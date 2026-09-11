@@ -1,0 +1,11 @@
+{
+  "name": "trustfund-prototype",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "generate-pdf": "node output/generate-pdf.js"
+  },
+  "dependencies": {
+    "puppeteer": "^22.0.0"
+  }
+}

@@ -1,0 +1,11 @@
+# Local preview and visual QA artifacts
+tmp/
+debug.log
+
+
+node_modules
+.venv-pdf
+.workbuddy-ai
+.agents
+.claude
+output

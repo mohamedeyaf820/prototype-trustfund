@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07383a">
+  <meta name="description" content="TrustFund — épargnez, progressez et réalisez vos projets.">
+  <title>TrustFund — Application mobile</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2307383a'/%3E%3Cpath d='M15 19h34v9H37v22H27V28H15z' fill='%23efbd41'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="prototype-stage">
+    <div class="phone-shell" id="phoneShell">
+      <div class="auth-flow" id="authFlow">
+        <section class="auth-screen active splash-screen" id="auth-splash">
+          <div class="splash-orbits" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="splash-brand">
+            <img src="assets/trustfund-logo-transparent-exact.png" alt="TrustFund">
+            <p>Épargnez. Progressez. Réalisez vos projets.</p>
+          </div>
+          <div class="splash-loader"><span><i></i></span><small>Préparation de votre espace sécurisé</small></div>
+        </section>
+
+        <section class="auth-screen welcome-screen" id="auth-welcome">
+          <div class="welcome-visual">
+            <div class="welcome-mark"><img src="assets/trustfund-logo-transparent-exact.png" alt="TrustFund"></div>
+            <div class="welcome-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="welcome-progress"><span>Objectif</span><strong>62%</strong><small>Votre projet prend forme</small></div>
+          </div>
+          <div class="welcome-copy">
+            <p class="eyebrow">Bienvenue sur TrustFund</p>
+            <h1>Épargnez.<br>Progressez.<br><span>Réalisez vos projets.</span></h1>
+            <p>Un parcours simple pour mettre de l’argent de côté, suivre chaque progrès et atteindre ce qui compte pour vous.</p>
+          </div>
+          <div class="auth-actions">
+            <button class="auth-primary" data-auth-target="signup">Créer un compte</button>
+            <button class="auth-secondary" data-auth-target="login">Se connecter</button>
+          </div>
+          <div class="welcome-legal"><button data-open="termsSheet">Conditions d’utilisation</button><span>·</span><button data-open="privacySheet">Confidentialité</button></div>
+        </section>
+
+        <section class="auth-screen form-screen" id="auth-login">
+          <div class="form-scroll-area">
+          <div class="auth-top"><button class="auth-back" data-auth-target="welcome">←</button><img src="assets/trustfund-logo-transparent-exact.png" alt="TrustFund"></div>
+          <div class="auth-heading"><p class="eyebrow">Accès sécurisé</p><h1>Se connecter</h1><p>Saisissez vos identifiants pour accéder à votre espace.</p></div>
+          <form id="loginForm" class="auth-form">
+            <label>Numéro de téléphone<div class="phone-field country-phone"><select aria-label="Pays" data-phone-country="loginPhone"><option value="SN" selected>🇸🇳 +221</option><option value="GM">🇬🇲 +220</option><option value="ML">🇲🇱 +223</option><option value="GN">🇬🇳 +224</option><option value="CI">🇨🇮 +225</option><option value="FR">🇫🇷 +33</option></select><input id="loginPhone" data-phone-input type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="77 123 45 67" required aria-describedby="loginPhoneHelp"></div><small class="field-feedback" id="loginPhoneHelp">Sénégal · 9 chiffres, ex. 77 123 45 67</small></label>
+            <label>Mot de passe<div class="password-field"><input id="loginPassword" type="password" placeholder="Votre mot de passe" autocomplete="current-password" required><button type="button" class="toggle-password" data-password-target="loginPassword">Voir</button></div></label>
+            <div class="login-options"><label class="check-line"><input type="checkbox"><span>Rester connecté</span></label><button type="button" data-open="passwordResetSheet">Mot de passe oublié ?</button></div>
+            <div class="login-feedback" id="loginFeedback" role="alert" aria-live="polite"></div>
+            <button type="button" class="demo-login" id="demoToggle" aria-expanded="false" aria-controls="demoAccounts"><span>Comptes de démonstration</span><i>⌄</i></button>
+            <section class="demo-accounts" id="demoAccounts" aria-label="Comptes de démonstration">
+              <div class="demo-accounts-head"><div><span>Accès immédiat</span><strong>Choisissez un profil.</strong></div><b>3 comptes</b></div>
+              <button type="button" class="demo-account-card" data-demo-role="user">
+                <span class="demo-avatar user">AN</span><span class="demo-identity"><strong>Aïssatou Ndiaye</strong><small>Compte utilisateur</small><code>77 000 00 01 · TrustUser#26</code></span><i>Utiliser</i>
+              </button>
+              <button type="button" class="demo-account-card" data-demo-role="provider">
+                <span class="demo-avatar provider">BE</span><span class="demo-identity"><strong>Babacar Entreprise</strong><small>Compte fournisseur</small><code>77 000 00 02 · TrustPro#26</code></span><i>Utiliser</i>
+              </button>
+              <button type="button" class="demo-account-card" data-demo-role="admin">
+                <span class="demo-avatar admin">MB</span><span class="demo-identity"><strong>Marième Ba</strong><small>Compte administrateur</small><code>77 000 00 03 · TrustAdmin#26</code></span><i>Utiliser</i>
+              </button>
+              <p>Ces accès sont fictifs et réservés à la présentation du prototype.</p>
+            </section>
+            <p class="auth-switch in-form">Pas encore de compte ? <button type="button" data-auth-target="signup">Créer un compte</button></p>
+          </form>
+          </div>
+          <div class="auth-action-bar">
+            <button form="loginForm" type="submit" class="auth-primary login-submit">Se connecter</button>
+          </div>
+        </section>
+
+        <section class="auth-screen form-screen signup-screen" id="auth-signup">
+          <div class="form-scroll-area">
+          <div class="auth-top"><button class="auth-back" id="signupBack">←</button><img src="assets/trustfund-logo-transparent-exact.png" alt="TrustFund"></div>
+          <div class="auth-heading"><p class="eyebrow">Nouveau compte</p><h1>Créer un compte</h1><p id="signupSubtitle">Commencez par choisir le type de compte.</p></div>
+          <div class="signup-progress"><i class="active"></i><i></i><i></i></div>
+          <form id="signupForm" class="auth-form">
+            <div class="signup-step active" data-signup-step="1">
+              <div class="role-choice-stack">
+                <button type="button" class="signup-role active" data-signup-role="user"><span>U</span><div><strong>Utilisateur</strong><small>J’épargne pour mes projets</small></div><i>✓</i></button>
+                <button type="button" class="signup-role" data-signup-role="provider"><span>F</span><div><strong>Fournisseur</strong><small>Je propose des produits ou services</small></div><i>›</i></button>
+              </div>
+              <div class="identity-notice"><span>1</span><p>Choisissez votre rôle. Les vérifications d’identité viendront plus tard, avant toute opération financière.</p></div>
+            </div>
+
+            <div class="signup-step" data-signup-step="2">
+              <div class="field-pair"><label>Prénom<input id="signupFirstName" autocomplete="given-name" required placeholder="Votre prénom"></label><label>Nom<input id="signupLastName" autocomplete="family-name" required placeholder="Votre nom"></label></div>
+              <label>Numéro de téléphone<div class="phone-field country-phone"><select aria-label="Pays" data-phone-country="signupPhone"><option value="SN" selected>🇸🇳 +221</option><option value="GM">🇬🇲 +220</option><option value="ML">🇲🇱 +223</option><option value="GN">🇬🇳 +224</option><option value="CI">🇨🇮 +225</option><option value="FR">🇫🇷 +33</option></select><input id="signupPhone" data-phone-input type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="77 123 45 67" required aria-describedby="signupPhoneHelp"></div><small class="field-feedback" id="signupPhoneHelp">Sénégal · 9 chiffres. Un code SMS confirmera ce numéro.</small></label>
+              <label>Adresse e-mail <em>Facultatif</em><input id="signupEmail" type="email" autocomplete="email" placeholder="exemple@email.com"></label>
+              <div class="conditional-fields" id="providerFields">
+                <div class="deferred-note"><strong>Profil fournisseur</strong><p>Le nom de la boutique, le NINEA/RCCM et les justificatifs seront demandés plus tard, avant la publication d’une première offre.</p></div>
+              </div>
+              <div class="conditional-fields" id="adminFields">
+                <div class="admin-invite-note"><span>!</span><p>La création d’un compte administrateur nécessite un code remis par l’équipe TrustFund.</p></div>
+                <label>Code d’invitation administrateur<input id="adminInvite" placeholder="TF-ADMIN-XXXX"></label>
+              </div>
+            </div>
+
+            <div class="signup-step" data-signup-step="3">
+              <label>Créer un mot de passe<div class="password-field"><input id="signupPassword" type="password" minlength="12" maxlength="64" autocomplete="new-password" placeholder="12 caractères minimum" required aria-describedby="passwordRules"><button type="button" class="toggle-password" data-password-target="signupPassword">Voir</button></div></label>
+              <div class="strength-meter"><i></i><i></i><i></i><i></i><span id="strengthLabel">Sécurité du mot de passe</span></div>
+              <div class="password-rules" id="passwordRules"><span data-password-rule="length">12 caractères minimum</span><span data-password-rule="case">Majuscule et minuscule</span><span data-password-rule="number">Au moins un chiffre</span><span data-password-rule="special">Au moins un caractère spécial</span><span data-password-rule="space">Aucun espace</span></div>
+              <label>Confirmer le mot de passe<div class="password-field"><input id="signupPasswordConfirm" type="password" minlength="12" maxlength="64" autocomplete="new-password" placeholder="Saisissez-le de nouveau" required aria-describedby="passwordMatchHelp"><button type="button" class="toggle-password" data-password-target="signupPasswordConfirm">Voir</button></div><small class="field-feedback" id="passwordMatchHelp">Les deux mots de passe doivent être identiques.</small></label>
+              <label class="consent-line"><input id="signupConsent" type="checkbox" required><span>J’accepte les <button type="button" data-open="termsSheet">conditions d’utilisation</button> et la <button type="button" data-open="privacySheet">politique de confidentialité</button> de TrustFund.</span></label>
+              <div class="no-social-note"><span>✓</span><p>Compte indépendant : aucune connexion Google ou réseau social.</p></div>
+            </div>
+
+            <p class="auth-switch in-form">Vous avez déjà un compte ? <button type="button" data-auth-target="login">Se connecter</button></p>
+          </form>
+          </div>
+          <div class="auth-action-bar">
+            <button type="button" class="auth-primary" id="signupNext">Continuer</button>
+            <button form="signupForm" type="submit" class="auth-primary hidden" id="signupSubmit">Créer mon compte</button>
+          </div>
+        </section>
+
+        <section class="auth-screen verify-screen" id="auth-verify">
+          <div class="verify-icon"><span>✓</span><i></i></div>
+          <p class="eyebrow">Vérification du téléphone</p>
+          <h1>Entrez le code<br>reçu par SMS.</h1>
+          <p>Un code à 6 chiffres a été envoyé au <strong id="verifyPhone">+221 77 000 00 00</strong>.</p>
+          <form id="verifyForm">
+            <div class="otp-fields"><input inputmode="numeric" maxlength="1" required><input inputmode="numeric" maxlength="1" required><input inputmode="numeric" maxlength="1" required><input inputmode="numeric" maxlength="1" required><input inputmode="numeric" maxlength="1" required><input inputmode="numeric" maxlength="1" required></div>
+            <button type="submit" class="auth-primary">Vérifier et continuer</button>
+          </form>
+          <button class="resend-code" id="resendCode">Renvoyer le code</button>
+          <small>Pour le prototype, saisissez n’importe quels 6 chiffres. Aucun SMS réel n’est envoyé.</small>
+        </section>
+      </div>
+
+      <div class="app-session hidden" id="appSession">
+      <header class="app-header">
+        <button class="brand-button" data-view-target="home" aria-label="Retour à l’accueil">
+          <img src="assets/trustfund-logo-transparent-exact.png" alt="TrustFund" class="app-logo">
+        </button>
+        <div class="header-actions">
+          <button class="round-button user-history-trigger" data-view-target="activity" aria-label="Ouvrir l’historique">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 7v5l3 2"/></svg>
+          </button>
+          <button class="round-button notification-trigger" data-view-target="notifications" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+            <i>2</i>
+          </button>
+          <button class="avatar-button" data-view-target="profile" aria-label="Ouvrir le profil"><span id="avatarInitials">AN</span></button>
+        </div>
+      </header>
+
+      <div class="prototype-ribbon"><span>Démo</span><p>Données fictives — aucun fonds n’est conservé.</p><button id="resetDemo">↻</button></div>
+      <div class="admin-web-notice"><img src="assets/trustfund-logo-transparent-exact.png" alt="TrustFund"><span>Administration web</span><h1>Ouvrez cet espace sur un ordinateur</h1><p>Le centre d’administration est conçu pour un grand écran afin de sécuriser les validations et faciliter le traitement des dossiers.</p><button class="logout-button">Se déconnecter</button></div>
+
+      <main class="app-main" id="appMain">
+        <section class="screen active simple-home" id="screen-home" data-title="Accueil">
+          <div class="home-greeting">
+            <div class="home-greeting-text"><span>Bonjour</span><h1>Aïssatou</h1><p class="brand-signature">Épargnez · Progressez · Réalisez vos projets</p></div>
+            <div class="home-greeting-actions">
+              <button class="round-button user-history-trigger" data-view-target="activity" aria-label="Ouvrir l'historique"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5M12 7v5l3 2"/></svg></button>
+              <button class="round-button notification-trigger" data-view-target="notifications" aria-label="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><i>2</i></button>
+              <button class="avatar-button" data-view-target="profile" aria-label="Ouvrir le profil"><span id="homeAvatarInitials">AN</span></button>
+            </div>
+          </div>
+
+          <article class="free-savings-card">
+            <div class="free-savings-head"><span>Épargne disponible</span><small>Libre</small></div>
+            <strong id="freeSavingsBalance">125 000 <small>FCFA</small></strong>
+            <p>Vous pourrez l’affecter à un objectif plus tard.</p>
+            <div class="free-savings-actions"><button data-open="allocateSavingsSheet">Affecter à un objectif</button><button class="primary" data-free-payment>Déposer de l’argent</button></div>
+          </article>
+
+          <div class="simple-section-title home-objectives-title"><div><h2>Vos objectifs</h2><p>3 sur 3</p></div><button data-view-target="goals">Tout voir</button></div>
+          <section class="home-goal-grid">
+            <article class="focus-goal" data-view-target="goal-detail">
+              <div class="focus-goal-visual"><img src="assets/product-laptop.webp" alt="Ordinateur portable Lenovo IdeaPad"></div>
+              <div class="focus-goal-head"><span>Études</span></div>
+              <h2>Ordinateur portable</h2>
+              <div class="focus-progress"><i id="homeProgressBar" style="width:62%"></i></div>
+              <div class="focus-progress-label"><strong><b id="homeValidated">372 000</b> FCFA</strong><span><b id="homePercent">62</b>%</span></div>
+            </article>
+            <button class="other-goal-row" data-view-target="goals"><span class="goal-row-image"><img src="assets/product-design-course.webp" alt=""></span><div><strong>Frais de formation</strong><p id="formationHomeProgress">75 000 sur 250 000 FCFA</p></div><em id="formationHomePercent">30%</em></button>
+            <button class="other-goal-row complete" data-view-target="finalization"><span class="goal-row-image"><img src="assets/product-sewing-machine.webp" alt=""></span><div><strong>Machine à coudre</strong><p>Objectif atteint</p></div><em>100%</em></button>
+            <button class="home-goal-limit" data-open="goalSheet"><span>＋</span><strong>Ajouter un objectif</strong><p>3/3 actifs · libérez une place pour continuer.</p></button>
+          </section>
+          <span id="totalSaved" class="hidden">757 000 FCFA</span>
+
+          <article class="coach-nudge">
+            <span>✦</span>
+            <div><strong>Besoin d’un conseil ?</strong><p>TrustCoach vous aide à adapter votre épargne.</p></div>
+            <button data-view-target="ai-coach">Demander</button>
+          </article>
+
+          <section class="home-activity-preview">
+            <div><span>Activité récente</span><button data-view-target="activity">Tout l’historique →</button></div>
+            <button class="home-activity-row" data-view-target="activity"><span class="activity-mini-icon">↓</span><p><strong>Dépôt validé</strong><small>Orange Money · Ordinateur portable</small></p><b>38 000 FCFA</b></button>
+          </section>
+        </section>
+
+        <section class="screen" id="screen-goals" data-title="Mes objectifs">
+          <div class="screen-heading goals-heading"><div><p class="eyebrow">3 objectifs sur 3</p><h1>Mes objectifs</h1><p>Choisissez un objectif pour voir son détail ou continuer votre épargne.</p></div><span class="goal-capacity">3/3</span></div>
+          <div class="goal-stack">
+            <article class="mobile-goal-card featured" data-view-target="goal-detail">
+              <div class="goal-card-img"><img src="assets/product-laptop.webp" alt="Ordinateur portable"></div>
+              <div class="goal-card-top"><div><span class="status-pill dark"><i></i> En bonne voie</span><h2>Ordinateur portable</h2><p>Études · 15 janvier 2027</p></div><strong class="goal-percent">62%</strong></div>
+              <div class="goal-track"><i style="width:62%"></i></div>
+              <div class="goal-card-bottom"><span><small>Validé</small><strong id="goalsValidated">372 000</strong></span><span><small>Reste</small><strong id="goalsRemaining">228 000</strong></span><button>›</button></div>
+            </article>
+            <article class="mobile-goal-card formation-goal-card">
+              <div class="goal-card-img"><img src="assets/product-design-course.webp" alt="Frais de formation"></div>
+              <div class="goal-card-top"><div><span class="status-pill warning"><i></i> À surveiller</span><h2>Frais de formation</h2><p>Éducation · 30 novembre 2026</p></div><strong class="goal-percent" id="formationGoalPercent">30%</strong></div>
+              <div class="goal-track"><i id="formationGoalBar" style="width:30%"></i></div>
+              <div class="goal-card-bottom"><span><small>Validé</small><strong id="formationGoalValidated">75 000</strong></span><span><small>Reste</small><strong id="formationGoalRemaining">175 000</strong></span><button>›</button></div>
+            </article>
+            <article class="mobile-goal-card reached" data-view-target="finalization">
+              <div class="goal-card-img"><img src="assets/product-sewing-machine.webp" alt="Machine à coudre"></div>
+              <div class="goal-card-top"><div><span class="status-pill reached"><i></i> Objectif atteint</span><h2>Machine à coudre</h2><p>Équipement · prêt à commander</p></div><strong class="goal-percent">100%</strong></div>
+              <div class="goal-track"><i style="width:100%"></i></div>
+              <div class="goal-card-bottom"><span><small>Validé</small><strong>185 000</strong></span><span><small>Étape</small><strong>Finaliser</strong></span><button>›</button></div>
+            </article>
+            <div class="new-goal-card goal-limit-card"><span>✓</span><div><strong>Limite atteinte</strong><p>Terminez ou supprimez un objectif pour en créer un nouveau.</p></div></div>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-goal-detail" data-title="Détail de l’objectif">
+          <button class="back-link" data-view-target="goals">← Retour</button>
+          <div class="goal-detail-image"><img src="assets/product-laptop.webp" alt="Ordinateur portable Lenovo IdeaPad"></div>
+          <div class="detail-title"><div><span class="status-pill dark" id="goalStatusPill"><i></i> En bonne voie</span><h1>Ordinateur portable</h1><p>Pour mes études · objectif prévu le 15 janvier 2027.</p></div><button class="more-button" data-open="goalActionsSheet" aria-label="Gérer cet objectif">•••</button></div>
+          <article class="detail-progress-card">
+            <div class="progress-orbit large" style="--value:62"><div><strong id="detailPercent">62</strong><small>%</small></div></div>
+            <div><span>Montant validé</span><strong id="detailValidated">372 000 FCFA</strong><p id="detailRemaining">228 000 FCFA à cotiser</p></div>
+          </article>
+          <div class="goal-primary-actions"><button class="secondary-button" data-withdraw="Ordinateur portable">Retirer des fonds</button><button class="main-button" data-goal-payment="Ordinateur portable">Déposer de l’argent</button></div>
+          <div class="detail-stats"><span><small>Cotisation conseillée</small><strong>38 000 FCFA</strong></span><span><small>Date cible</small><strong>15 jan. 2027</strong></span></div>
+          <div class="goal-detail-actions"><button data-view-target="ai-insights">Voir l'analyse IA</button><button data-open="productDetailSheet">Voir les caractéristiques du produit</button><button data-change-product>Changer de produit</button></div>
+          <section class="section-block"><div class="section-head"><div><p class="eyebrow">Calendrier</p><h2>Votre prochain rythme.</h2></div></div><div class="timeline"><article class="done"><span>✓</span><div><strong>18 juillet</strong><p>Orange Money · validée</p></div><b>38 000</b></article><article class="current"><span>05</span><div><strong>5 août</strong><p>Prochaine échéance</p></div><b>38 000</b></article><article><span>05</span><div><strong>5 septembre</strong><p>Planifiée</p></div><b>38 000</b></article><article><span>05</span><div><strong>5 octobre</strong><p>Planifiée</p></div><b>38 000</b></article></div></section>
+        </section>
+
+        <section class="screen" id="screen-catalog" data-title="Catalogue">
+          <div class="screen-heading compact-heading"><div><p class="eyebrow">Produits et services vérifiés</p><h1>Boutique</h1><p>Consultez les détails avant de choisir.</p></div></div>
+          <article class="ai-recommendation compact-recommendation"><span class="ai-label">✦ Pour vous</span><div><strong>3 offres adaptées à votre budget</strong></div><button class="apply-ai-filter">Voir</button></article>
+          <label class="mobile-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="catalogSearch" type="search" placeholder="Rechercher une offre"></label>
+          <div class="chip-row"><button class="filter-chip active" data-filter="all">Tout</button><button class="filter-chip" data-filter="tech">Tech</button><button class="filter-chip" data-filter="business">Commerce</button><button class="filter-chip" data-filter="education">Formation</button><button class="filter-chip" data-filter="home">Maison</button></div>
+          <div class="product-stack" id="productStack">
+            <article class="mobile-product" data-category="tech" data-search="ordinateur lenovo technologie études" data-image="assets/product-laptop.webp" data-description="Ordinateur 15 pouces, 8 Go RAM et 512 Go SSD, adapté aux études et au travail." data-specs="Écran 15 pouces|8 Go de mémoire|SSD 512 Go|Garantie 12 mois"><div class="product-art"><img src="assets/product-laptop.webp" alt="Ordinateur portable 15 pouces"><i>Disponible</i></div><div class="product-copy"><p>Tekki Digital · Dakar</p><h2>Lenovo IdeaPad</h2><div><strong data-customer-price="425000">429 250 FCFA</strong><small>425 000 + 1% TrustFund</small></div><button class="choose-product" data-product="Lenovo IdeaPad" data-amount="425000">Voir les caractéristiques</button></div></article>
+            <article class="mobile-product" data-category="business" data-search="congélateur solaire commerce" data-image="assets/product-solar-freezer.webp" data-description="Congélateur solaire autonome conçu pour les commerces et zones à alimentation électrique instable." data-specs="Capacité 200 litres|Kit solaire inclus|Livraison à Dakar|Garantie 18 mois"><div class="product-art"><img src="assets/product-solar-freezer.webp" alt="Congélateur solaire avec panneau"><i>Stock limité</i></div><div class="product-copy"><p>Baobab Équipement · Thiès</p><h2>Congélateur solaire 200 L</h2><div><strong data-customer-price="580000">585 800 FCFA</strong><small>580 000 + 1% TrustFund</small></div><button class="choose-product" data-product="Congélateur solaire 200 L" data-amount="580000">Voir les caractéristiques</button></div></article>
+            <article class="mobile-product" data-category="education" data-search="formation design numérique" data-image="assets/product-design-course.webp" data-description="Parcours pratique en design numérique avec mentorat et certificat de fin de formation." data-specs="12 semaines|Cours en ligne|Mentorat inclus|Certificat délivré"><div class="product-art"><img src="assets/product-design-course.webp" alt="Espace de formation en design numérique"><i>Disponible</i></div><div class="product-copy"><p>Jàng Academy · En ligne</p><h2>Formation design numérique</h2><div><strong data-customer-price="250000">252 500 FCFA</strong><small>250 000 + 1% TrustFund</small></div><button class="choose-product" data-product="Formation design numérique" data-amount="250000">Voir les caractéristiques</button></div></article>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-activity" data-title="Historique">
+          <div class="screen-heading"><div><p class="eyebrow">Paiements et preuves</p><h1>Historique</h1><p>Retrouvez chaque opération et son état de vérification.</p></div><button class="floating-add" data-open="paymentSheet">＋</button></div>
+          <div class="status-guide"><span class="active">Tous</span><button data-status="accepted">Validées</button><button data-status="pending">En attente</button><button data-status="rejected">Rejetées</button></div>
+          <div class="activity-stack" id="activityStack">
+            <article class="activity-card accepted"><div class="activity-date"><strong>18</strong><span>JUIL</span></div><div><span class="state-label">✓ Validée</span><strong>38 000 FCFA</strong><p>Orange Money · OM-48291</p><small>Ordinateur portable</small></div><button>›</button></article>
+            <article class="activity-card accepted"><div class="activity-date"><strong>18</strong><span>JUIN</span></div><div><span class="state-label">✓ Validée</span><strong>38 000 FCFA</strong><p>Wave · WV-90114</p><small>Ordinateur portable</small></div><button>›</button></article>
+            <article class="activity-card rejected"><div class="activity-date"><strong>29</strong><span>MAI</span></div><div><span class="state-label">! Rejetée</span><strong>25 000 FCFA</strong><p>Wave · preuve illisible</p><small>Frais de formation</small></div><button>›</button></article>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-profile" data-title="Profil">
+          <div class="profile-hero"><div class="profile-avatar" id="profileAvatar">AN</div><div><p class="eyebrow" id="profileRole">Compte utilisateur</p><h1 id="profileName">Aïssatou<br>Ndiaye.</h1><p id="profileCompletion">Profil complété à 85%</p></div></div>
+          <div class="profile-progress"><i id="profileProgress" style="width:85%"></i></div>
+          <div class="user-profile-only">
+            <section class="profile-section"><p class="profile-label">Mon compte</p><button class="settings-row" data-open="profileEditSheet"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><div><strong>Mes informations</strong><small>Identité et coordonnées</small></div><i>›</i></button><button class="settings-row" data-open="notificationPrefsSheet"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></span><div><strong>Notifications</strong><small>Rappels et canaux de contact</small></div><i>›</i></button><button class="settings-row" data-open="securitySheet"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></span><div><strong>Sécurité</strong><small>Mot de passe et vérification</small></div><i>›</i></button><button class="settings-row" data-view-target="support"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v12H9l-4 4z"/><path d="M9 9a3 3 0 1 1 5 2c-1 1-2 1-2 3M12 17h.01"/></svg></span><div><strong>Aide & réclamations</strong><small>1 demande en cours</small></div><i>›</i></button></section>
+            <section class="profile-section"><p class="profile-label">Informations légales</p><button class="settings-row" data-open="termsSheet"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6zM9 11h6M9 15h6M9 7h3"/></svg></span><div><strong>Conditions d’utilisation</strong><small>Règles du service</small></div><i>›</i></button><button class="settings-row" data-open="privacySheet"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6zM9 12l2 2 4-4"/></svg></span><div><strong>Politique de confidentialité</strong><small>Protection de vos données</small></div><i>›</i></button></section>
+            <section class="profile-section security-summary"><p class="profile-label">Vérification</p><div class="verified-line pending-verification"><span>1</span><div><strong>À faire avant la première opération</strong><small>Aucune pièce d’identité n’est demandée avant ce moment.</small></div></div></section>
+          </div>
+          <div class="admin-profile-only">
+            <article class="admin-access-card"><span>Accès sécurisé</span><strong>Administratrice principale</strong><p>Dernière connexion aujourd’hui à 08:42 · Dakar</p><div><i></i><small>Double vérification active</small></div></article>
+            <section class="profile-section"><p class="profile-label">Administration</p><button class="settings-row" data-open="adminProfileSheet"><span>◎</span><div><strong>Identité professionnelle</strong><small>Fonction, téléphone et disponibilité</small></div><i>›</i></button><button class="settings-row" data-open="adminAccessSheet"><span>⌘</span><div><strong>Rôle et autorisations</strong><small>Validation, support, rapports et réglages</small></div><i>›</i></button><button class="settings-row" data-open="securitySheet"><span>◇</span><div><strong>Sécurité et sessions</strong><small>2FA active · 1 session ouverte</small></div><i>›</i></button><button class="settings-row" data-view-target="admin-audit"><span>≡</span><div><strong>Mes actions récentes</strong><small>Journal personnel et traçabilité</small></div><i>›</i></button></section>
+          </div>
+          <div class="provider-profile-only">
+            <article class="provider-profile-status"><span>✓</span><div><strong>Boutique vérifiée</strong><p>Baobab Équipement · NINEA 123456789</p></div><button data-open="providerBusinessSheet">Voir le dossier</button></article>
+            <section class="profile-section"><p class="profile-label">Ma boutique</p><button class="settings-row" data-open="providerBusinessSheet"><span>▣</span><div><strong>Informations professionnelles</strong><small>Entreprise, NINEA, adresse et contacts</small></div><i>›</i></button><button class="settings-row" data-view-target="provider-offers"><span>□</span><div><strong>Produits et services</strong><small>8 offres actives · 2 stocks faibles</small></div><i>›</i></button><button class="settings-row" data-open="notificationPrefsSheet"><span>○</span><div><strong>Notifications</strong><small>Commandes, stock et réclamations</small></div><i>›</i></button><button class="settings-row" data-open="securitySheet"><span>◇</span><div><strong>Sécurité</strong><small>Mot de passe et vérification</small></div><i>›</i></button></section>
+            <section class="profile-section"><p class="profile-label">Assistance</p><button class="settings-row" data-view-target="provider-claims"><span>◇</span><div><strong>Réclamations</strong><small>1 réponse attendue</small></div><i>›</i></button><button class="settings-row" data-open="termsSheet"><span>≡</span><div><strong>Conditions partenaires</strong><small>Règles de publication et de livraison</small></div><i>›</i></button></section>
+          </div>
+          <button class="logout-button">Se déconnecter</button>
+        </section>
+
+        <section class="screen" id="screen-support" data-title="Aide">
+          <button class="back-link" data-view-target="profile">← Retour</button><div class="screen-heading compact"><div><p class="eyebrow">Assistance TrustFund</p><h1>Aide et support</h1><p>Une question ou un problème ? Nous suivons chaque demande.</p></div></div>
+          <button class="main-button" data-open="ticketSheet">Créer une demande</button>
+          <section class="section-block"><div class="section-head"><div><p class="eyebrow">Mes demandes</p><h2>Suivi des réclamations.</h2></div></div><div class="ticket-list" id="userTicketList"><button class="ticket-row" data-open="ticketDetailSheet"><span class="ticket-state pending">En traitement</span><strong>#REC-2048 · Livraison</strong><p>Produit reçu avec un accessoire manquant</p><small>Mis à jour aujourd’hui à 10:24</small></button></div></section>
+          <section class="section-block"><div class="section-head"><div><p class="eyebrow">Question fréquente</p><h2>Comprendre TrustFund.</h2></div></div><div class="faq-list"><details open><summary>Où se trouve mon argent ? <span>−</span></summary><p>Vos fonds restent sur votre canal externe. TrustFund structure le plan et vérifie les preuves, mais ne conserve pas votre argent pendant le pilote.</p></details><details><summary>Pourquoi ma cotisation est en attente ? <span>＋</span></summary><p>Une vérification administrative est nécessaire avant que le montant augmente votre progression.</p></details><details><summary>Puis-je changer ma date cible ? <span>＋</span></summary><p>Oui, si l’objectif n’est pas encore en finalisation. Votre plan sera recalculé.</p></details></div></section>
+        </section>
+
+        <section class="screen" id="screen-notifications" data-title="Notifications">
+          <div class="screen-heading"><div><p class="eyebrow">Centre de messages</p><h1>Notifications</h1><p>Rappels, validations et suivi des commandes.</p></div><button class="floating-add mark-all-read" aria-label="Tout marquer comme lu">✓</button></div>
+          <div class="notification-list">
+            <article class="notification-card unread provider-notif" id="providerContactNotif"><span class="notification-icon">TF</span><div><strong>Vérification demandée par TrustFund</strong><p id="providerContactNotifText">L’administration demande de confirmer la disponibilité d’un produit.</p><small id="providerContactNotifTime">À l'instant</small><button type="button" class="notification-inline-action" id="providerAvailabilityConfirm">Confirmer la disponibilité</button></div><i></i></article>
+            <article class="notification-card unread user-notif hidden" id="userAvailabilityNotif"><span class="notification-icon">TF</span><div><strong id="userAvailabilityTitle">Réponse de TrustFund</strong><p id="userAvailabilityText">La disponibilité du produit a été vérifiée.</p><small>À l'instant</small></div><i></i></article>
+            <article class="notification-card unread ai-reminder user-notif"><span class="notification-icon ai">✦</span><div><strong>Rappel au bon moment</strong><p>Vous cotisez souvent le vendredi. Votre prochain rappel arrivera vendredi à 18 h.</p><small>Adapté à vos habitudes · aujourd’hui</small></div><i></i></article>
+            <article class="notification-card unread user-notif"><span class="notification-icon success">✓</span><div><strong>Cotisation validée</strong><p>38 000 FCFA ont été ajoutés à « Ordinateur portable ».</p><small>Aujourd’hui · 10:42</small></div><i></i></article>
+            <article class="notification-card unread user-notif"><span class="notification-icon reminder">05</span><div><strong>Prochaine échéance</strong><p>Votre cotisation de 38 000 FCFA est prévue dans 12 jours.</p><small>Aujourd’hui · 08:00</small></div><i></i></article>
+            <article class="notification-card user-notif"><span class="notification-icon order">↗</span><div><strong>Commande en préparation</strong><p>Baobab Équipement prépare votre commande #TF-1197.</p><small>Hier · 16:15</small></div></article>
+          </div>
+          <button class="secondary-button full-button" data-open="notificationPrefsSheet">Gérer mes préférences</button>
+        </section>
+
+        <section class="screen ai-screen" id="screen-ai-insights" data-title="Mon analyse IA">
+          <button class="back-link" data-view-target="home">← Accueil</button>
+          <div class="ai-hero"><span>✦ Analyse personnalisée</span><h1>Mon rythme d’épargne</h1><p>Des repères simples pour vous aider. Vous gardez toujours la décision finale.</p></div>
+          <div class="risk-score-grid"><article><div class="score-ring regularity" style="--score:86"><strong>86</strong><small>/100</small></div><p><strong>Votre régularité</strong><small>Très bonne · +6 ce mois</small></p></article><article><div class="score-ring risk" style="--score:18"><strong>18%</strong></div><p><strong>Risque de ne pas terminer</strong><small>Faible · situation stable</small></p></article></div>
+          <section class="explain-card"><div class="section-head"><div><p class="eyebrow">Pourquoi ce résultat ?</p><h2>Facteurs observés.</h2></div></div><div class="factor-list"><div class="positive"><span>＋12</span><p><strong>4 cotisations consécutives</strong><small>Votre régularité récente réduit le risque.</small></p></div><div class="positive"><span>＋8</span><p><strong>Échéances respectées</strong><small>3 contributions sur 4 avant la date prévue.</small></p></div><div class="watch"><span>−6</span><p><strong>Effort mensuel élevé</strong><small>38 000 FCFA dépasse légèrement votre rythme habituel.</small></p></div></div></section>
+          <article class="prediction-action"><span>Recommandation prioritaire</span><strong>Gardez 38 000 FCFA ce mois-ci.</strong><p>Si votre budget devient plus serré, décalez plutôt la date cible que d’interrompre votre objectif.</p><button data-view-target="ai-coach">Construire une alternative avec TrustCoach</button></article>
+          <p class="ai-disclaimer">Simulation du prototype : ces scores utilisent des données fictives. Un modèle réel devra être entraîné, évalué et surveillé avant production.</p>
+        </section>
+
+        <section class="screen coach-screen" id="screen-ai-coach" data-title="TrustCoach">
+          <div class="coach-header"><button data-view-target="home">←</button><div><span class="coach-orb">✦</span><p><strong>TrustCoach</strong><small>Coach intelligent · en ligne</small></p></div><button class="coach-info">i</button></div>
+          <div class="coach-context"><span>Contexte utilisé</span><p>Épargne disponible 125 000 · 3 objectifs · régularité 86/100</p></div>
+          <div class="coach-overview"><article><span>Prochaine étape</span><strong>38 000 FCFA le 5 août</strong><small>Objectif ordinateur</small></article><article><span>Conseil du jour</span><strong>Gardez 20 000 FCFA libres</strong><small>Pour protéger votre rythme</small></article></div>
+          <div class="coach-chat" id="coachChat">
+            <article class="coach-message ai"><span>✦</span><div><p>Bonjour Aïssatou. Votre score de régularité est de <strong>86/100</strong> et votre risque d’abandon reste faible.</p><small>TrustCoach · maintenant</small></div></article>
+            <article class="coach-message ai"><span>✦</span><div><p>Je peux comparer votre budget, proposer un plan chiffré et vous laisser confirmer chaque changement.</p></div></article>
+          </div>
+          <div class="coach-suggestions"><button data-coach-prompt="J’ai un budget de 25 000 FCFA par mois, propose-moi un plan">Plan selon mon budget</button><button data-coach-prompt="Compare mes trois objectifs et dis-moi lequel prioriser">Prioriser mes objectifs</button><button data-coach-prompt="Recommande-moi un produit avec le prix total et les frais">Trouver une offre</button></div>
+          <form class="coach-form" id="coachForm"><input id="coachInput" placeholder="Écrivez votre question..." required><button type="submit" aria-label="Envoyer">↑</button></form>
+          <p class="coach-note">TrustCoach fournit des recommandations. Vous confirmez toujours chaque modification.</p>
+        </section>
+
+        <section class="screen" id="screen-finalization" data-title="Finalisation">
+          <button class="back-link" data-view-target="goals">← Mes objectifs</button>
+          <div class="finalize-hero"><span>✓</span><p class="eyebrow">Objectif atteint</p><h1>Votre machine<br>vous attend.</h1><p>185 000 FCFA validés sur 185 000 FCFA. Vérifiez les conditions avant de créer la commande.</p></div>
+          <div class="stepper-card"><div class="done"><span>1</span><p><strong>Objectif atteint</strong><small>Montant entièrement validé</small></p></div><div class="active"><span>2</span><p><strong>Confirmer le fournisseur</strong><small>Choisissez une offre disponible</small></p></div><div><span>3</span><p><strong>Réception et évaluation</strong><small>Après la livraison</small></p></div></div>
+          <article class="supplier-choice selected"><div class="supplier-product-image"><img src="assets/product-sewing-machine.webp" alt="Machine à coudre proposée"></div><div><span>Partenaire vérifié · 4,7 ★</span><strong>Atelier Fatou Couture</strong><p>Machine professionnelle · Garantie 12 mois</p><b>185 000 FCFA</b></div><i>✓</i></article>
+          <div class="fee-summary"><p><span>Prix fournisseur</span><strong>185 000 FCFA</strong></p><p><span>Frais TrustFund · 1%</span><strong>1 850 FCFA</strong></p><p class="fee-total"><span>Total utilisateur</span><strong>186 850 FCFA</strong></p><p><span>Disponibilité</span><strong class="green-text">En stock · 48 h</strong></p></div>
+          <label class="consent-line final-consent"><input type="checkbox" id="finalizeConsent"><span>Je confirme avoir vérifié le prix, les conditions et le fournisseur.</span></label>
+          <button class="main-button" id="createOrder">Créer la demande de commande</button>
+          <div class="order-tracking hidden" id="orderTracking"><span>Commande #TF-1214</span><strong>Disponibilité confirmée</strong><p>Le fournisseur prépare maintenant votre commande.</p><button class="secondary-button" data-open="receptionSheet">Simuler la réception</button></div>
+        </section>
+
+        <section class="screen" id="screen-admin" data-title="Administration">
+          <div class="admin-heading"><div><p class="eyebrow">Bonjour Marième</p><h1>Centre de contrôle</h1><p>Décidez, justifiez et suivez les actions sensibles.</p><small class="brand-signature">Épargnez · Progressez · Réalisez vos projets</small></div><span class="admin-badge">ADMIN</span></div>
+          <div class="admin-priority-strip"><span>À traiter maintenant</span><strong><b id="pendingMetric">3</b> vérifications</strong><button data-view-target="admin-ai">Ouvrir la file →</button></div>
+          <div class="metrics-scroll admin-metrics"><article><span>Montants validés</span><strong>2,84 M</strong><small>FCFA ce mois</small></article><article><span>Revenus plateforme</span><strong>28 400</strong><small>frais à 1%</small></article><article><span>Réclamations</span><strong>6</strong><small>2 prioritaires</small></article><article><span>Délai moyen</span><strong>4h12</strong><small>−38 min</small></article></div>
+          <div class="hub-grid admin-hub primary-tools"><button data-view-target="admin-users"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 8h5M18.5 5.5v5"/></svg></span><strong>Comptes</strong><small>Utilisateurs actifs</small></button><button data-view-target="admin-suppliers"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16v11H4zM7 9V5h10v4"/></svg></span><strong>Partenaires</strong><small>3 dossiers à traiter</small></button><button data-view-target="admin-support"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v12H9l-4 4z"/></svg></span><strong>Réclamations</strong><small>6 dossiers ouverts</small></button><button data-view-target="admin-ai"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></span><strong>Alertes IA</strong><small>3 contrôles humains</small></button></div>
+          <details class="more-tools"><summary>Plus d’outils <span>⌄</span></summary><div class="hub-grid admin-hub secondary-tools"><button data-view-target="admin-goals"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4V2M20 12h2"/></svg></span><strong>Objectifs</strong><small>Vue d’ensemble</small></button><button data-view-target="admin-orders"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v13H4zM8 3h8v4M8 12h8M8 16h5"/></svg></span><strong>Commandes</strong><small>12 en cours</small></button><button data-view-target="admin-reports"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-8M22 20H2"/></svg></span><strong>Rapports</strong><small>Chiffres et export</small></button><button data-view-target="admin-settings"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.5 1a7 7 0 0 0-1.8-1L14.2 3h-4.4l-.4 3.1a7 7 0 0 0-1.8 1l-2.5-1-2 3.4 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.5-1a7 7 0 0 0 1.8 1l.4 3.1h4.4l.4-3.1a7 7 0 0 0 1.8-1l2.5 1 2-3.4-2-1.5a7 7 0 0 0 .1-1z"/></svg></span><strong>Réglages</strong><small>Frais et rappels</small></button><button data-view-target="admin-audit"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14M5 12h14M5 19h14M3 5h.01M3 12h.01M3 19h.01"/></svg></span><strong>Historique</strong><small>Actions sensibles</small></button></div></details>
+          <div class="admin-mini-chart"><div><span>Volume validé · 7 jours</span><strong>+18%</strong></div><svg viewBox="0 0 560 120" preserveAspectRatio="none" aria-label="Évolution des montants validés"><path class="chart-grid" d="M0 25H560M0 60H560M0 95H560"/><path class="chart-area" d="M0 100L80 84L160 90L240 60L320 67L400 36L480 44L560 14V120H0Z"/><path class="chart-line" d="M0 100L80 84L160 90L240 60L320 67L400 36L480 44L560 14"/></svg></div>
+          <div class="section-head"><div><p class="eyebrow">File du jour</p><h2>Preuves à vérifier.</h2></div><button class="text-action" data-view-target="admin-ai">Tout voir</button></div>
+          <div class="validation-stack" id="validationQueue">
+            <article class="validation-card" data-id="TF-9052" data-amount="38000"><div class="proof-card om">OM<span>reçu</span></div><div class="validation-copy"><span>TF-9052 · il y a 18 min</span><strong>Aïssatou Ndiaye</strong><p>Ordinateur portable</p><b>38 000 FCFA</b><small>Réf. OM-58921</small></div><div class="validation-buttons"><button class="reject-button">Signaler</button><button class="validate-button">Valider</button></div></article>
+            <article class="validation-card" data-id="TF-9051" data-amount="25000"><div class="proof-card wave">W<span>capture</span></div><div class="validation-copy"><span>TF-9051 · il y a 2 h</span><strong>Mamadou Fall</strong><p>Congélateur solaire</p><b>25 000 FCFA</b><small>Réf. WV-90213</small></div><div class="validation-buttons"><button class="reject-button">Signaler</button><button class="validate-button">Valider</button></div></article>
+          </div>
+        </section>
+
+        <section class="screen" id="screen-provider" data-title="Fournisseur">
+          <div class="provider-heading"><div><p class="eyebrow">Partenaire vérifié</p><h1>Baobab Équipement</h1><p>Gérez vos offres et vos commandes simplement.</p><small class="brand-signature">Épargnez · Progressez · Réalisez vos projets</small></div><div class="partner-score"><strong>4,8</strong><small>★ note</small></div></div>
+          <article class="provider-status"><span>✓</span><div><strong>Votre boutique est visible</strong><p>Profil complété à 92%</p><div><i style="width:92%"></i></div></div></article>
+          <button class="provider-quick-action" data-open="offerSheet"><span>＋</span><p><strong>Ajouter un produit</strong><small>Prix, photos, stock et livraison</small></p><i>Continuer →</i></button>
+          <div class="metrics-scroll"><article><span>Offres actives</span><strong>8</strong><small>2 stocks faibles</small></article><article><span>À confirmer</span><strong>3</strong><small>sous 24 h</small></article><article><span>Livraisons</span><strong>5</strong><small>en cours</small></article></div>
+          <div class="hub-grid provider-hub"><button data-view-target="provider-offers"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM4 10h16M12 13v4M10 15h4"/></svg></span><strong>Mes offres</strong><small>Prix et stock</small></button><button data-view-target="provider-orders"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v13H4zM8 3h8v4M8 12h8M8 16h5"/></svg></span><strong>Commandes</strong><small>Suivre la livraison</small></button><button data-view-target="provider-claims"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v12H9l-4 4z"/><path d="M9 9h6M9 12h4"/></svg></span><strong>Réclamations</strong><small>1 à répondre</small></button><button data-view-target="profile"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><strong>Mon profil</strong><small>Boutique vérifiée</small></button></div>
+          <div class="section-head"><div><p class="eyebrow">À traiter</p><h2>Commandes du jour.</h2></div></div>
+          <div class="order-stack"><article class="order-card"><span class="order-product-image"><img src="assets/product-solar-freezer.webp" alt=""></span><div><small class="order-reference">#TF-1208</small><strong>Congélateur solaire 200 L</strong><p>Mamadou F. · 580 000 FCFA</p><small>Disponibilité à confirmer</small></div><button class="confirm-order">Confirmer</button></article><article class="order-card"><span class="order-product-image"><img src="assets/product-solar-kit.webp" alt=""></span><div><small class="order-reference">#TF-1197</small><strong>Kit solaire 800 W</strong><p>Aminata S. · Préparation</p><small>Livraison prévue demain</small></div><button>Mettre à jour</button></article></div>
+        </section>
+
+        <section class="screen module-screen" id="screen-provider-offers" data-title="Mes offres">
+          <div class="module-heading"><button data-view-target="provider">←</button><div><p class="eyebrow">Catalogue fournisseur</p><h1>Mes offres.</h1></div><button class="floating-add" data-open="offerSheet">＋</button></div>
+          <div class="summary-band"><div><span>Actives</span><strong>8</strong></div><div><span>En attente</span><strong>1</strong></div><div><span>Stock faible</span><strong>2</strong></div></div>
+          <label class="mobile-search compact-search"><input id="providerOfferSearch" type="search" placeholder="Rechercher une offre"></label>
+          <div class="management-list" id="providerOfferList">
+            <article class="management-card offer-management-card" data-search="congélateur solaire"><div class="management-thumb"><img src="assets/product-solar-freezer.webp" alt=""></div><div><span class="entity-state active">Publiée</span><strong>Congélateur solaire 200 L</strong><p>580 000 FCFA · 4 en stock · valable au 30/09</p></div><div class="offer-card-actions"><button class="offer-toggle" data-state="active">Suspendre</button><button class="offer-edit">Modifier</button><button class="offer-delete">Supprimer</button></div></article>
+            <article class="management-card offer-management-card" data-search="kit solaire"><div class="management-thumb"><img src="assets/product-solar-kit.webp" alt=""></div><div><span class="entity-state warning">Stock faible</span><strong>Kit solaire 800 W</strong><p>320 000 FCFA · 2 en stock · valable au 15/10</p></div><div class="offer-card-actions"><button class="offer-toggle" data-state="active">Suspendre</button><button class="offer-edit">Modifier</button><button class="offer-delete">Supprimer</button></div></article>
+          </div>
+        </section>
+
+        <section class="screen module-screen" id="screen-provider-orders" data-title="Commandes">
+          <div class="module-heading"><button data-view-target="provider">←</button><div><p class="eyebrow">Logistique</p><h1>Commandes.</h1></div></div>
+          <div class="segmented-tabs"><button class="active" data-order-filter="all">Toutes</button><button data-order-filter="confirm">À confirmer</button><button data-order-filter="delivery">Livraison</button></div>
+          <div class="workflow-list">
+            <article class="workflow-card" data-order-status="confirm"><div class="workflow-top"><span>#TF-1208</span><b>À confirmer</b></div><h2>Congélateur solaire 200 L</h2><p>Mamadou Fall · Dakar · 580 000 FCFA</p><div class="mini-steps"><i class="on"></i><i></i><i></i><i></i></div><small>Réponse attendue avant demain, 12:00</small><div class="inline-actions"><button class="order-unavailable">Indisponible</button><button class="order-advance" data-next="Préparation">Confirmer le stock</button></div></article>
+            <article class="workflow-card" data-order-status="delivery"><div class="workflow-top"><span>#TF-1197</span><b class="green">En préparation</b></div><h2>Kit solaire 800 W</h2><p>Aminata Sow · Rufisque · 320 000 FCFA</p><div class="mini-steps"><i class="on"></i><i class="on"></i><i></i><i></i></div><small>Livraison estimée : 23 juillet</small><button class="main-button order-advance" data-next="Expédiée">Marquer comme expédiée</button></article>
+          </div>
+        </section>
+
+        <section class="screen module-screen" id="screen-provider-claims" data-title="Réclamations">
+          <div class="module-heading"><button data-view-target="provider">←</button><div><p class="eyebrow">Qualité partenaire</p><h1>Réclamations.</h1></div></div>
+          <article class="claim-card urgent"><span>Réponse attendue</span><strong>#REC-2048 · Accessoire manquant</strong><p>Aïssatou Ndiaye signale qu’un câble n’était pas présent dans le colis #TF-1182.</p><small>Ouverte il y a 3 h · priorité élevée</small><button data-open="providerReplySheet">Répondre à l’utilisateur</button></article>
+          <article class="claim-card resolved"><span>Résolue</span><strong>#REC-2011 · Retard de livraison</strong><p>Nouveau délai accepté par le client.</p><small>Clôturée le 18 juillet</small></article>
+        </section>
+
+        <section class="screen module-screen" id="screen-admin-users" data-title="Utilisateurs">
+          <div class="module-heading"><button data-view-target="admin">←</button><div><p class="eyebrow">Administration</p><h1>Utilisateurs.</h1></div></div>
+          <label class="mobile-search compact-search"><input id="adminUserSearch" type="search" placeholder="Nom, téléphone ou identifiant"></label>
+          <div class="account-policy-note"><span>!</span><p><strong>Toute suspension doit être motivée.</strong><small>L’utilisateur reçoit la raison, la durée et la procédure de recours.</small></p></div>
+          <div class="management-list" id="adminUserList"><article class="management-card" data-search="aïssatou ndiaye 770000001"><div class="management-icon green">AN</div><div><span class="entity-state active">Actif</span><strong>Aïssatou Ndiaye</strong><p>77 000 00 01 · 3 objectifs · vérifiée</p></div><button class="account-status" data-account="Aïssatou Ndiaye">Gérer</button></article><article class="management-card" data-search="mamadou fall"><div class="management-icon mango">MF</div><div><span class="entity-state active">Actif</span><strong>Mamadou Fall</strong><p>76 410 28 19 · 1 objectif · vérifié</p></div><button class="account-status" data-account="Mamadou Fall">Gérer</button></article></div>
+        </section>
+
+        <section class="screen module-screen" id="screen-admin-suppliers" data-title="Fournisseurs">
+          <div class="module-heading"><button data-view-target="admin">←</button><div><p class="eyebrow">Contrôle partenaire</p><h1>Fournisseurs.</h1></div></div>
+          <div class="supplier-review-tabs"><button class="active">À contrôler <b>3</b></button><button>Compléments <b>2</b></button><button>Décidés</button></div>
+          <div class="supplier-review-grid"><article class="review-card" data-supplier="Boutique Kër Gi"><div class="review-top"><span>BK</span><div><b>Dossier à contrôler</b><strong>Boutique Kër Gi</strong><p>NINEA SN-DKR-2026-841 · Dakar</p></div><em>4 pièces</em></div><div class="document-checks detailed"><button><span>✓</span><p><strong>CNI du dirigeant</strong><small>Lisible · expire en 2032</small></p><i>Voir</i></button><button><span>✓</span><p><strong>NINEA / RCCM</strong><small>Numéro détecté et cohérent</small></p><i>Voir</i></button><button><span>?</span><p><strong>Justificatif d’adresse</strong><small>Contrôle humain nécessaire</small></p><i>Voir</i></button></div><button class="main-button supplier-review" data-supplier="Boutique Kër Gi">Prendre une décision</button></article><article class="review-card muted" data-supplier="Jambar Tech"><div class="review-top"><span>JT</span><div><b>Pièce manquante</b><strong>Jambar Tech</strong><p>Identifiant JT-204 · Thiès</p></div><em>2/4 pièces</em></div><div class="document-checks detailed"><button><span>✓</span><p><strong>CNI du dirigeant</strong><small>Reçue et lisible</small></p><i>Voir</i></button><button class="missing"><span>!</span><p><strong>RCCM</strong><small>Document non joint</small></p><i>Manquant</i></button></div><button class="secondary-button request-document" data-supplier="Jambar Tech">Demander un complément</button></article></div>
+        </section>
+
+        <section class="screen module-screen" id="screen-admin-goals" data-title="Supervision">
+          <div class="module-heading"><button data-view-target="admin">←</button><div><p class="eyebrow">Portefeuille pilote</p><h1>Objectifs.</h1></div></div>
+          <div class="summary-band"><div><span>Actifs</span><strong>89</strong></div><div><span>Atteints</span><strong>17</strong></div><div><span>En retard</span><strong>12</strong></div></div>
+          <div class="oversight-list"><article><span class="entity-state warning">À surveiller</span><strong>Frais de formation · A. Ndiaye</strong><p>75 000 / 250 000 FCFA · échéance 30/11</p><div><i style="width:30%"></i></div></article><article><span class="entity-state active">Atteint</span><strong>Machine à coudre · F. Diop</strong><p>185 000 / 185 000 FCFA · finalisation ouverte</p><div><i style="width:100%"></i></div></article></div>
+          <button class="secondary-button full-button" data-view-target="admin-orders">Superviser les commandes</button>
+        </section>
+
+        <section class="screen module-screen" id="screen-admin-orders" data-title="Commandes">
+          <div class="module-heading"><button data-view-target="admin-goals">←</button><div><p class="eyebrow">Acquisitions</p><h1>Commandes.</h1></div></div>
+          <div class="workflow-list"><article class="workflow-card"><div class="workflow-top"><span>#TF-1208</span><b>Disponibilité</b></div><h2>Congélateur solaire</h2><p>Suivi par TrustFund · partenaire Baobab Équipement</p><small>580 000 FCFA · créée aujourd’hui</small></article><article class="workflow-card"><div class="workflow-top"><span>#TF-1182</span><b class="red">Réclamation</b></div><h2>Ordinateur Lenovo</h2><p>Suivi par TrustFund · partenaire Tekki Digital</p><small>Accessoire manquant · intervention requise</small></article></div>
+        </section>
+
+        <section class="screen module-screen" id="screen-admin-support" data-title="Réclamations">
+          <div class="module-heading"><button data-view-target="admin">←</button><div><p class="eyebrow">Support central</p><h1>Réclamations.</h1><p>Une vue claire du responsable, du délai et de la prochaine action.</p></div></div>
+          <div class="support-kpis"><article><span>Ouvertes</span><strong>6</strong></article><article><span>Prioritaires</span><strong>2</strong></article><article><span>Délai moyen</span><strong>6h20</strong></article></div>
+          <div class="segmented-tabs admin-ticket-tabs"><button class="active" data-ticket-filter="all">Toutes</button><button data-ticket-filter="urgent">Urgentes</button><button data-ticket-filter="waiting">En attente</button></div>
+          <div class="admin-ticket-list">
+            <article class="claim-card availability-admin-card" id="availabilityAdminCard" data-ticket-status="waiting"><div class="ticket-card-top"><span>Demande de disponibilité</span><b>Nouveau</b></div><strong id="availabilityAdminProduct">Produit à vérifier</strong><p id="availabilityAdminMessage">Un utilisateur demande si ce produit est toujours disponible.</p><div class="ticket-ownership"><span>TF</span><p><strong>Équipe TrustFund</strong><small id="availabilityAdminStatus">À transmettre au fournisseur</small></p></div><button class="main-button" id="adminAskProvider">Demander au fournisseur</button><button class="secondary-button hidden" id="adminReplyUserAvailability">Répondre à l’utilisateur</button></article>
+            <article class="claim-card urgent" data-ticket-status="urgent"><div class="ticket-card-top"><span>Priorité élevée</span><b>SLA 3 h</b></div><strong>#REC-2048 · Livraison incomplète</strong><p>Accessoire manquant sur la commande #TF-1182.</p><div class="ticket-ownership"><span>MB</span><p><strong>Marième Ba</strong><small>Fournisseur sollicité · réponse attendue</small></p></div><button class="main-button admin-ticket-open" data-ticket="#REC-2048">Ouvrir le dossier</button></article>
+            <article class="claim-card" data-ticket-status="waiting"><div class="ticket-card-top"><span>En attente utilisateur</span><b>21 h</b></div><strong>#REC-2041 · Preuve rejetée</strong><p>Une nouvelle capture Wave a été demandée.</p><div class="ticket-ownership"><span>AD</span><p><strong>Alioune Diop</strong><small>Prochaine relance demain à 09:00</small></p></div><button class="secondary-button admin-ticket-open" data-ticket="#REC-2041">Voir le suivi</button></article>
+          </div>
+        </section>
+
+        <section class="screen module-screen admin-ai-screen" id="screen-admin-ai" data-title="Contrôle IA">
+          <div class="module-heading"><button data-view-target="admin">←</button><div><p class="eyebrow">Paiements à vérifier</p><h1>Vérification assistée.</h1></div><span class="live-ai-badge">✦ aide active</span></div>
+          <article class="ai-control-summary"><div><span>Déclarations analysées</span><strong>312</strong></div><div><span>À examiner</span><strong>3</strong></div><div><span>Taux d’alerte</span><strong>0,9%</strong></div><p>Les alertes assistent l’administrateur. Aucune cotisation n’est rejetée automatiquement.</p></article>
+          <div class="section-head"><div><p class="eyebrow">À regarder en premier</p><h2>Pourquoi ces alertes ?</h2></div></div>
+          <div class="anomaly-list">
+            <article class="anomaly-card high"><div class="anomaly-top"><span>Alerte forte</span><b>#TF-9064</b></div><strong>Cette référence ressemble à une autre</strong><p>WV-902I3 est presque identique à WV-90213, déjà utilisée. Vérifiez la preuve avant de décider.</p><details class="signal-details"><summary>Voir les raisons</summary><div class="anomaly-signals"><span>Référence très proche</span><span>Même montant</span><span>Même journée</span></div></details><div class="inline-actions"><button class="anomaly-clear">Tout est correct</button><button class="anomaly-investigate">Vérifier</button></div></article>
+            <article class="anomaly-card medium"><div class="anomaly-top"><span>À vérifier</span><b>#TF-9061</b></div><strong>Le montant est beaucoup plus élevé</strong><p>280 000 FCFA est nettement supérieur aux cotisations habituelles de ce compte.</p><details class="signal-details"><summary>Voir les raisons</summary><div class="anomaly-signals"><span>Montant inhabituel</span><span>Nouveau canal</span></div></details><div class="inline-actions"><button class="anomaly-clear">Tout est correct</button><button class="anomaly-investigate">Vérifier</button></div></article>
+          </div>
+          <p class="ai-disclaimer admin">Simulation explicable : les seuils sont fictifs. En production, le modèle devra être audité pour les faux positifs, les biais et la traçabilité.</p>
+        </section>
+
+        <section class="screen module-screen" id="screen-admin-reports" data-title="Rapports">
+          <div class="module-heading"><button data-view-target="admin">←</button><div><p class="eyebrow">Pilotage</p><h1>Statistiques.</h1></div><button class="floating-add export-report" aria-label="Exporter">↧</button></div>
+          <div class="report-period"><button class="active">30 jours</button><button>Trimestre</button><button>Tout</button></div>
+          <article class="big-kpi"><span>Cotisations validées</span><strong>8,42 M <small>FCFA</small></strong><p>+18% par rapport à la période précédente</p><div class="report-line-chart"><svg viewBox="0 0 640 180" preserveAspectRatio="none" aria-label="Courbe des cotisations"><path class="chart-grid" d="M0 30H640M0 90H640M0 150H640"/><path class="chart-area" d="M0 150L80 124L160 135L240 92L320 104L400 70L480 82L560 40L640 24V180H0Z"/><path class="chart-line" d="M0 150L80 124L160 135L240 92L320 104L400 70L480 82L560 40L640 24"/><g><circle cx="0" cy="150" r="4"/><circle cx="240" cy="92" r="4"/><circle cx="400" cy="70" r="4"/><circle cx="640" cy="24" r="4"/></g></svg><div><span>S1</span><span>S2</span><span>S3</span><span>S4</span></div></div></article>
+          <div class="kpi-grid"><article><span>Taux de validation</span><strong>91%</strong><small>312 déclarations</small></article><article><span>Objectifs atteints</span><strong>17</strong><small>19% des actifs</small></article><article><span>Délai moyen</span><strong>4h12</strong><small>validation preuve</small></article><article><span>Réclamations</span><strong>3,8%</strong><small>des acquisitions</small></article></div>
+          <div class="report-split"><article class="donut-panel"><div class="report-donut"><strong>64%</strong></div><div><span>Objectifs par état</span><p><i></i> En bonne voie <b>57</b></p><p><i></i> À surveiller <b>20</b></p><p><i></i> Atteints <b>17</b></p></div></article><article class="fee-report-card"><span>Revenus TrustFund</span><strong id="feeRevenueKpi">84 200 FCFA</strong><p>Calculés sur 8,42 M FCFA de produits finalisés avec un taux de <b id="feeRateReport">1%</b>.</p><div><span>Fournisseurs</span><b>8 420 000</b></div><div><span>Plateforme</span><b>84 200</b></div></article></div>
+          <div class="export-options"><span>Exporter les données</span><button class="export-report" data-export="csv">CSV</button><button class="export-report" data-export="pdf">Rapport PDF</button></div>
+          <button class="secondary-button full-button" data-view-target="admin-audit">Consulter le journal d’audit</button>
+        </section>
+
+        <section class="screen module-screen" id="screen-admin-settings" data-title="Paramètres">
+          <div class="module-heading"><button data-view-target="admin">←</button><div><p class="eyebrow">Configuration</p><h1>Paramètres.</h1></div></div>
+          <form class="settings-form" id="adminSettingsForm"><section class="fee-setting-card"><div><span>Modèle économique</span><strong>Commission sur le prix fournisseur</strong><p>Le fournisseur conserve son prix. TrustFund ajoute les frais au montant visible par l’utilisateur.</p></div><label>Taux de frais (%)<div class="percent-input"><input id="serviceFee" type="number" min="0" max="10" step="0.1" value="1"><i>%</i></div><small>Le taux s’applique aux nouveaux prix et reste visible dans le détail.</small></label><div class="fee-calculator"><span>Simulation instantanée</span><label>Prix fournisseur<input id="feeExampleBase" type="number" min="1000" step="1000" value="200000"></label><div><p><span>Prix fournisseur</span><strong id="feeExampleSupplier">200 000 FCFA</strong></p><p><span>Frais TrustFund</span><strong id="feeExampleFee">2 000 FCFA</strong></p><p class="total"><span>Prix utilisateur</span><strong id="feeExampleTotal">202 000 FCFA</strong></p></div></div></section><label>Tolérance de retard (jours)<input id="lateTolerance" type="number" min="0" max="30" value="3"></label><label>Rappel avant échéance<select><option>3 jours avant</option><option>5 jours avant</option><option>7 jours avant</option></select></label><label class="switch-row"><span><strong>Validation fournisseur obligatoire</strong><small>Bloque la publication avant contrôle</small></span><input type="checkbox" checked></label><label class="switch-row"><span><strong>Double vérification administrateur</strong><small>Pour les actions sensibles</small></span><input type="checkbox" checked></label><button class="main-button" type="submit">Enregistrer et appliquer le taux</button></form>
+        </section>
+
+        <section class="screen module-screen" id="screen-admin-audit" data-title="Journal d’audit">
+          <div class="module-heading"><button data-view-target="admin-reports">←</button><div><p class="eyebrow">Traçabilité</p><h1>Journal d’audit.</h1></div></div>
+          <div class="audit-list"><article><span>10:42</span><div><strong>Cotisation TF-9052 validée</strong><p>Marième Ba · 38 000 FCFA · Aïssatou Ndiaye</p></div></article><article><span>09:18</span><div><strong>Fournisseur BK-104 validé</strong><p>Moussa Ba · Boutique Kër Gi</p></div></article><article><span>Hier</span><div><strong>Paramètre de rappel modifié</strong><p>Admin système · 5 jours → 3 jours</p></div></article></div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Navigation principale">
+        <div class="nav-set active" data-nav-role="user">
+          <button class="active" data-view-target="home"><svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Accueil</span></button>
+          <button data-view-target="catalog"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 10h16M9 5v14"/></svg><span>Boutique</span></button>
+          <button data-view-target="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profil</span></button>
+        </div>
+        <div class="nav-set" data-nav-role="provider">
+          <button class="active" data-view-target="provider"><svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9H3z"/></svg><span>Accueil</span></button><button data-view-target="provider-offers"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM4 10h16"/></svg><span>Offres</span></button><button data-view-target="provider-orders"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4zM8 3h8v4"/></svg><span>Commandes</span></button><button class="notification-trigger" data-view-target="notifications" style="position:relative"><svg viewBox="0 0 24 24" style="width:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><i style="display:none">0</i><span>Alertes</span></button><button data-view-target="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profil</span></button>
+        </div>
+        <div class="nav-set" data-nav-role="admin">
+          <button class="active" data-view-target="admin"><svg viewBox="0 0 24 24"><path d="M4 20V10h6v10M14 20V4h6v16"/></svg><span>Accueil</span></button><button data-view-target="admin-users"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M16 8h5M18.5 5.5v5"/></svg><span>Comptes</span></button><button data-view-target="admin-suppliers"><svg viewBox="0 0 24 24"><path d="M4 9h16v11H4zM7 9V5h10v4"/></svg><span>Partenaires</span></button><button data-view-target="admin-support"><svg viewBox="0 0 24 24"><path d="M5 4h14v12H9l-4 4z"/></svg><span>Réclamations</span></button><button data-view-target="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>Profil</span></button>
+        </div>
+      </nav>
+      </div>
+    </div>
+  </div>
+
+  <dialog class="sheet payment-sheet" id="paymentSheet">
+    <form method="dialog" id="paymentForm">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head"><div><p class="eyebrow">Épargne</p><h2>Épargner maintenant</h2></div><button value="cancel" aria-label="Fermer">×</button></div>
+      <label>Objectif<select id="paymentGoal"><option>Épargne disponible — décider plus tard</option><option>Ordinateur portable</option><option>Frais de formation</option></select></label>
+      <fieldset class="payment-methods"><legend>Moyen de paiement</legend><button type="button" class="active" data-payment-method="Wave"><span class="wave-mark">W</span><strong>Wave</strong></button><button type="button" data-payment-method="Orange Money"><span class="om-mark">OM</span><strong>Orange Money</strong></button></fieldset>
+      <label>Montant<div class="money-input"><input id="paymentAmount" type="number" min="1000" step="500" value="38000" required><i>FCFA</i></div></label>
+      <div class="amount-choices"><button type="button" data-amount="10000">10 000</button><button type="button" data-amount="25000">25 000</button><button type="button" class="active" data-amount="38000">38 000</button><button type="button" data-amount="50000">50 000</button></div>
+      <label>Numéro à débiter<div class="phone-field country-phone"><span class="country-fixed">🇸🇳 +221</span><input id="paymentPhone" data-phone-input type="tel" inputmode="numeric" autocomplete="tel-national" value="77 000 00 01" required aria-describedby="paymentPhoneHelp"></div><small class="field-feedback" id="paymentPhoneHelp">Format : 77 123 45 67</small></label>
+      <div class="payment-summary"><p><span>Montant versé</span><strong id="paymentSummaryAmount">38 000 FCFA</strong></p></div>
+      <label class="consent-line"><input id="paymentConsent" type="checkbox" required><span>Je confirme ce paiement mobile.</span></label>
+      <button type="button" class="text-payment-action" id="showProofForm">J’ai déjà payé · ajouter une preuve</button>
+      <button type="submit" class="main-button">Payer maintenant</button>
+      <p class="prototype-payment-note">Simulation : aucun débit réel ne sera effectué.</p>
+    </form>
+  </dialog>
+
+  <dialog class="sheet kyc-sheet" id="kycSheet">
+    <form method="dialog" id="kycForm">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head"><div><p class="eyebrow">Étape nécessaire</p><h2>Vérifier votre identité</h2><p>Nous demandons ces informations maintenant, car vous allez effectuer une opération financière.</p></div><button value="cancel" aria-label="Fermer">×</button></div>
+      <div class="kyc-reason"><span>1</span><p><strong>Une seule vérification</strong><small>Votre prochaine opération pourra ensuite continuer sans refaire cette étape.</small></p></div>
+      <label>Type de pièce<select id="kycDocumentType"><option value="cni">Carte nationale d’identité sénégalaise</option><option value="passport">Passeport</option></select></label>
+      <label>Numéro de la pièce<input id="kycDocumentNumber" inputmode="numeric" autocomplete="off" maxlength="13" required placeholder="13 chiffres" aria-describedby="kycNumberHelp"><small class="field-feedback" id="kycNumberHelp">CNI : saisissez les 13 chiffres, sans espace.</small></label>
+      <div class="kyc-upload-grid"><label class="identity-upload"><input id="kycFront" type="file" accept="image/jpeg,image/png,application/pdf" required><span>＋</span><div><strong>Recto de la pièce</strong><small>JPG, PNG ou PDF · 5 Mo max.</small></div></label><label class="identity-upload"><input id="kycBack" type="file" accept="image/jpeg,image/png,application/pdf" required><span>＋</span><div><strong>Verso de la pièce</strong><small>JPG, PNG ou PDF · 5 Mo max.</small></div></label></div>
+      <p class="document-safety-note">Le format est contrôlé ici. L’équipe TrustFund vérifiera ensuite que la pièce est authentique et correspond aux photos.</p>
+      <div class="sheet-actions sticky-sheet-actions"><button type="button" class="secondary-button" data-close="kycSheet">Plus tard</button><button type="submit" class="main-button">Vérifier et continuer</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="sheet short-sheet" id="withdrawSheet">
+    <form method="dialog" id="withdrawForm">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head"><div><p class="eyebrow">Retrait</p><h2>Retirer des fonds</h2><p>La demande sera contrôlée avant son exécution.</p></div><button value="cancel" aria-label="Fermer">×</button></div>
+      <label>Source<select id="withdrawSource"><option>Épargne disponible</option><option>Ordinateur portable</option></select></label>
+      <label>Montant<div class="money-input"><input id="withdrawAmount" type="number" min="1000" step="500" value="25000" required><i>FCFA</i></div></label>
+      <label>Motif<select id="withdrawReason"><option>Besoin imprévu</option><option>Changer d’objectif</option><option>Annuler le projet</option><option>Autre</option></select></label>
+      <div class="sheet-actions sticky-sheet-actions"><button type="button" class="secondary-button" data-close="withdrawSheet">Annuler</button><button type="submit" class="main-button">Envoyer la demande</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="sheet allocate-savings-sheet" id="allocateSavingsSheet">
+    <form method="dialog" id="allocateSavingsForm">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head"><div><p class="eyebrow">Épargne disponible</p><h2>Utiliser mon épargne</h2><p>Choisissez maintenant le projet auquel affecter votre argent.</p></div><button value="cancel" aria-label="Fermer">×</button></div>
+      <div class="available-balance"><span>Solde disponible</span><strong id="allocateAvailableBalance">125 000 FCFA</strong></div>
+      <label>Objectif<select id="allocateGoal"><option>Ordinateur portable</option><option>Frais de formation</option></select></label>
+      <label>Montant à affecter<div class="money-input"><input id="allocateAmount" type="number" min="1000" step="500" max="125000" value="25000" required><i>FCFA</i></div></label>
+      <div class="amount-choices allocate-choices"><button type="button" data-allocate-amount="10000">10 000</button><button type="button" class="active" data-allocate-amount="25000">25 000</button><button type="button" data-allocate-amount="50000">50 000</button><button type="button" data-allocate-amount="all">Tout</button></div>
+      <div class="allocation-note"><span>i</span><p>Cette opération déplace votre épargne disponible vers l’objectif choisi. Elle ne déclenche aucun nouveau paiement.</p></div>
+      <button type="submit" class="main-button">Affecter à cet objectif</button>
+    </form>
+  </dialog>
+
+  <dialog class="sheet product-detail-sheet" id="productDetailSheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head"><div><p class="eyebrow">Fiche produit</p><h2 id="productDetailName">Lenovo IdeaPad</h2></div><button data-close="productDetailSheet">×</button></div>
+    <div class="product-detail-visual"><img id="productDetailImage" src="assets/product-laptop.webp" alt="Lenovo IdeaPad"><small>Produit du partenaire vérifié</small></div>
+    <div class="product-detail-vendor"><div><strong id="productDetailVendor">Tekki Digital · Dakar</strong><span>✓ Partenaire vérifié par TrustFund</span></div><button id="contactProvider">Contactez-nous</button></div>
+    <strong class="product-detail-price" id="productDetailPrice">429 250 FCFA</strong>
+    <div class="customer-price-breakdown"><p><span>Prix fournisseur</span><strong id="productSupplierPrice">425 000 FCFA</strong></p><p><span>Frais TrustFund · <b id="productFeeRate">1%</b></span><strong id="productPlatformFee">4 250 FCFA</strong></p><p><span>Total à épargner</span><strong id="productCustomerTotal">429 250 FCFA</strong></p></div>
+    <p class="product-detail-description" id="productDetailDescription">Ordinateur 15 pouces, 8 Go RAM et 512 Go SSD, adapté aux études et au travail.</p>
+    <div class="product-specs" id="productDetailSpecs"><span><i>✓</i>Écran 15 pouces</span><span><i>✓</i>8 Go de mémoire</span><span><i>✓</i>SSD 512 Go</span><span><i>✓</i>Garantie 12 mois</span></div>
+    <div class="product-detail-actions"><button class="product-detail-back" data-close="productDetailSheet">Plus tard</button><button class="main-button" id="selectProduct">Choisir pour mon objectif</button></div>
+  </dialog>
+
+  <dialog class="sheet" id="contactProviderSheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head"><div><p class="eyebrow">Disponibilité</p><h2>Contacter TrustFund</h2><p>TrustFund reste votre interlocuteur et vérifie l’information auprès du fournisseur.</p></div><button data-close="contactProviderSheet">×</button></div>
+    <div class="contact-vendor-row"><div class="contact-vendor-avatar" id="contactVendorAvatar">TF</div><div><strong id="contactVendorName">Équipe TrustFund</strong><small>Aucun contact direct avec le fournisseur</small></div></div>
+    <form id="contactProviderForm">
+      <label>Produit<input id="contactProductRef" readonly></label>
+      <label>Votre demande<textarea id="contactMessage" rows="5" required></textarea></label>
+      <div class="intermediary-note"><span>1</span><p>TrustFund reçoit votre demande, contacte le fournisseur, contrôle sa réponse puis vous informe.</p></div>
+      <div id="contactSuccessBanner" class="contact-success hidden"><span>✓</span><p>Demande reçue par TrustFund. Vous serez informé après vérification auprès du fournisseur.</p></div>
+      <button type="submit" class="main-button" id="contactSendBtn">Envoyer à TrustFund</button>
+    </form>
+  </dialog>
+
+  <dialog class="sheet short-sheet" id="availabilityReplySheet"><form method="dialog" id="availabilityReplyForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Réponse utilisateur</p><h2>Informer l’utilisateur</h2><p>La réponse du fournisseur a été reçue et contrôlée par TrustFund.</p></div><button type="button" data-close="availabilityReplySheet">×</button></div><label>Disponibilité<select id="availabilityReplyStatus"><option value="available">Produit disponible</option><option value="unavailable">Produit indisponible</option><option value="alternative">Alternative disponible</option></select></label><label>Message envoyé par TrustFund<textarea id="availabilityReplyMessage" rows="4" required>Le fournisseur a confirmé la disponibilité du produit. Vous pouvez poursuivre votre objectif en toute sécurité.</textarea></label><button type="submit" class="main-button">Envoyer la réponse</button></form></dialog>
+
+  <dialog class="sheet" id="contributionSheet">
+    <form method="dialog" id="contributionForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Cotisation externe</p><h2>Déclarer une cotisation</h2><p>La progression changera uniquement après validation.</p></div><button value="cancel" aria-label="Fermer">×</button></div><div class="sheet-note"><span>i</span><p>TrustFund ne prélève pas vos fonds. Ajoutez la preuve du transfert effectué sur votre canal habituel.</p></div><label>Où placer cette épargne ?<select id="contributionGoal"><option>Épargne disponible — décider plus tard</option><option>Ordinateur portable</option><option>Frais de formation</option></select></label><div class="two-fields"><label>Montant<input id="contributionAmount" type="number" min="1000" value="38000" required><i>FCFA</i></label><label>Date<input type="date" value="2026-07-21" required></label></div><label>Canal<select id="contributionChannel"><option>Orange Money</option><option>Wave</option><option>Virement bancaire</option></select></label><label>Référence<input id="contributionRef" placeholder="Ex. OM-58921" required></label><label class="upload-card"><input id="proofFile" type="file" accept="image/*,.pdf"><span>＋</span><strong>Ajouter la preuve</strong><small>Capture ou reçu · JPG, PNG, PDF</small></label><button type="submit" class="main-button">Soumettre pour vérification</button></form>
+  </dialog>
+
+  <dialog class="sheet" id="goalSheet">
+    <form method="dialog" id="goalForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Nouvel objectif</p><h2>Construisons votre plan</h2><p>Trois informations suffisent pour commencer.</p></div><button value="cancel" aria-label="Fermer">×</button></div><div class="goal-step active" data-step="1"><label>Nom du projet<input id="goalName" placeholder="Ex. Ordinateur pour mes études" required></label><label>Montant cible<input id="goalAmount" type="number" min="10000" step="1000" value="600000" required><i>FCFA</i></label><label>Date cible<input id="goalDate" type="date" value="2027-01-15" required></label><label>Rythme<select id="goalFrequency"><option value="monthly">Mensuel</option><option value="weekly">Hebdomadaire</option></select></label></div><div class="goal-step" data-step="2"><div class="plan-result"><span>Votre plan proposé</span><strong id="calculatedContribution">100 000 FCFA</strong><small>par mois</small></div><article class="ai-plan-option"><span>✦ Alternative recommandée par l’IA</span><strong id="aiPlanAmount">Plan plus confortable</strong><p id="aiPlanReason">Décaler l’échéance de 2 mois réduirait l’effort mensuel et le risque d’abandon.</p><button type="button" id="applyAiPlan">Appliquer cette recommandation</button></article><div class="plan-summary"><p><span>Objectif</span><strong id="summaryGoalName">Votre projet</strong></p><p><span>Montant cible</span><strong id="summaryAmount">600 000 FCFA</strong></p><p><span>Date</span><strong id="summaryDate">15 janvier 2027</strong></p></div><div class="sheet-note"><span>✓</span><p>La recommandation reste un conseil : vous gardez toujours la décision finale.</p></div></div><div class="sheet-actions"><button type="button" class="secondary-button hidden" id="goalBack">Retour</button><button type="button" class="main-button" id="goalNext">Calculer mon plan</button><button type="submit" class="main-button hidden" id="goalCreate">Créer l’objectif</button></div></form>
+  </dialog>
+
+  <dialog class="sheet short-sheet" id="trustSheet"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Principe du pilote</p><h2>Votre argent reste avec vous</h2></div><button data-close="trustSheet">×</button></div><div class="trust-steps"><div><span>1</span><p>Vous effectuez le transfert via votre canal externe.</p></div><div><span>2</span><p>Vous envoyez la référence et la preuve dans TrustFund.</p></div><div><span>3</span><p>Après vérification, la progression est mise à jour.</p></div></div><button class="main-button" data-close="trustSheet">J’ai compris</button></dialog>
+
+  <dialog class="sheet legal-sheet" id="termsSheet"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Informations légales</p><h2>Conditions d’utilisation</h2><p>Version prototype · 24 juillet 2026</p></div><button data-close="termsSheet">×</button></div><div class="legal-content"><section><h3>1. Objet du service</h3><p>TrustFund aide l’utilisateur à définir des objectifs, suivre son épargne et découvrir des offres de fournisseurs vérifiés.</p></section><section><h3>2. Compte et vérification</h3><p>Chaque compte est personnel. Le téléphone, l’identité et les identifiants officiels peuvent être vérifiés avant l’activation.</p></section><section><h3>3. Paiements</h3><p>Dans ce prototype, les paiements Wave et Orange Money sont simulés. Une future version devra confirmer chaque transaction auprès du prestataire de paiement.</p></section><section><h3>4. Décision de l’utilisateur</h3><p>Les recommandations de TrustCoach restent des conseils. L’utilisateur garde la décision finale sur son plan, ses rappels et ses produits.</p></section><section><h3>5. Produits et fournisseurs</h3><p>Les caractéristiques, prix, stocks, garanties et conditions de livraison doivent être confirmés avant la commande.</p></section></div><button class="main-button" data-close="termsSheet">J’ai compris</button></dialog>
+
+  <dialog class="sheet legal-sheet" id="privacySheet"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Protection des données</p><h2>Politique de confidentialité</h2><p>Version prototype · 24 juillet 2026</p></div><button data-close="privacySheet">×</button></div><div class="legal-content"><section><h3>Données utilisées</h3><p>Nom, prénom, téléphone, identifiant de compte, pièce d’identité, informations d’objectifs, paiements et échanges de support.</p></section><section><h3>Finalités</h3><p>Vérifier les comptes, sécuriser les opérations, suivre les objectifs, personnaliser les rappels et détecter les anomalies.</p></section><section><h3>Intelligence artificielle</h3><p>Les scores et recommandations du prototype sont fictifs. En production, l’utilisateur devra pouvoir comprendre les facteurs utilisés et demander une révision humaine.</p></section><section><h3>Conservation et accès</h3><p>Les accès devront être limités par rôle, les actions sensibles journalisées et les durées de conservation définies avant la mise en production.</p></section><section><h3>Vos droits</h3><p>L’utilisateur devra pouvoir demander l’accès, la correction ou la suppression de ses données selon les règles applicables.</p></section></div><button class="main-button" data-close="privacySheet">Fermer</button></dialog>
+
+  <dialog class="sheet short-sheet" id="ticketSheet"><form method="dialog" id="ticketForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Assistance</p><h2>Nouvelle réclamation</h2></div><button value="cancel">×</button></div><label>Catégorie<select><option>Cotisation ou preuve</option><option>Objectif</option><option>Fournisseur ou livraison</option><option>Compte</option></select></label><label>Votre message<textarea rows="5" required placeholder="Expliquez ce qui s’est passé..."></textarea></label><button type="submit" class="main-button">Envoyer la réclamation</button></form></dialog>
+
+  <dialog class="sheet password-reset-sheet" id="passwordResetSheet"><form method="dialog" id="passwordResetForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow" id="resetStepLabel">Étape 1 sur 3</p><h2>Réinitialiser le mot de passe</h2><p id="resetStepHelp">Choisissez comment recevoir votre code de sécurité.</p></div><button type="button" data-close="passwordResetSheet">×</button></div><div class="reset-progress"><i class="active"></i><i></i><i></i></div><section class="reset-step active" data-reset-step="1"><fieldset class="reset-channel-choice"><legend>Recevoir le code par</legend><button type="button" class="active" data-reset-channel="sms"><span>SMS</span><small>Sur votre numéro vérifié</small></button><button type="button" data-reset-channel="email"><span>E-mail</span><small>Sur votre adresse enregistrée</small></button></fieldset><div id="resetSmsField"><label>Numéro de téléphone<div class="phone-field country-phone"><select aria-label="Pays" data-phone-country="resetPhone"><option value="SN" selected>SN +221</option><option value="GM">GM +220</option><option value="ML">ML +223</option><option value="GN">GN +224</option><option value="CI">CI +225</option><option value="FR">FR +33</option></select><input id="resetPhone" data-phone-input type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="77 123 45 67" aria-describedby="resetPhoneHelp"></div><small class="field-feedback" id="resetPhoneHelp">Saisissez le numéro utilisé à l’inscription.</small></label></div><div id="resetEmailField" class="hidden"><label>Adresse e-mail<input id="resetEmail" type="email" autocomplete="email" placeholder="nom@exemple.com"></label></div><div class="reset-privacy-note"><span>i</span><p>Pour votre sécurité, le message ne confirme pas publiquement si le compte existe.</p></div></section><section class="reset-step" data-reset-step="2"><div class="reset-destination"><span>Code envoyé</span><strong id="resetDestination">+221 77 ••• •• 67</strong><p>Le code est valable pendant 10 minutes.</p></div><div class="reset-otp-fields"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"><input inputmode="numeric" maxlength="1"></div><button type="button" class="reset-resend" id="resetResend">Renvoyer le code</button></section><section class="reset-step" data-reset-step="3"><div class="password-strength-card"><span>Dernière étape</span><strong>Créez un nouveau mot de passe.</strong><p>Utilisez un mot de passe différent de l’ancien.</p></div><label>Nouveau mot de passe<div class="password-field"><input id="resetNewPassword" type="password" minlength="12" maxlength="64" autocomplete="new-password" placeholder="12 caractères minimum"><button type="button" class="toggle-password" data-password-target="resetNewPassword">Voir</button></div></label><label>Confirmer le mot de passe<div class="password-field"><input id="resetConfirmPassword" type="password" minlength="12" maxlength="64" autocomplete="new-password" placeholder="Saisissez-le de nouveau"><button type="button" class="toggle-password" data-password-target="resetConfirmPassword">Voir</button></div></label><div class="reset-password-rules"><span>12 caractères minimum</span><span>Majuscule et minuscule</span><span>Un chiffre et un caractère spécial</span></div><div class="login-feedback" id="resetPasswordFeedback" role="alert"></div></section><div class="sheet-actions sticky-sheet-actions"><button type="button" class="secondary-button hidden" id="resetBack">Retour</button><button type="submit" class="main-button" id="resetNext">Recevoir le code</button></div></form></dialog>
+
+  <dialog class="sheet" id="profileEditSheet"><form method="dialog" id="profileEditForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Profil vérifié</p><h2>Informations du compte</h2><p>Les changements sensibles nécessitent une nouvelle vérification.</p></div><button value="cancel">×</button></div><div class="two-fields"><label>Prénom<input id="editFirstName" value="Aïssatou" required></label><label>Nom<input id="editLastName" value="Ndiaye" required></label></div><label>Téléphone vérifié<input value="+221 77 000 00 01" disabled></label><label>Adresse e-mail <em>facultative</em><input type="email" value="aissatou@exemple.sn"></label><label>Adresse<input value="Parcelles Assainies, Dakar"></label><div class="sheet-note"><span>✓</span><p>Votre numéro de CNI est protégé et ne peut pas être modifié depuis cette démo.</p></div><button type="submit" class="main-button">Enregistrer les modifications</button></form></dialog>
+
+  <dialog class="sheet short-sheet" id="notificationPrefsSheet"><form method="dialog" id="notificationPrefsForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Rappels</p><h2>Préférences de notification</h2></div><button value="cancel">×</button></div><label class="switch-row"><span><strong>SMS</strong><small>Échéances, validations et rejets</small></span><input type="checkbox" checked></label><label class="switch-row"><span><strong>WhatsApp</strong><small>Rappels et suivi de commande</small></span><input type="checkbox" checked></label><label class="switch-row"><span><strong>E-mail</strong><small>Récapitulatif mensuel facultatif</small></span><input type="checkbox"></label><label>Rappel avant échéance<select><option>3 jours avant</option><option>5 jours avant</option><option>7 jours avant</option></select></label><button type="submit" class="main-button">Enregistrer mes préférences</button></form></dialog>
+
+  <dialog class="sheet short-sheet" id="securitySheet"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Protection du compte</p><h2>Sécurité</h2></div><button data-close="securitySheet">×</button></div><div class="security-checklist"><div><span>✓</span><p><strong>Téléphone vérifié</strong><small>Dernière vérification : 21 juillet 2026</small></p></div><div><span>✓</span><p><strong>Pièce d’identité contrôlée</strong><small>Accès limité aux rôles autorisés</small></p></div><div><span>⌾</span><p><strong>Mot de passe robuste</strong><small>Modifié il y a 18 jours</small></p></div></div><button class="secondary-button full-button security-change-password">Modifier le mot de passe</button></dialog>
+
+  <dialog class="sheet short-sheet" id="goalActionsSheet"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Gestion de l’objectif</p><h2>Que voulez-vous faire ?</h2></div><button data-close="goalActionsSheet">×</button></div><div class="action-menu"><button data-goal-action="edit"><span>✎</span><div><strong>Modifier le plan</strong><small>Recalculer la date ou le rythme</small></div><i>›</i></button><button data-goal-action="suspend"><span>Ⅱ</span><div><strong>Suspendre temporairement</strong><small>Les montants validés restent conservés</small></div><i>›</i></button><button class="danger" data-goal-action="cancel"><span>×</span><div><strong>Annuler l’objectif</strong><small>Action irréversible dans le prototype</small></div><i>›</i></button></div></dialog>
+
+  <dialog class="sheet offer-sheet" id="offerSheet"><form method="dialog" id="offerForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow" id="offerStepLabel">Étape 1 sur 4</p><h2>Nouveau produit</h2><p id="offerStepHelp">Commencez par l’essentiel.</p></div><button value="cancel">×</button></div><div class="wizard-progress"><i class="active"></i><i></i><i></i><i></i></div><div class="offer-step active" data-offer-step="1"><label>Nom du produit<input id="offerName" required placeholder="Ex. Réfrigérateur solaire"></label><label class="offer-image-upload multi"><input id="offerImage" type="file" accept="image/*" multiple><span id="offerImagePreview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM8 14l3-3 5 5M15 9h.01"/></svg></span><div><strong>Ajouter 2 à 4 photos</strong><small>Face, côté, détails · JPG ou PNG</small></div></label><div class="offer-image-gallery" id="offerImageGallery"><button type="button" data-photo-slot="0">1<small>Principale</small></button><button type="button" data-photo-slot="1">2<small>Autre vue</small></button><button type="button" data-photo-slot="2">3<small>Détail</small></button><button type="button" data-photo-slot="3">4<small>Optionnelle</small></button></div><p class="field-help" id="offerPhotoHelp">Ajoutez au moins 2 photos pour aider l’utilisateur à vérifier le produit.</p></div><div class="offer-step" data-offer-step="2"><label>Catégorie<select id="offerCategory"><option>Maison</option><option>Technologie</option><option>Commerce</option><option>Formation</option><option>Service</option></select></label><label>Description<textarea id="offerDescription" rows="4" required placeholder="Décrivez simplement le produit et son usage."></textarea></label></div><div class="offer-step" data-offer-step="3"><div class="two-fields"><label>Prix fournisseur<input id="offerPrice" type="number" min="1000" required><i>FCFA</i></label><label>Stock<input id="offerStock" type="number" min="0" required></label></div><div class="provider-fee-preview"><p><span>Votre prix</span><strong id="offerSupplierPrice">0 FCFA</strong></p><p><span>Frais TrustFund · 1%</span><strong id="offerFeeAmount">0 FCFA</strong></p><p><span>Prix affiché au client</span><strong id="offerCustomerPrice">0 FCFA</strong></p></div><label>Validité du prix<input id="offerValidity" type="date" value="2026-09-30" required></label><label>Garantie<input id="offerWarranty" placeholder="Ex. 12 mois"></label></div><div class="offer-step" data-offer-step="4"><div class="offer-review"><span>Vérification</span><strong id="offerReviewName">Nouveau produit</strong><p id="offerReviewMeta">Prix et stock à confirmer</p></div><label>Conditions de livraison<textarea id="offerConditions" rows="3" placeholder="Délai, zone couverte, retrait..."></textarea></label></div><div class="sheet-actions sticky-sheet-actions"><button type="button" class="secondary-button hidden" id="offerBack">Retour</button><button type="button" class="main-button" id="offerNext">Suivant</button><button type="submit" class="main-button hidden" id="offerSubmit">Enregistrer le produit</button></div></form></dialog>
+
+  <dialog class="sheet" id="orderDetailSheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <div><p class="eyebrow" id="orderDetailRef">#TF-1208</p><h2 id="orderDetailName">Congélateur solaire 200 L</h2></div>
+      <button data-close="orderDetailSheet">×</button>
+    </div>
+    <div class="order-detail-client"><div class="order-detail-avatar" id="orderDetailAvatar">M</div><div><strong id="orderDetailClient">Mamadou Fall</strong><small id="orderDetailCity">Dakar · 580 000 FCFA</small></div></div>
+    <div class="order-detail-steps">
+      <div class="order-step" id="orderStep1"><span>✓</span><p><strong>Commande reçue</strong><small>Paiement confirmé</small></p></div>
+      <div class="order-step" id="orderStep2"><span id="orderStep2Icon">✓</span><p><strong>Stock confirmé</strong><small id="orderStep2Label">En préparation</small></p></div>
+      <div class="order-step" id="orderStep3"><span id="orderStep3Icon">◎</span><p><strong>Expédié</strong><small id="orderStep3Label">En attente</small></p></div>
+      <div class="order-step" id="orderStep4"><span id="orderStep4Icon">◎</span><p><strong>Livré</strong><small id="orderStep4Label">En attente</small></p></div>
+    </div>
+    <div class="order-detail-meta">
+      <p><span>Date de commande</span><strong id="orderDetailDate">21 juillet 2026</strong></p>
+      <p><span>Livraison estimée</span><strong id="orderDetailDelivery">—</strong></p>
+      <p><span>Mode de livraison</span><strong>Domicile · Dakar</strong></p>
+    </div>
+    <div class="sheet-actions sticky-sheet-actions">
+      <button class="secondary-button" data-close="orderDetailSheet">Fermer</button>
+      <button class="main-button" id="orderDetailAdvance">Mettre à jour</button>
+    </div>
+  </dialog>
+
+  <dialog class="sheet short-sheet" id="providerReplySheet"><form method="dialog" id="providerReplyForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">#REC-2048</p><h2>Répondre à la réclamation</h2></div><button value="cancel">×</button></div><label>Réponse<textarea rows="5" required placeholder="Expliquez la solution proposée..."></textarea></label><label>Action<select><option>Envoyer l’accessoire manquant</option><option>Proposer un remplacement</option><option>Demander un complément</option></select></label><button type="submit" class="main-button">Envoyer la réponse</button></form></dialog>
+
+  <dialog class="sheet short-sheet" id="adminReplySheet"><form method="dialog" id="adminReplyForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Traitement administrateur</p><h2>Répondre et clôturer</h2></div><button value="cancel">×</button></div><label>Réponse<textarea rows="4" required placeholder="Réponse visible par l’utilisateur..."></textarea></label><label>Statut<select><option>Réponse envoyée</option><option>En attente du fournisseur</option><option>Résolue et clôturée</option></select></label><button type="submit" class="main-button">Enregistrer la décision</button></form></dialog>
+
+  <dialog class="sheet admin-decision-sheet" id="supplierDecisionSheet"><form method="dialog" id="supplierDecisionForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Décision partenaire</p><h2 id="supplierDecisionName">Boutique Kër Gi</h2><p>La décision et le message envoyé seront ajoutés au journal d’audit.</p></div><button value="cancel">×</button></div><fieldset class="decision-options"><legend>Choisir une décision</legend><label><input type="radio" name="supplierDecision" value="approve" checked><span>✓</span><p><strong>Valider le dossier</strong><small>Autoriser la publication des offres</small></p></label><label><input type="radio" name="supplierDecision" value="request"><span>↻</span><p><strong>Demander un complément</strong><small>Le fournisseur pourra remplacer ou ajouter les pièces</small></p></label><label><input type="radio" name="supplierDecision" value="reject"><span>×</span><p><strong>Refuser le dossier</strong><small>La demande sera clôturée avec possibilité de recours</small></p></label></fieldset><div class="decision-details hidden" id="supplierDecisionDetails"><label>Documents concernés</label><div class="document-choice-grid"><label><input type="checkbox" value="NINEA"><span>NINEA</span></label><label><input type="checkbox" value="RCCM"><span>RCCM</span></label><label><input type="checkbox" value="CNI du dirigeant"><span>CNI dirigeant</span></label><label><input type="checkbox" value="Justificatif d’adresse"><span>Adresse</span></label></div><label>Motif<select id="supplierDecisionReason"><option>Document absent</option><option>Document illisible</option><option>Numéro incohérent</option><option>Document expiré</option><option>Informations non concordantes</option><option>Autre motif</option></select></label><label>Explication envoyée au fournisseur<textarea id="supplierDecisionMessage" rows="4" placeholder="Expliquez clairement ce qui doit être corrigé..."></textarea></label><label>Délai accordé<select id="supplierDecisionDeadline"><option>7 jours</option><option>14 jours</option><option>30 jours</option><option>Sans délai</option></select></label></div><label class="switch-row"><span><strong>Notifier le fournisseur</strong><small>SMS et notification dans son espace</small></span><input id="notifySupplierDecision" type="checkbox" checked></label><div class="sheet-actions sticky-sheet-actions"><button type="button" class="secondary-button" data-close="supplierDecisionSheet">Annuler</button><button type="submit" class="main-button" id="supplierDecisionSubmit">Valider le fournisseur</button></div></form></dialog>
+
+  <dialog class="sheet admin-decision-sheet" id="accountActionSheet"><form method="dialog" id="accountActionForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Gestion du compte</p><h2 id="accountActionName">Aïssatou Ndiaye</h2><p>Une suspension doit être proportionnée, motivée et notifiée.</p></div><button value="cancel">×</button></div><label>Action<select id="accountActionType"><option value="suspend">Suspendre temporairement</option><option value="restrict">Limiter les opérations financières</option><option value="reactivate">Réactiver le compte</option></select></label><div id="suspensionFields"><label>Raison principale<select id="accountActionReason"><option>Suspicion de fraude</option><option>Document d’identité expiré</option><option>Réclamations répétées</option><option>Non-respect des conditions d’utilisation</option><option>Demande de l’utilisateur</option><option>Autre raison</option></select></label><label>Détails obligatoires<textarea id="accountActionDetails" rows="4" required placeholder="Décrivez les faits observés et les éléments à régulariser..."></textarea></label><label>Durée<select id="accountActionDuration"><option>24 heures</option><option>7 jours</option><option>30 jours</option><option>Jusqu’à régularisation</option></select></label></div><label class="switch-row"><span><strong>Informer l’utilisateur</strong><small>Raison, durée et lien de recours</small></span><input type="checkbox" checked></label><div class="decision-preview"><span>Message utilisateur</span><p id="accountNotificationPreview">Votre compte sera temporairement suspendu. La raison et les étapes de régularisation apparaîtront ici.</p></div><div class="sheet-actions sticky-sheet-actions"><button type="button" class="secondary-button" data-close="accountActionSheet">Annuler</button><button type="submit" class="main-button">Enregistrer l’action</button></div></form></dialog>
+
+  <dialog class="sheet admin-ticket-sheet" id="adminTicketSheet"><form method="dialog" id="adminTicketForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow" id="adminTicketReference">#REC-2048</p><h2>Livraison incomplète</h2><p>Commande #TF-1182 · ouverte aujourd’hui à 07:24</p></div><button value="cancel">×</button></div><div class="ticket-detail-summary"><div><span>Priorité</span><strong>Élevée</strong></div><div><span>Responsable</span><strong>Marième Ba</strong></div><div><span>SLA restant</span><strong>3 h 18</strong></div></div><div class="ticket-timeline"><article class="done"><span>✓</span><p><strong>Réclamation reçue</strong><small>Aujourd’hui · 07:24</small></p></article><article class="done"><span>✓</span><p><strong>Fournisseur contacté</strong><small>Aujourd’hui · 08:10</small></p></article><article class="current"><span>3</span><p><strong>Réponse attendue</strong><small>Avant 14:00</small></p></article><article><span>4</span><p><strong>Résolution et validation utilisateur</strong></p></article></div><label>Assigner à<select><option>Marième Ba</option><option>Alioune Diop</option><option>Équipe paiement</option><option>Équipe partenaires</option></select></label><label>Réponse visible par l’utilisateur<textarea rows="4" required placeholder="Écrivez une réponse précise et la prochaine étape..."></textarea></label><div class="two-fields"><label>Statut<select><option>En cours</option><option>En attente fournisseur</option><option>En attente utilisateur</option><option>Résolue</option></select></label><label>Priorité<select><option>Élevée</option><option>Normale</option><option>Faible</option></select></label></div><label class="switch-row"><span><strong>Notifier les parties concernées</strong><small>Utilisateur et fournisseur</small></span><input type="checkbox" checked></label><div class="sheet-actions sticky-sheet-actions"><button type="button" class="secondary-button claim-escalate">Escalader</button><button type="submit" class="main-button">Enregistrer le suivi</button></div></form></dialog>
+
+  <dialog class="sheet short-sheet" id="proofDecisionSheet"><form method="dialog" id="proofDecisionForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow" id="proofDecisionReference">Preuve TF-9052</p><h2>Signaler un problème</h2><p>La progression ne sera pas modifiée tant que le document n’est pas corrigé.</p></div><button value="cancel">×</button></div><label>Problème constaté<select id="proofDecisionReason"><option>Preuve illisible</option><option>Référence introuvable</option><option>Montant différent</option><option>Référence déjà utilisée</option><option>Capture incomplète</option><option>Autre</option></select></label><label>Message à l’utilisateur<textarea id="proofDecisionMessage" rows="4" required placeholder="Précisez ce qui doit être renvoyé ou corrigé..."></textarea></label><div class="sheet-actions"><button type="button" class="secondary-button" data-close="proofDecisionSheet">Annuler</button><button type="submit" class="main-button">Envoyer la demande</button></div></form></dialog>
+
+  <dialog class="sheet short-sheet" id="adminProfileSheet"><form method="dialog" id="adminProfileForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Profil administrateur</p><h2>Identité professionnelle</h2></div><button value="cancel">×</button></div><div class="two-fields"><label>Prénom<input value="Marième" required></label><label>Nom<input value="Ba" required></label></div><label>Fonction<input value="Responsable des opérations" required></label><label>Téléphone professionnel<input value="+221 77 000 00 03" required></label><label>E-mail<input type="email" value="marieme@trustfund.sn" required></label><label>Disponibilité<select><option>Lun–Ven · 08:00–18:00</option><option>Lun–Sam · 08:00–18:00</option></select></label><button type="submit" class="main-button">Enregistrer mon profil</button></form></dialog>
+
+  <dialog class="sheet short-sheet" id="adminAccessSheet"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Contrôle des accès</p><h2>Rôle et autorisations</h2><p>Administratrice principale · accès accordé par le propriétaire.</p></div><button data-close="adminAccessSheet">×</button></div><div class="permission-list"><div><span>✓</span><p><strong>Validation des preuves</strong><small>Valider, signaler et demander une correction</small></p></div><div><span>✓</span><p><strong>Gestion des partenaires</strong><small>Valider, refuser et demander des documents</small></p></div><div><span>✓</span><p><strong>Support et réclamations</strong><small>Assigner, répondre et clôturer</small></p></div><div><span>✓</span><p><strong>Rapports et paramètres</strong><small>Consulter les revenus et modifier les frais</small></p></div></div><div class="sheet-note"><span>i</span><p>Les modifications de rôle nécessitent l’accord d’un propriétaire et ne sont pas disponibles depuis ce profil.</p></div></dialog>
+
+  <dialog class="sheet provider-business-sheet" id="providerBusinessSheet"><form method="dialog" id="providerBusinessForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Dossier fournisseur</p><h2>Vérifier votre activité</h2><p>Ces informations prouvent que la boutique et son responsable sont identifiables.</p></div><button value="cancel">×</button></div><div class="provider-file-progress"><span>Pièces du dossier</span><strong id="providerDocumentProgress">0 sur 4 ajoutée</strong></div><label>Nom de la boutique<input id="providerShopName" value="Baobab Équipement" maxlength="80" required></label><label>Responsable légal<input id="providerManagerName" value="Babacar Entreprise" maxlength="80" required></label><div class="two-fields"><label>NINEA<input id="providerNinea" value="123456789" inputmode="numeric" maxlength="9" required aria-describedby="nineaHelp"><small class="field-feedback" id="nineaHelp">9 chiffres, sans espace.</small></label><label>RCCM<input id="providerRccm" value="SN-THS-2026-B-184" maxlength="30" required aria-describedby="rccmHelp"><small class="field-feedback" id="rccmHelp">Lettres, chiffres et tirets.</small></label></div><label>Adresse professionnelle<input value="Zone industrielle, Thiès" maxlength="120" required></label><label>Téléphone professionnel<div class="phone-field country-phone"><select aria-label="Pays" data-phone-country="providerPhone"><option value="SN" selected>🇸🇳 +221</option><option value="GM">🇬🇲 +220</option><option value="ML">🇲🇱 +223</option><option value="GN">🇬🇳 +224</option><option value="CI">🇨🇮 +225</option><option value="FR">🇫🇷 +33</option></select><input id="providerPhone" data-phone-input type="tel" inputmode="numeric" autocomplete="tel-national" value="77 000 00 02" required aria-describedby="providerPhoneHelp"></div><small class="field-feedback" id="providerPhoneHelp">Ce numéro recevra les alertes liées aux commandes.</small></label><label>E-mail professionnel <em>facultatif</em><input type="email" value="contact@baobab.sn"></label><fieldset class="provider-documents"><legend>Documents justificatifs</legend><div class="provider-document-grid"><label class="provider-document"><input type="file" data-provider-document accept="image/jpeg,image/png,application/pdf" required><span>01</span><div><strong>Avis NINEA</strong><small>JPG, PNG ou PDF · 5 Mo max.</small></div></label><label class="provider-document"><input type="file" data-provider-document accept="image/jpeg,image/png,application/pdf" required><span>02</span><div><strong>RCCM ou registre</strong><small>Document d’immatriculation</small></div></label><label class="provider-document"><input type="file" data-provider-document accept="image/jpeg,image/png,application/pdf" required><span>03</span><div><strong>CNI du responsable</strong><small>Photo recto lisible</small></div></label><label class="provider-document"><input type="file" data-provider-document accept="image/jpeg,image/png,application/pdf" required><span>04</span><div><strong>Preuve d’activité</strong><small>Facture, local ou attestation</small></div></label></div></fieldset><div class="document-safety-note">Chaque remplacement remet uniquement la pièce concernée en contrôle. L’administrateur peut demander un document plus lisible sans refuser tout le dossier.</div><button type="submit" class="main-button">Envoyer le dossier au contrôle</button></form></dialog>
+
+  <dialog class="sheet short-sheet" id="ticketDetailSheet"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">#REC-2048 · En traitement</p><h2>Livraison incomplète</h2></div><button data-close="ticketDetailSheet">×</button></div><div class="conversation"><article class="me"><span>Vous · 09:02</span><p>Le câble d’alimentation n’était pas dans le colis.</p></article><article><span>Support TrustFund · 10:24</span><p>Votre demande a été transmise au fournisseur. Nous suivons la réponse.</p></article></div><div class="sheet-note"><span>i</span><p>Prochaine mise à jour estimée sous 24 heures.</p></div></dialog>
+
+  <dialog class="sheet short-sheet" id="receptionSheet"><form method="dialog" id="receptionForm"><div class="sheet-handle"></div><div class="sheet-head"><div><p class="eyebrow">Commande #TF-1214</p><h2>Confirmer la réception</h2><p>Vérifiez le produit avant de clôturer l’objectif.</p></div><button value="cancel">×</button></div><label>Le produit est-il conforme ?<select id="receptionStatus"><option value="yes">Oui, tout est conforme</option><option value="no">Non, ouvrir une réclamation</option></select></label><label>Votre note<select><option>5 — Excellent</option><option>4 — Très bien</option><option>3 — Correct</option><option>2 — Insuffisant</option><option>1 — Mauvais</option></select></label><label>Commentaire <em>facultatif</em><textarea rows="3" placeholder="Votre expérience avec le fournisseur..."></textarea></label><button type="submit" class="main-button">Confirmer et clôturer</button></form></dialog>
+
+  <div class="toast-zone" id="toastZone" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
