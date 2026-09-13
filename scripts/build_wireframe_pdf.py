@@ -23,8 +23,8 @@ SCREENS = [
     "Comptes de démonstration",
     "Créer un compte · Choisir un rôle",
     "Créer un compte · Informations",
+    "Créer un compte · Informations fournisseur",
     "Créer un compte · Mot de passe",
-    "Vérification par SMS",
     "Tableau de bord utilisateur",
     "Mes objectifs",
     "Détail d’un objectif",
@@ -88,6 +88,11 @@ SCREENS = [
     "Fournisseur · Vérification TrustFund",
     "Admin · Répondre à l’utilisateur",
     "Utilisateur · Réponse de TrustFund",
+    "Découverte libre · Boutique",
+    "Découverte libre · Fiche produit",
+    "Connexion demandée pour une action sensible",
+    "Vérification d’identité · Documents et validation",
+    "Dossier fournisseur · Documents justificatifs",
 ]
 
 

@@ -1,9 +1,9 @@
 /**
- * TrustFund — Capture maîtresse des 71 écrans pour les wireframes.
+ * TrustFund — Capture maîtresse des 76 écrans pour les wireframes.
  *
  * Produit deux jeux d'images brutes consommés par les constructeurs PDF :
  *   tmp/pdfs/wireframe_source/screen-NN.png      (écrans 01 → 45)
- *   tmp/pdfs/wireframe_extra_raw/screen-NN.png   (écrans 46 → 71)
+ *   tmp/pdfs/wireframe_extra_raw/screen-NN.png   (écrans 46 → 74)
  *
  * La numérotation correspond à SCREENS dans scripts/build_wireframe_pdf.py.
  * À relancer après toute modification de index.html / styles.css / app.js.
@@ -25,14 +25,16 @@ const CHROME = 'C:\\Users\\moham\\.cache\\puppeteer\\chrome\\win64-127.0.6533.88
 
 /* Les captures sont produites à la largeur d'un grand téléphone pour que le
    rendu reste net une fois réduit dans les planches A2 / A3. */
-const CAPTURE_WIDTH = Number(process.env.TRUST_CAPTURE_WIDTH || 1654);
-const CAPTURE_HEIGHT = Number(process.env.TRUST_CAPTURE_HEIGHT || 1170);
+const CAPTURE_WIDTH = Number(process.env.TRUST_CAPTURE_WIDTH || 500);
+const CAPTURE_HEIGHT = Number(process.env.TRUST_CAPTURE_HEIGHT || 970);
+const WEB_CAPTURE_WIDTH = Number(process.env.TRUST_WEB_CAPTURE_WIDTH || 1280);
+const WEB_CAPTURE_HEIGHT = Number(process.env.TRUST_WEB_CAPTURE_HEIGHT || 920);
 const CAPTURE_SCALE = Number(process.env.TRUST_CAPTURE_SCALE || 2);
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ────────────────────────────────────────────────────────────────────────
-   Définition des 71 écrans.
+   Définition des 74 écrans.
    Chaque entrée décrit l'état à reproduire avant la capture.
    ──────────────────────────────────────────────────────────────────────── */
 const SCENARIOS = [
@@ -44,7 +46,7 @@ const SCENARIOS = [
   { n: 5,  auth: 'signup', variant: 'signupStep1' },
   { n: 6,  auth: 'signup', variant: 'signupStep2' },
   { n: 7,  auth: 'signup', variant: 'signupStep2Provider' },
-  { n: 8,  auth: 'verify', variant: 'verifyDeferred' },
+  { n: 8,  auth: 'signup', variant: 'signupStep3' },
 
   /* ── Espace utilisateur (09 → 25) ── */
   { n: 9,  app: 'user', screen: 'home' },
@@ -87,9 +89,9 @@ const SCENARIOS = [
   { n: 42, app: 'admin', screen: 'admin-support', web: true },
   { n: 43, app: 'admin', screen: 'admin-reports', web: true },
   { n: 44, app: 'admin', screen: 'admin-settings', web: true },
-  { n: 45, app: 'user', screen: 'catalog', variant: 'contactProvider' },
+  { n: 45, app: 'user', screen: 'catalog', variant: 'contactTrustFund' },
 
-  /* ── Feuilles modales et variantes (46 → 71) ── */
+  /* ── Feuilles modales et variantes (46 → 76) ── */
   { n: 46, app: 'user', screen: 'home', dialog: 'kycSheet' },
   { n: 47, app: 'user', screen: 'home', dialog: 'allocateSavingsSheet' },
   { n: 48, app: 'user', screen: 'home', dialog: 'trustSheet' },
@@ -116,6 +118,11 @@ const SCENARIOS = [
   { n: 69, app: 'provider', screen: 'notifications', variant: 'providerAvailabilityRequest' },
   { n: 70, app: 'admin', screen: 'admin-support', variant: 'adminAvailabilityReply', web: true },
   { n: 71, app: 'user', screen: 'notifications', variant: 'userAvailabilityResult' },
+  { n: 72, app: 'user', screen: 'catalog', variant: 'guestCatalog' },
+  { n: 73, app: 'user', screen: 'catalog', variant: 'guestProductDetail' },
+  { n: 74, app: 'user', screen: 'catalog', variant: 'guestGate' },
+  { n: 75, app: 'user', screen: 'home', dialog: 'kycSheet', variant: 'scrollBottom' },
+  { n: 76, app: 'provider', screen: 'provider', dialog: 'providerBusinessSheet', variant: 'scrollBottom' },
 ];
 
 /* ────────────────────────────────────────────────────────────────────────
@@ -145,6 +152,10 @@ async function prepare(page, s) {
         setSignupRole('provider');
         setSignupStep(2);
       }
+      if (item.variant === 'signupStep3') {
+        setSignupRole('user');
+        setSignupStep(3);
+      }
       if (item.variant === 'verifyDeferred') {
         const el = document.getElementById('verifyPhone');
         if (el) el.textContent = '+221 77 000 00 01';
@@ -154,7 +165,7 @@ async function prepare(page, s) {
 
     /* Mode application */
     if (item.app) {
-      enterApp(item.app);
+      enterApp(item.app, item.variant?.startsWith('guest') ? { guest: true } : {});
       showScreen(item.screen);
     }
 
@@ -210,6 +221,18 @@ async function prepare(page, s) {
 
     /* Fiche produit */
     if (item.variant === 'productDetail') openSheet('productDetailSheet');
+    if (item.variant === 'guestProductDetail') openSheet('productDetailSheet');
+    if (item.variant === 'guestGate') {
+      document.getElementById('guestGateMessage').textContent = 'Connectez-vous pour associer ce produit à un objectif. Vous pouvez continuer à parcourir la boutique sans compte.';
+      openSheet('guestGateSheet');
+    }
+
+    /* Les formulaires longs disposent d'une seconde capture documentant leur
+       partie basse au lieu de masquer les champs situes apres le defilement. */
+    if (item.variant === 'scrollBottom' && item.dialog) {
+      const dialog = document.getElementById(item.dialog);
+      if (dialog) dialog.scrollTop = dialog.scrollHeight;
+    }
 
     /* Contacter un fournisseur */
     if (item.variant === 'contactProvider') {
@@ -283,7 +306,7 @@ async function prepare(page, s) {
     ? new Set(process.env.TRUST_CAPTURE_ONLY.split(',').map((x) => Number(x.trim())))
     : null;
   const first = Number(process.env.TRUST_CAPTURE_START || 1);
-  const last = Number(process.env.TRUST_CAPTURE_END || 71);
+  const last = Number(process.env.TRUST_CAPTURE_END || SCENARIOS.length);
 
   const browser = await puppeteer.launch({
     headless: 'new',
@@ -313,7 +336,42 @@ async function prepare(page, s) {
     if (only) { if (!only.has(s.n)) continue; }
     else if (s.n < first || s.n > last) continue;
 
+    const targetViewport = s.web
+      ? { width: WEB_CAPTURE_WIDTH, height: WEB_CAPTURE_HEIGHT, deviceScaleFactor: CAPTURE_SCALE }
+      : { width: CAPTURE_WIDTH, height: CAPTURE_HEIGHT, deviceScaleFactor: CAPTURE_SCALE };
+    await page.setViewport(targetViewport);
     await prepare(page, s);
+
+    if (!s.web) {
+      const sheetLayout = await page.evaluate(() => {
+        const shell = document.querySelector('.phone-shell')?.getBoundingClientRect();
+        const dialogs = [...document.querySelectorAll('dialog[open]')].map((dialog) => {
+          const rect = dialog.getBoundingClientRect();
+          return { id: dialog.id, left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+        });
+        return shell ? {
+          shell: { left: shell.left, right: shell.right, top: shell.top, bottom: shell.bottom },
+          dialogs,
+        } : null;
+      });
+
+      for (const dialog of sheetLayout?.dialogs || []) {
+        const shell = sheetLayout.shell;
+        const tolerance = 1;
+        if (
+          dialog.left < shell.left - tolerance ||
+          dialog.right > shell.right + tolerance ||
+          dialog.top < shell.top - tolerance ||
+          dialog.bottom > shell.bottom + tolerance
+        ) {
+          throw new Error(
+            `La feuille ${dialog.id} dépasse du téléphone sur l'écran ${s.n}: ` +
+            JSON.stringify({ dialog, shell })
+          );
+        }
+      }
+    }
+
     const dir = s.n <= 45 ? SOURCE_DIR : EXTRA_DIR;
     const filename = path.join(dir, `screen-${String(s.n).padStart(2, '0')}.png`);
     await page.screenshot({ path: filename, type: 'png', captureBeyondViewport: false });

@@ -1,0 +1,484 @@
+/* TrustFund - coherence UI/UX, version monochrome */
+
+:root {
+  --tf-space-1: 4px;
+  --tf-space-2: 8px;
+  --tf-space-3: 12px;
+  --tf-space-4: 16px;
+  --tf-space-5: 20px;
+  --tf-space-6: 24px;
+  --tf-radius-sm: 10px;
+  --tf-radius-md: 14px;
+  --tf-radius-lg: 22px;
+  --tf-text-xs: 11px;
+  --tf-text-sm: 12px;
+  --tf-text-md: 14px;
+  --tf-button-height: 48px;
+  --pine: #111;
+  --pine-deep: #000;
+  --pine-soft: #303030;
+  --leaf: #111;
+  --leaf-bright: #414141;
+  --mango: #fff;
+  --mango-soft: #f1f1ef;
+  --clay: #333;
+  --sand: #f4f4f1;
+  --sand-dark: #deded9;
+  --cream: #fff;
+  --white: #fff;
+  --ink: #111;
+  --muted: #666662;
+  --line: #d7d7d2;
+  --success: #111;
+  --danger: #111;
+  --ui-surface: #fff;
+  --ui-ink: #111;
+  --ui-line: #d7d7d2;
+  --ui-muted: #666662;
+  --ui-bg: #f4f4f1;
+  --ui-radius: 14px;
+  --ui-radius-sm: 10px;
+  --shadow: 0 24px 70px rgba(0,0,0,.22);
+}
+
+html { font-size: 16px; filter: grayscale(1) !important; }
+body { color: var(--ink) !important; background: #171717 !important; }
+img, picture, video, canvas { filter: grayscale(1) !important; }
+.welcome-mark img, .splash-brand img { filter: grayscale(1) brightness(0) invert(1) !important; }
+
+/* Cadre general et marges */
+.phone-shell {
+  border: 1px solid rgba(255,255,255,.22) !important;
+  background: var(--sand) !important;
+}
+.phone-shell::after { box-shadow: inset 0 0 0 1px rgba(255,255,255,.24) !important; }
+.app-main { padding: 0 var(--tf-space-4) !important; background: var(--sand) !important; }
+.screen, .module-screen { padding: var(--tf-space-4) 0 !important; }
+.form-screen, .verify-screen { padding: var(--tf-space-6) var(--tf-space-4) !important; }
+
+/* Echelle typographique lisible */
+.screen p, .auth-heading > p:last-child, .welcome-copy > p:last-child,
+.auth-form label, .signup-step label, .sheet input, .sheet select, .sheet textarea,
+.list-item p, .mobile-goal-card p, .activity-card p, .coach-message p,
+.prediction-action p, .ai-hero p, .trust-note p, .legal-content p {
+  font-size: var(--tf-text-md) !important;
+  line-height: 1.5 !important;
+}
+.status-pill, .entity-state, .ticket-state, .state-label, .goal-percent,
+.goal-capacity, .product-copy small, .management-card p, .workflow-card p,
+.workflow-card small, .claim-card p, .claim-card small, .ticket-row p,
+.ticket-row small, .notification-card small, .coach-message small,
+.coach-context p, .coach-note, .ai-disclaimer, .faq-list details p,
+.settings-row small, .role-card small, .action-menu small,
+.security-checklist small, .verified-line small, .sheet-head > div > p:last-child,
+.bottom-nav span, .field-feedback {
+  font-size: var(--tf-text-xs) !important;
+  line-height: 1.45 !important;
+}
+.eyebrow, .profile-label, .sheet label, .settings-form label,
+.goal-detail-stat p, .section-label, .section-heading, .screen-section-title {
+  font-size: var(--tf-text-xs) !important;
+}
+.module-heading h1, .screen-heading h1, .admin-heading h1, .provider-heading h1 {
+  font-size: clamp(30px, 5vw, 38px) !important;
+}
+
+/* Boutons - une seule hauteur et des etats complets */
+.main-button, .auth-primary, .secondary-button, .auth-secondary,
+.claim-card > button, .workflow-card > .main-button, .management-card > button,
+.sheet-actions .main-button, .sheet-actions .secondary-button,
+.product-detail-actions .main-button, .product-detail-actions .product-detail-back,
+.goal-primary-actions .main-button, .goal-primary-actions .secondary-button,
+.free-savings-actions button, .choose-product, .inline-actions button,
+.prediction-action button, .coach-suggestions button, .text-action, .back-link,
+.provider-quick-action, .order-card > button, .guest-banner button {
+  min-height: var(--tf-button-height) !important;
+  height: auto !important;
+  padding: 0 var(--tf-space-4) !important;
+  border-radius: var(--tf-radius-sm) !important;
+  font-size: var(--tf-text-sm) !important;
+  font-weight: 800 !important;
+}
+.main-button, .auth-primary, .claim-card > button, .workflow-card > .main-button,
+.goal-primary-actions .main-button, .prediction-action button,
+.inline-actions button:last-child, button[type="submit"].main-button,
+.sheet-actions .main-button, .order-card > button {
+  color: #fff !important;
+  border-color: #111 !important;
+  background: #111 !important;
+  box-shadow: none !important;
+}
+.secondary-button, .auth-secondary, .product-detail-back,
+.sheet-actions .secondary-button, .goal-primary-actions .secondary-button,
+.inline-actions button:first-child {
+  color: #111 !important;
+  border: 1px solid #cfcfca !important;
+  background: #fff !important;
+}
+button:hover { filter: brightness(.96); }
+button:active { transform: scale(.985); }
+button:disabled { cursor: not-allowed !important; opacity: .48 !important; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #111 !important;
+  outline-offset: 2px !important;
+}
+.floating-add, .round-button, .avatar-button, .sheet-head > button {
+  width: 44px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  border-radius: var(--tf-radius-sm) !important;
+}
+
+/* Panneaux venant du bas */
+.sheet {
+  left: 50% !important;
+  right: auto !important;
+  /* La feuille reste à l'intérieur du téléphone de démonstration (430 px),
+     même lorsque le viewport de capture est plus large que le téléphone. */
+  bottom: max(16px, calc((100dvh - 920px) / 2 + 12px)) !important;
+  width: min(406px, calc(100vw - 32px)) !important;
+  max-width: min(406px, calc(100vw - 32px)) !important;
+  max-height: min(896px, calc(100dvh - 32px)) !important;
+  border: 0 !important;
+  border-radius: var(--tf-radius-lg) !important;
+  background: #fff !important;
+  box-shadow: 0 28px 80px rgba(0,0,0,.30) !important;
+}
+
+@media (max-width: 480px) {
+  .sheet {
+    bottom: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    max-height: calc(100dvh - 12px) !important;
+    border-radius: var(--tf-radius-lg) var(--tf-radius-lg) 0 0 !important;
+  }
+}
+.sheet form, .short-sheet, .sheet:not(:has(> form)) {
+  padding: var(--tf-space-5) !important;
+}
+.sheet-handle {
+  width: 48px !important;
+  height: 4px !important;
+  margin: 0 auto var(--tf-space-5) !important;
+  border-radius: 4px !important;
+  background: #c8c8c3 !important;
+}
+.sheet-head { gap: var(--tf-space-3) !important; margin-bottom: var(--tf-space-4) !important; }
+.sheet-head > div { flex: 1 1 auto !important; min-width: 0 !important; }
+.sheet-head h2 { font-size: 25px !important; line-height: 1.08 !important; }
+.sheet-head h2 { overflow-wrap: anywhere !important; }
+.sheet-head > div > p:last-child { margin-top: var(--tf-space-2) !important; }
+.sheet label { margin: 0 0 var(--tf-space-4) !important; }
+.sheet input, .sheet select, .sheet textarea, .settings-form input, .settings-form select {
+  min-height: 46px !important;
+  margin-top: var(--tf-space-2) !important;
+  padding: 11px 12px !important;
+  border: 1px solid #cfcfca !important;
+  border-radius: var(--tf-radius-sm) !important;
+  color: #111 !important;
+  background: #fff !important;
+}
+.sheet-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--tf-space-2) !important;
+  margin-top: var(--tf-space-4) !important;
+}
+.sheet-actions > button { width: 100% !important; }
+.sheet-actions .secondary-button { order: 1 !important; }
+.sheet-actions .main-button { order: 2 !important; margin-top: 0 !important; }
+.sticky-sheet-actions { padding-top: var(--tf-space-3) !important; background: #fff !important; }
+.legal-sheet .legal-content { padding: 0 !important; }
+.legal-content section {
+  padding: var(--tf-space-4) 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+.legal-content section:last-child { border-bottom: 0 !important; }
+.legal-content h3 { font-size: var(--tf-text-md) !important; }
+.legal-sheet > .main-button { margin-top: var(--tf-space-4) !important; }
+.legal-sheet > .main-button {
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 2 !important;
+  box-shadow: 0 -12px 18px #fff !important;
+}
+
+/* Cartes legeres : espacements et separateurs remplacent l'imbrication */
+.claim-card {
+  margin: 0 !important;
+  padding: var(--tf-space-4) 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.claim-card:last-child { border-bottom: 0 !important; }
+.claim-card.urgent { border-left: 0 !important; }
+.claim-card .ticket-card-top, .claim-card .ticket-ownership,
+.claim-card .provider-fee-preview, .claim-card .customer-price-breakdown,
+.workflow-card .workflow-top, .workflow-card .mini-steps,
+.mobile-goal-card .goal-card-bottom, .fee-summary {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.claim-card .ticket-ownership { padding: var(--tf-space-3) 0 !important; }
+.ticket-list, .workflow-list { gap: 0 !important; }
+.ticket-row, .settings-row, .activity-card, .notification-card,
+.management-card, .workflow-card, .mobile-goal-card, .role-card,
+.faq-list details, .security-checklist > div, .summary-band {
+  border: 1px solid var(--line) !important;
+  border-radius: var(--tf-radius-md) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+/* Cartes de chiffres - aucun debordement */
+.metrics-scroll {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: var(--tf-space-2) !important;
+  margin: 0 0 var(--tf-space-4) !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.metrics-scroll article {
+  min-width: 0 !important;
+  width: auto !important;
+  padding: var(--tf-space-3) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--tf-radius-md) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+.metrics-scroll article span, .metrics-scroll article small {
+  overflow-wrap: anywhere;
+  font-size: var(--tf-text-xs) !important;
+}
+.metrics-scroll article strong { font-size: clamp(20px, 4vw, 28px) !important; }
+@media (min-width: 900px) {
+  .role-admin .metrics-scroll { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+  .role-provider .metrics-scroll { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+
+/* Surfaces noires lourdes remplacees par des surfaces claires */
+.provider-status, .provider-profile-status, .admin-access-card, .big-kpi, .admin-priority-strip,
+.prediction-action, .ai-control-summary > div, .ai-hero, .coach-header {
+  color: #111 !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--tf-radius-md) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+.provider-status *, .provider-profile-status *, .admin-access-card *, .admin-priority-strip *,
+.big-kpi *, .prediction-action *, .ai-control-summary > div *,
+.ai-hero *, .coach-header * { color: #111 !important; }
+.admin-badge, .partner-score, .ticket-ownership > span, .demo-avatar.admin,
+.status-pill.dark, .notification-card > i, .profile-avatar {
+  color: #fff !important;
+  background: #111 !important;
+}
+.status-pill, .ticket-state, .state-label, .goal-capacity {
+  color: #333 !important;
+  border: 1px solid var(--line) !important;
+  background: #efefec !important;
+}
+
+/* TrustCoach reste disponible partout */
+.trust-coach-fab {
+  position: absolute !important;
+  z-index: 200 !important;
+  right: 18px !important;
+  bottom: 94px !important;
+  width: 54px !important;
+  height: 54px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 2px solid #fff !important;
+  border-radius: 50% !important;
+  color: #fff !important;
+  background: #111 !important;
+  box-shadow: 0 10px 24px rgba(0,0,0,.24) !important;
+  font-size: 23px !important;
+}
+.trust-coach-fab.hidden { display: none !important; }
+
+/* Mode decouverte */
+.guest-banner {
+  display: none;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tf-space-3);
+  padding: var(--tf-space-3) var(--tf-space-4);
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+.guest-mode .guest-banner { display: flex; }
+.guest-banner div { min-width: 0; }
+.guest-banner strong, .guest-banner span { display: block; }
+.guest-banner strong { font-size: var(--tf-text-sm); }
+.guest-banner span { margin-top: 2px; color: var(--muted); font-size: var(--tf-text-xs); line-height: 1.35; }
+.guest-banner button { flex: 0 0 auto; min-height: 40px !important; border: 1px solid #111; color: #fff; background: #111; }
+.guest-login-nav { display: none !important; }
+.guest-mode .guest-private-nav { display: none !important; }
+.guest-mode .guest-login-nav { display: grid !important; }
+.guest-mode .nav-set[data-nav-role="user"] { grid-template-columns: 1fr 1fr !important; }
+.guest-mode .app-header .header-actions { visibility: hidden; pointer-events: none; }
+.guest-gate-points { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.guest-gate-points p { display: grid; grid-template-columns: 28px 1fr; align-items: center; gap: var(--tf-space-3); margin: 0; padding: var(--tf-space-3) 0; }
+.guest-gate-points p + p { border-top: 1px solid var(--line); }
+.guest-gate-points span { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #111; font-size: var(--tf-text-xs); }
+.guest-gate-points strong { font-size: var(--tf-text-sm); line-height: 1.4; }
+
+/* OTP dans la verification differee */
+.kyc-code-block { margin: 0 0 var(--tf-space-4); padding: var(--tf-space-4) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.kyc-code-block > span, .kyc-code-block > small { display: block; }
+.kyc-code-block > span { margin-bottom: var(--tf-space-2); font-size: var(--tf-text-xs); font-weight: 800; }
+.kyc-code-block > small { margin-top: var(--tf-space-2); color: var(--muted); font-size: var(--tf-text-xs); }
+.kyc-otp-fields { gap: 6px !important; }
+.kyc-otp-fields input { min-width: 0 !important; padding: 0 !important; text-align: center !important; font-size: 18px !important; }
+
+/* Navigation et cartes secondaires */
+.bottom-nav span { font-weight: 800 !important; }
+.hub-grid { gap: var(--tf-space-2) !important; margin: var(--tf-space-4) 0 var(--tf-space-5) !important; }
+.hub-grid button { min-height: 86px !important; padding: var(--tf-space-3) !important; border-radius: var(--tf-radius-md) !important; background: #fff !important; }
+.hub-grid button > span { width: 36px !important; height: 36px !important; border-radius: var(--tf-radius-sm) !important; }
+.notification-icon, .activity-date { color: #111 !important; border-color: var(--line) !important; background: #efefec !important; }
+
+/* Lisibilite finale : neutralise les anciennes tailles trop petites encore
+   presentes dans certaines variantes du prototype. */
+.auth-screen small,
+.screen small,
+.module-screen small,
+.sheet small,
+.brand-signature,
+.field-help,
+.intermediary-note p,
+.reset-password-rules span,
+.password-strength-card span,
+.password-strength-card p {
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+.home-goal-grid .focus-goal-head > span,
+.home-goal-grid .other-goal-row p,
+.home-goal-grid .other-goal-row em,
+.home-goal-limit p,
+.simple-home .free-savings-card > p,
+#paymentSheet #paymentPhoneHelp,
+#paymentSheet .payment-summary span,
+#paymentSheet .consent-line span,
+#paymentSheet .text-payment-action,
+.ticket-detail-summary span,
+.ticket-detail-summary strong,
+.ticket-timeline strong,
+.ticket-timeline small,
+.permission-list strong,
+.permission-list small,
+.decision-options strong,
+.decision-options small,
+.decision-preview span,
+.decision-preview p {
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+}
+
+/* Les actions principales gardent la meme hauteur sur chaque famille d'ecran. */
+#screen-catalog .choose-product,
+.simple-home .free-savings-actions button,
+.provider-profile-status button,
+.supplier-review-tabs button,
+.export-options button,
+.notification-inline-action {
+  min-height: var(--tf-button-height) !important;
+  height: auto !important;
+  padding: 0 var(--tf-space-3) !important;
+  border-radius: var(--tf-radius-sm) !important;
+  font-size: var(--tf-text-sm) !important;
+}
+
+.sheet { overflow-x: hidden !important; }
+
+/* Les derniers libelles herites de l'ancienne maquette restent lisibles a la
+   taille reelle du telephone. */
+.welcome-legal button,
+.toggle-password,
+.login-options > button,
+.check-line span,
+.auth-switch,
+.auth-switch button,
+.identity-notice p,
+.no-social-note p,
+.sheet legend,
+.sheet label,
+.sheet label > i,
+.sheet .prototype-payment-note,
+.sheet .document-safety-note,
+.sheet .sheet-note p,
+.sheet .allocation-note p,
+.sheet .kyc-reason p,
+.sheet .available-balance span,
+.sheet .amount-choices button,
+.sheet .contact-vendor-row small,
+.sheet .security-checklist strong,
+.sheet .action-menu strong,
+.sheet .conversation span,
+.sheet .provider-file-progress span,
+.sheet .provider-file-progress strong,
+.sheet .provider-document > span,
+.sheet .provider-document strong,
+.sheet .switch-row strong,
+.sheet .reset-channel-choice legend,
+.sheet .reset-privacy-note p,
+#productDetailSheet .product-detail-vendor span,
+#productDetailSheet #contactProvider,
+#orderDetailSheet span,
+#orderDetailSheet strong,
+#demoToggle,
+.sheet .money-input i,
+.sheet .identity-upload strong,
+.sheet .trust-steps p {
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+}
+
+.sheet .amount-choices button {
+  min-height: 44px !important;
+}
+
+.sheet .provider-document {
+  min-height: 86px !important;
+}
+.sheet .provider-document strong,
+.sheet .provider-document small {
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+}
+
+@media (max-width: 480px) {
+  .sheet {
+    bottom: 12px !important;
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    max-height: calc(100dvh - 24px) !important;
+  }
+  .sheet form, .short-sheet, .sheet:not(:has(> form)) { padding: var(--tf-space-4) !important; }
+  .guest-banner span { max-width: 25ch; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}

@@ -7,6 +7,7 @@ const state = {
   loginRole: 'user',
   signupRole: 'user',
   signupStep: 1,
+  isGuest: false,
   kycVerified: false,
   pendingFinancialAction: null,
   verifyMode: 'signup',
@@ -274,6 +275,7 @@ function updateCatalogPrices() {
 }
 
 function showAuth(name) {
+  state.isGuest = false;
   $('#appSession').classList.add('hidden');
   $('#authFlow').classList.remove('hidden');
   $('#phoneShell').classList.remove('role-user', 'role-provider', 'role-admin');
@@ -283,6 +285,7 @@ function showAuth(name) {
 }
 
 function enterApp(role, profile = {}) {
+  state.isGuest = Boolean(profile.guest && role === 'user');
   $('#toastZone').innerHTML = '';
   $('#authFlow').classList.add('hidden');
   $('#appSession').classList.remove('hidden');
@@ -303,6 +306,8 @@ function showScreen(name) {
   state.screen = name;
   $$('.screen').forEach(screen => screen.classList.toggle('active', screen === target));
   $$('.bottom-nav button[data-view-target]').forEach(button => button.classList.toggle('active', button.dataset.viewTarget === name));
+  const fab = $('#trustCoachFab');
+  if (fab) fab.classList.toggle('hidden', name === 'ai-coach');
   $('#appMain').scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -338,10 +343,11 @@ function setRole(role, silent = false) {
   const meta = roleMeta[role];
   $('#phoneShell').classList.remove('role-user', 'role-provider', 'role-admin');
   $('#phoneShell').classList.add(`role-${role}`);
+  $('#phoneShell').classList.toggle('guest-mode', state.isGuest && role === 'user');
   $('#avatarInitials').textContent = meta.initials;
   const homeAvatar = $('#homeAvatarInitials');
   if (homeAvatar) homeAvatar.textContent = meta.initials;
-  $('.brand-button').dataset.viewTarget = meta.screen;
+  $('.brand-button').dataset.viewTarget = state.isGuest ? 'catalog' : meta.screen;
   $$('.role-card').forEach(card => card.classList.toggle('active', card.dataset.role === role));
   $$('.nav-set').forEach(nav => nav.classList.toggle('active', nav.dataset.navRole === role));
   $('#profileAvatar').textContent = meta.initials;
@@ -352,7 +358,7 @@ function setRole(role, silent = false) {
   $('.user-profile-only').classList.toggle('hidden', role !== 'user');
   $('.admin-profile-only').classList.toggle('hidden', role !== 'admin');
   $('.provider-profile-only').classList.toggle('hidden', role !== 'provider');
-  showScreen(meta.screen);
+  showScreen(state.isGuest ? 'catalog' : meta.screen);
   if (!silent) toast(`Espace ${meta.label}`, 'Le prototype affiche maintenant les fonctions de ce rôle.');
 }
 
@@ -530,6 +536,21 @@ $$('[data-auth-target]').forEach(button => button.addEventListener('click', () =
   showAuth(target);
 }));
 
+$('[data-explore-app]')?.addEventListener('click', () => {
+  enterApp('user', { guest: true });
+  toast('Mode découverte', 'Consultez la boutique et utilisez TrustCoach sans créer de compte.');
+});
+
+$$('[data-guest-auth-target]').forEach(button => button.addEventListener('click', () => {
+  const target = button.dataset.guestAuthTarget;
+  closeSheet('guestGateSheet');
+  if (target === 'signup') {
+    setSignupRole('user');
+    setSignupStep(1);
+  }
+  showAuth(target);
+}));
+
 function selectLoginRole(role) {
   state.loginRole = role;
   $$('[data-login-role]').forEach(item => item.classList.toggle('active', item.dataset.loginRole === role));
@@ -660,12 +681,25 @@ $('#signupForm').addEventListener('submit', event => {
     },
     kycVerified: false
   };
-  state.pendingAccount = account;
-  state.verifyMode = 'signup';
-  state.verifyRole = account.role;
-  $('#verifyPhone').textContent = fullPhone($('#signupPhone'));
-  showAuth('verify');
-  $('.otp-fields input').focus();
+  /* La vérification forte est différée jusqu'à une opération sensible.
+     Après inscription, l'utilisateur revient néanmoins à la connexion. */
+  if (state.signupRole === 'admin') {
+    state.pendingAccount = account;
+    state.verifyMode = 'signup';
+    state.verifyRole = account.role;
+    $('#verifyPhone').textContent = fullPhone($('#signupPhone'));
+    showAuth('verify');
+    $('.otp-fields input').focus();
+    return;
+  }
+  state.createdAccount = account;
+  showAuth('login');
+  $('[data-phone-country="loginPhone"]').value = account.country;
+  $('#loginPhone').value = groupDigits(account.phone, phoneCountries[account.country].groups);
+  validatePhoneInput($('#loginPhone'), false);
+  $('#loginPassword').value = '';
+  setLoginFeedback('Compte créé. Connectez-vous avec votre numéro et votre mot de passe.', 'success');
+  $('#loginPassword').focus();
 });
 
 $$('.otp-fields input').forEach((input, index, inputs) => {
@@ -723,6 +757,20 @@ $$('[data-open]').forEach(button => button.addEventListener('click', event => {
     openPasswordResetFlow();
     return;
   }
+  if (state.isGuest && ['goalSheet', 'paymentSheet', 'allocateSavingsSheet', 'withdrawSheet', 'profileEditSheet', 'ticketSheet'].includes(target)) {
+    event.preventDefault();
+    const descriptions = {
+      goalSheet: 'Connectez-vous pour créer et sauvegarder votre objectif d’épargne.',
+      paymentSheet: 'Connectez-vous avant de déposer de l’argent.',
+      allocateSavingsSheet: 'Connectez-vous pour affecter votre épargne à un objectif.',
+      withdrawSheet: 'Connectez-vous pour demander un retrait.',
+      profileEditSheet: 'Connectez-vous pour modifier vos informations personnelles.',
+      ticketSheet: 'Connectez-vous pour créer et suivre une réclamation.'
+    };
+    $('#guestGateMessage').textContent = descriptions[target];
+    openSheet('guestGateSheet');
+    return;
+  }
   if (target === 'goalSheet' && state.goalCount >= 3) {
     event.preventDefault();
     toast('Limite de 3 objectifs atteinte', 'Terminez, supprimez ou remplacez un objectif avant d\'en créer un autre.', 'error');
@@ -739,6 +787,11 @@ $$('[data-open]').forEach(button => button.addEventListener('click', event => {
 /* Porte d'entrée des opérations sensibles : un compte vérifié est requis
    avant toute manipulation d'argent ou d'identité. */
 function requireKyc(nextAction) {
+  if (state.isGuest) {
+    $('#guestGateMessage').textContent = 'Connectez-vous avant d’effectuer une opération financière. La vérification renforcée ne sera demandée qu’au moment nécessaire.';
+    openSheet('guestGateSheet');
+    return;
+  }
   if (state.kycVerified) {
     nextAction();
     return;
@@ -874,6 +927,12 @@ $('[data-change-product]').addEventListener('click', () => {
 
 $('#selectProduct').addEventListener('click', () => {
   if (!state.selectedProduct) return;
+  if (state.isGuest) {
+    closeSheet('productDetailSheet');
+    $('#guestGateMessage').textContent = 'Connectez-vous pour associer ce produit à un objectif. Vous pouvez continuer à parcourir la boutique sans compte.';
+    openSheet('guestGateSheet');
+    return;
+  }
   closeSheet('productDetailSheet');
   if (state.changeProductMode || state.goalCount >= 3) {
     state.changeProductMode = false;

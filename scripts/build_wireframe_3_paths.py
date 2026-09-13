@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 from reportlab.lib.colors import HexColor
 from reportlab.lib.pagesizes import A2, landscape
 from reportlab.pdfgen.canvas import Canvas
@@ -20,32 +20,25 @@ JOURNEYS = {
         "number": "01",
         "label": "UTILISATEUR",
         "pages": [
-            ("Accès et choix du compte", [1, 2, 3, 4, 5]),
-            ("Création du compte, SMS et connexion obligatoire", [6, 7, 8, 61, 62]),
-            ("Récupération du mot de passe et reconnexion", [63, 64, 65, 66, 9]),
-            ("Objectifs, plan d’épargne et catalogue", [10, 11, 12, 13, 14]),
-            ("Produit, disponibilité via TrustFund et cotisation", [15, 67, 71, 16, 17]),
-            ("Retrait, suivi, commande et accompagnement", [18, 19, 20, 21, 22]),
-            ("Analyse, profil, assistance et gestion de l’épargne", [23, 24, 25, 46, 47]),
-            ("Fonctionnement, cadre légal et réception", [48, 49, 50, 51, 60]),
+            ("Découverte libre avant la création du compte", [1, 2, 72, 73, 74]),
+            ("Connexion et création simplifiée du compte", [3, 4, 5, 6, 8]),
+            ("Compte créé, connexion obligatoire et récupération", [61, 62, 63, 64, 65]),
+            ("Reconnexion, accueil et premiers objectifs", [66, 9, 10, 11, 12]),
+            ("Plan d’épargne, catalogue et disponibilité", [13, 14, 15, 67, 71]),
+            ("Cotisation, retrait et suivi des opérations", [16, 17, 18, 19, 20]),
+            ("Commande, TrustCoach, analyse, profil et aide", [21, 22, 23, 24, 25]),
+            ("Vérification différée et gestion de l’épargne", [46, 75, 47, 53, 54]),
+            ("Cadre légal, assistance et réception", [48, 49, 50, 51, 60]),
         ],
     },
     "provider": {
         "number": "02",
         "label": "FOURNISSEUR",
         "pages": [
-            ("Accès sécurisé et création d’une offre", [3, 63, 26, 27, 28]),
-            ("Publication, commandes et demande TrustFund", [29, 30, 31, 55, 69]),
-            ("Réclamations, dossier et conformité", [32, 33, 34, 35, 50]),
-        ],
-    },
-    "admin": {
-        "number": "03",
-        "label": "ADMINISTRATEUR",
-        "pages": [
-            ("Connexion, contrôle et comptes", [3, 36, 37, 38, 39]),
-            ("Partenaires, réclamations et statistiques", [40, 41, 42, 43, 44]),
-            ("Disponibilité, réponse, preuves et autorisations", [68, 70, 56, 57, 59]),
+            ("Accès et création du compte fournisseur", [3, 5, 7, 8, 61]),
+            ("Pilotage et création d’une offre", [26, 27, 28, 29, 30]),
+            ("Commandes, demandes TrustFund et réclamations", [31, 55, 69, 32, 33]),
+            ("Dossier, pièces justificatives et conformité", [34, 76, 35, 50, 63]),
         ],
     },
 }
@@ -53,7 +46,7 @@ JOURNEYS = {
 
 WEB_JOURNEYS = {
     "provider_web": {
-        "number": "04",
+        "number": "02",
         "label": "FOURNISSEUR - WEB",
         "prefix": "provider-web",
         "pages": [
@@ -88,7 +81,7 @@ WEB_JOURNEYS = {
         ],
     },
     "admin_web": {
-        "number": "05",
+        "number": "03",
         "label": "ADMINISTRATEUR - WEB",
         "prefix": "admin-web",
         "pages": [
@@ -153,14 +146,70 @@ def prepare_images() -> dict[int, Path]:
             # même pour les anciennes captures prises avant le thème monochrome.
             image = original.convert("L").convert("RGB")
             width, height = image.size
-            bottom = int(height * 0.89) if number <= 45 else height
-            if number > 45 and number not in {68, 69, 70}:
-                left = int(width * 0.35)
-                right = int(width * 0.65)
+
+            if width <= 1200 and height >= 1500:
+                # Les captures mobiles récentes contiennent l'application entière
+                # dans une scène 500 x 970 (DPR 2). On retire seulement la scène,
+                # puis on place l'interface dans une vraie silhouette d'iPhone.
+                left = int(width * 0.048)
+                top = int(height * 0.025)
+                right = int(width * 0.909)
+                bottom = int(height * 0.974)
+                screen = image.crop((left, top, right, bottom))
+
+                phone_width, phone_height = 930, 1988
+                phone = Image.new("RGB", (phone_width, phone_height), "#F4F4F4")
+
+                shadow_layer = Image.new("RGBA", phone.size, (0, 0, 0, 0))
+                shadow_draw = ImageDraw.Draw(shadow_layer)
+                shadow_draw.rounded_rectangle(
+                    (39, 35, phone_width - 29, phone_height - 23),
+                    radius=96,
+                    fill=(0, 0, 0, 90),
+                )
+                shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(18))
+                phone = Image.alpha_composite(phone.convert("RGBA"), shadow_layer)
+
+                frame_layer = Image.new("RGBA", phone.size, (0, 0, 0, 0))
+                frame_draw = ImageDraw.Draw(frame_layer)
+                frame_draw.rounded_rectangle(
+                    (30, 18, phone_width - 30, phone_height - 32),
+                    radius=94,
+                    fill="#111111",
+                    outline="#4A4A4A",
+                    width=4,
+                )
+                # Boutons latéraux discrets pour renforcer la lecture « iPhone ».
+                frame_draw.rounded_rectangle((20, 305, 34, 430), radius=7, fill="#202020")
+                frame_draw.rounded_rectangle((20, 470, 34, 655), radius=7, fill="#202020")
+                frame_draw.rounded_rectangle((phone_width - 34, 400, phone_width - 20, 610), radius=7, fill="#202020")
+                phone = Image.alpha_composite(phone, frame_layer)
+
+                inner_box = (52, 42, phone_width - 52, phone_height - 56)
+                inner_width = inner_box[2] - inner_box[0]
+                inner_height = inner_box[3] - inner_box[1]
+                fitted = screen.resize((inner_width, inner_height), Image.Resampling.LANCZOS)
+                screen_mask = Image.new("L", (inner_width, inner_height), 0)
+                ImageDraw.Draw(screen_mask).rounded_rectangle(
+                    (0, 0, inner_width - 1, inner_height - 1),
+                    radius=68,
+                    fill=255,
+                )
+                phone.paste(fitted, (inner_box[0], inner_box[1]), screen_mask)
+
+                details = ImageDraw.Draw(phone)
+                island_width, island_height = 156, 40
+                island_left = (phone_width - island_width) // 2
+                details.rounded_rectangle(
+                    (island_left, 58, island_left + island_width, 58 + island_height),
+                    radius=20,
+                    fill="#111111",
+                )
+                image = phone.convert("RGB")
             else:
-                left = int(width * 0.24)
-                right = int(width * 0.76)
-            image = image.crop((left, 0, right, bottom))
+                # Les écrans administrateur sont des vues web : on conserve la vue
+                # complète pour ne jamais couper les tableaux ou les libellés.
+                image = image.crop((0, 0, width, height))
 
             framed = Image.new("RGB", (image.width + 14, image.height + 14), "#FFFFFF")
             framed.paste(image, (7, 7))
