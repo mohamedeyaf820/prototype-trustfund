@@ -1,0 +1,10 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const ROOT = path.resolve(__dirname, '..');
+const js = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
+const legacy = js.split('\n').filter((line) => /requireKyc\(\(\)/.test(line));
+console.log('appels requireKyc sans cle: ' + legacy.length);
+legacy.forEach((line) => console.log('RESIDU: ' + line.trim().slice(0, 140)));
+if (legacy.length) process.exit(1);
+console.log('aucun appel sans cle');

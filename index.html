@@ -507,7 +507,7 @@
   <dialog class="sheet kyc-sheet" id="kycSheet">
     <form method="dialog" id="kycForm">
       <div class="sheet-handle"></div>
-      <div class="sheet-head"><div><p class="eyebrow">Étape nécessaire</p><h2>Vérifier votre identité</h2><p>Nous demandons ces informations maintenant, car vous allez effectuer une opération financière.</p></div><button value="cancel" aria-label="Fermer">×</button></div>
+      <div class="sheet-head"><div><p class="eyebrow">Étape nécessaire</p><h2>Vérifier votre identité</h2><p id="kycReason">Nous demandons ces informations maintenant, car vous allez effectuer une opération financière.</p></div><button value="cancel" aria-label="Fermer">×</button></div>
       <div class="kyc-reason"><span>1</span><p><strong>Une seule vérification</strong><small>Votre prochaine opération pourra ensuite continuer sans refaire cette étape.</small></p></div>
       <label>Recevoir le code de confirmation<select id="kycVerificationChannel"><option>Code OTP par SMS</option><option>Code OTP par e-mail</option></select><small class="field-feedback">Le code n’est envoyé qu’au moment de cette opération sensible.</small></label>
       <div class="kyc-code-block"><span>Code de confirmation</span><div class="otp-fields kyc-otp-fields"><input inputmode="numeric" maxlength="1" required aria-label="Chiffre 1"><input inputmode="numeric" maxlength="1" required aria-label="Chiffre 2"><input inputmode="numeric" maxlength="1" required aria-label="Chiffre 3"><input inputmode="numeric" maxlength="1" required aria-label="Chiffre 4"><input inputmode="numeric" maxlength="1" required aria-label="Chiffre 5"><input inputmode="numeric" maxlength="1" required aria-label="Chiffre 6"></div><small>Prototype : utilisez n’importe quels 6 chiffres.</small></div>

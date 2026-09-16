@@ -13,7 +13,8 @@ Ouvrez `index.html` dans un navigateur moderne. L’interface remplit l’écran
 - inscription sécurisée sans compte Google ni réseau social ;
 - inscription initiale minimale : rôle, nom, prénom, téléphone, e-mail facultatif et mot de passe ;
 - vérification du numéro de téléphone par code SMS à six chiffres ;
-- vérification KYC différée : CNI ou passeport demandé uniquement au premier dépôt ou retrait ;
+- vérification KYC différée : pièce d’identité et code OTP demandés uniquement au moment d’une opération sensible (dépôt, retrait, création d’objectif, publication d’offre fournisseur) ;
+- réutilisation de la vérification : une seule vérification pendant la session, l’opération en attente reprend ensuite automatiquement ;
 - informations professionnelles du fournisseur reportées avant la publication de sa première offre ;
 - double vérification SMS pour le compte administrateur ;
 - accueil mobile simplifié avec épargne disponible, total épargné et trois objectifs maximum ;

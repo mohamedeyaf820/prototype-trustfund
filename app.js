@@ -778,39 +778,66 @@ $$('[data-open]').forEach(button => button.addEventListener('click', event => {
     toast('Limite de 3 objectifs atteinte', 'Terminez, supprimez ou remplacez un objectif avant d\'en créer un autre.', 'error');
     return;
   }
-  if (target === 'offerSheet') {
+  if (target === 'goalSheet' && !state.isGuest) {
+    event.preventDefault();
+    requireGoalVerification(() => openSheet('goalSheet'));
+    return;
+  }
+  if (target === 'offerSheet' && state.role === 'provider') {
+    event.preventDefault();
     const h2 = $('#offerSheet h2');
     if (h2) h2.textContent = 'Nouveau produit';
     setOfferStep(1);
+    requireKyc('offerPublication', () => openSheet('offerSheet'));
+    return;
   }
   openSheet(target);
 }));
 
+/* Registre des opérations sensibles : la vérification renforcée (OTP + pièce
+   d'identité contrôlée) n'est exigée qu'au moment nécessaire, jamais à
+   l'inscription ni en mode découverte. */
+const sensitiveOperations = {
+  freePayment: { label: 'dépôt d’argent', needsVerification: true },
+  goalPayment: { label: 'dépôt sur un objectif', needsVerification: true },
+  withdraw: { label: 'retrait de fonds', needsVerification: true },
+  goalCreation: { label: 'création d’un objectif d’épargne', needsVerification: true },
+  offerPublication: { label: 'publication d’une offre fournisseur', needsVerification: true }
+};
+
 /* Porte d'entrée des opérations sensibles : un compte vérifié est requis
    avant toute manipulation d'argent ou d'identité. */
-function requireKyc(nextAction) {
+function requireKyc(operationKey, nextAction) {
+  const operation = sensitiveOperations[operationKey] || { label: 'opération sensible', needsVerification: true };
   if (state.isGuest) {
     $('#guestGateMessage').textContent = 'Connectez-vous avant d’effectuer une opération financière. La vérification renforcée ne sera demandée qu’au moment nécessaire.';
     openSheet('guestGateSheet');
     return;
   }
-  if (state.kycVerified) {
+  if (!operation.needsVerification || state.kycVerified) {
     nextAction();
     return;
   }
   state.pendingFinancialAction = nextAction;
+  $('#kycReason').textContent = operation.label === 'opération sensible'
+    ? 'Nous demandons ces informations maintenant, car vous allez effectuer une opération sensible.'
+    : `Nous demandons ces informations maintenant, car vous allez effectuer : ${operation.label}.`;
   openSheet('kycSheet');
 }
 
-$$('[data-free-payment]').forEach(button => button.addEventListener('click', () => requireKyc(() => {
+function requireGoalVerification(nextAction) {
+  requireKyc('goalCreation', nextAction);
+}
+
+$$('[data-free-payment]').forEach(button => button.addEventListener('click', () => requireKyc('freePayment', () => {
   $('#paymentGoal').selectedIndex = 0;
   openSheet('paymentSheet');
 })));
-$$('[data-goal-payment]').forEach(button => button.addEventListener('click', () => requireKyc(() => {
+$$('[data-goal-payment]').forEach(button => button.addEventListener('click', () => requireKyc('goalPayment', () => {
   $('#paymentGoal').value = button.dataset.goalPayment;
   openSheet('paymentSheet');
 })));
-$$('[data-withdraw]').forEach(button => button.addEventListener('click', () => requireKyc(() => {
+$$('[data-withdraw]').forEach(button => button.addEventListener('click', () => requireKyc('withdraw', () => {
   $('#withdrawSource').value = button.dataset.withdraw || 'Épargne disponible';
   openSheet('withdrawSheet');
 })));
@@ -948,7 +975,7 @@ $('#selectProduct').addEventListener('click', () => {
   $('#goalName').value = state.selectedProduct.name;
   $('#goalAmount').value = customerPrice(state.selectedProduct.amount);
   setGoalStep(2);
-  openSheet('goalSheet');
+  requireGoalVerification(() => openSheet('goalSheet'));
 });
 
 $('#contactProvider').addEventListener('click', () => {
@@ -1460,7 +1487,7 @@ $$('[data-goal-action]').forEach(button => button.addEventListener('click', () =
     $('#goalAmount').value = 600000;
     $('#goalDate').value = '2027-01-15';
     setGoalStep(1);
-    openSheet('goalSheet');
+    requireGoalVerification(() => openSheet('goalSheet'));
     return;
   }
   if (action === 'suspend') {
@@ -1647,7 +1674,7 @@ $('#providerOfferList').addEventListener('click', event => {
     const h2 = $('#offerSheet h2');
     if (h2) h2.textContent = 'Modifier l\'offre';
     setOfferStep(1);
-    openSheet('offerSheet');
+    requireKyc('offerPublication', () => openSheet('offerSheet'));
     return;
   }
 
