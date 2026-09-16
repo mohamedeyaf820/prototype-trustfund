@@ -3,7 +3,7 @@ const { pathToFileURL } = require('url');
 const puppeteer = require('puppeteer');
 
 const ROOT = path.resolve(__dirname, '..');
-const CHROME = 'C:\\Users\\moham\\.cache\\puppeteer\\chrome\\win64-127.0.6533.88\\chrome-win64\\chrome.exe';
+const CHROME = resolveChromePath();
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const roleScreens = {

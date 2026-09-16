@@ -75,3 +75,26 @@ Sur l’écran de connexion, ouvrez « Comptes de démonstration » puis choisis
 - fonctions avancées rangées derrière « Voir l’analyse » ou « Plus d’outils » ;
 - navigation utilisateur limitée à Accueil, Boutique et Profil ;
 - aucune fonctionnalité supprimée : les détails restent accessibles progressivement.
+
+## Cohérence du design (passe UI)
+
+Les règles d’harmonisation sont centralisées en fin de `design-fixes.css` :
+
+- un seul cadre par bloc : les cartes sont plates, des séparateurs remplacent les cadres imbriqués ;
+- une échelle unique de boutons : 48 px pour l’action principale, 40 px pour les actions secondaires, 44 px pour les boutons d’icône ;
+- un seul contrat de panneau venant du bas : largeur maximale 406 px, marges latérales 16 px, padding interne 20 px, rayon 22 px ;
+- un bandeau de chiffres unique (`.metrics-scroll` et `.summary-band`) : colonnes égales, aucun défilement horizontal, aucune carte rognée ;
+- un plancher typographique : 12 px minimum pour les textes secondaires, 13 px pour les libellés d’action ;
+- les surfaces sombres sont réservées à l’action principale et aux badges.
+
+### Vérifier la cohérence
+
+```bash
+npm run audit            # 198 états mesurés (320, 375, 414 px) : débordements, boutons, textes, cadres, panneaux
+npm run audit:report     # rapport lisible du dernier audit
+npm run board            # planche PDF : écrans regroupés par type, côte à côte
+npm run generate-pdf     # régénère le PDF des 76 écrans
+TRUST_AUDIT_WIDTHS=320,375,414 npm run audit
+```
+
+Seuils contrôlés par l’audit : aucun texte sous 12 px, aucun bouton sous 40 px, aucun débordement, aucun cadre imbriqué, marges de panneaux identiques.

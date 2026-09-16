@@ -3,9 +3,9 @@ const fs = require('fs');
 const { pathToFileURL } = require('url');
 const puppeteer = require('puppeteer');
 
-const ROOT = 'C:\\Users\\moham\\OneDrive\\Documents\\Trustfund';
+const ROOT = REPO_ROOT;
 const OUT_DIR = path.join(ROOT, 'tmp', 'pdfs', 'wireframe_extra_raw');
-const CHROME = 'C:\\Users\\moham\\.cache\\puppeteer\\chrome\\win64-127.0.6533.88\\chrome-win64\\chrome.exe';
+const CHROME = resolveChromePath();
 
 const scenarios = [
   { number: 46, mode: 'app', role: 'user', screen: 'home', dialog: 'kycSheet' },

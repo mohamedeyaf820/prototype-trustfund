@@ -308,6 +308,8 @@ function showScreen(name) {
   $$('.bottom-nav button[data-view-target]').forEach(button => button.classList.toggle('active', button.dataset.viewTarget === name));
   const fab = $('#trustCoachFab');
   if (fab) fab.classList.toggle('hidden', name === 'ai-coach');
+  const headerCoach = $('.header-coach-link');
+  if (headerCoach) headerCoach.classList.toggle('hidden', name === 'ai-coach');
   $('#appMain').scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -536,10 +538,10 @@ $$('[data-auth-target]').forEach(button => button.addEventListener('click', () =
   showAuth(target);
 }));
 
-$('[data-explore-app]')?.addEventListener('click', () => {
+$$('[data-explore-app]').forEach(button => button.addEventListener('click', () => {
   enterApp('user', { guest: true });
-  toast('Mode découverte', 'Consultez la boutique et utilisez TrustCoach sans créer de compte.');
-});
+  toast('Mode découverte', 'Explorez la boutique et TrustCoach sans compte. La vérification SMS n’interviendra qu’avant une opération sensible.');
+}));
 
 $$('[data-guest-auth-target]').forEach(button => button.addEventListener('click', () => {
   const target = button.dataset.guestAuthTarget;

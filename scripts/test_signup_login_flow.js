@@ -2,8 +2,8 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 const puppeteer = require('puppeteer');
 
-const ROOT = 'C:\\Users\\moham\\OneDrive\\Documents\\Trustfund';
-const CHROME = 'C:\\Users\\moham\\.cache\\puppeteer\\chrome\\win64-127.0.6533.88\\chrome-win64\\chrome.exe';
+const ROOT = REPO_ROOT;
+const CHROME = resolveChromePath();
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);

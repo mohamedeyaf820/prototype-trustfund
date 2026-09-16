@@ -3,9 +3,9 @@ const fs = require('fs');
 const { pathToFileURL } = require('url');
 const puppeteer = require('puppeteer');
 
-const ROOT = 'C:\\Users\\moham\\OneDrive\\Documents\\Trustfund';
+const ROOT = REPO_ROOT;
 const OUT_DIR = path.join(ROOT, 'tmp', 'pdfs', 'wireframe_web_raw');
-const CHROME = 'C:\\Users\\moham\\.cache\\puppeteer\\chrome\\win64-127.0.6533.88\\chrome-win64\\chrome.exe';
+const CHROME = resolveChromePath();
 
 const providerScenarios = [
   { number: 1, role: 'provider', screen: 'provider' },

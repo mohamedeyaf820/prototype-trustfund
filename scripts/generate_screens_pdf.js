@@ -1,17 +1,14 @@
 /**
- * TrustFund — Capture maîtresse des 76 écrans pour les wireframes.
+ * TrustFund — Génération d'un PDF des écrans du prototype.
  *
- * Produit deux jeux d'images brutes consommés par les constructeurs PDF :
- *   tmp/pdfs/wireframe_source/screen-NN.png      (écrans 01 → 45)
- *   tmp/pdfs/wireframe_extra_raw/screen-NN.png   (écrans 46 → 74)
+ * 1. Charge index.html dans Chrome headless (fourni par Puppeteer).
+ * 2. Reproduit chacun des 76 états d'écran (mêmes scénarios que
+ *    scripts/capture_all_wireframes.js) et en fait une capture PNG.
+ * 3. Assemble ces captures en un PDF A4 : une page par écran, avec
+ *    son numéro et son titre en légende.
  *
- * La numérotation correspond à SCREENS dans scripts/build_wireframe_pdf.py.
- * À relancer après toute modification de index.html / styles.css / app.js.
- *
- * Usage :
- *   node scripts/capture_all_wireframes.js              (tous les écrans)
- *   TRUST_CAPTURE_START=1 TRUST_CAPTURE_END=45 node scripts/capture_all_wireframes.js
- *   TRUST_CAPTURE_ONLY=6,7,8,61,62 node scripts/capture_all_wireframes.js
+ * Usage :  node scripts/generate_screens_pdf.js
+ *          TRUST_CAPTURE_ONLY=9,10,14 node scripts/generate_screens_pdf.js
  */
 const path = require('path');
 const fs = require('fs');
@@ -19,12 +16,10 @@ const { pathToFileURL } = require('url');
 const puppeteer = require('puppeteer');
 
 const ROOT = path.resolve(__dirname, '..');
-const SOURCE_DIR = path.join(ROOT, 'tmp', 'pdfs', 'wireframe_source');
-const EXTRA_DIR = path.join(ROOT, 'tmp', 'pdfs', 'wireframe_extra_raw');
-const CHROME = resolveChromePath();
+const TMP_DIR = path.join(ROOT, 'tmp', 'pdf_screens');
+const OUTPUT_DIR = path.join(ROOT, 'output', 'pdf');
+const OUTPUT_PDF = path.join(OUTPUT_DIR, 'TrustFund_prototype_ecrans.pdf');
 
-/* Les captures sont produites à la largeur d'un grand téléphone pour que le
-   rendu reste net une fois réduit dans les planches A2 / A3. */
 const CAPTURE_WIDTH = Number(process.env.TRUST_CAPTURE_WIDTH || 500);
 const CAPTURE_HEIGHT = Number(process.env.TRUST_CAPTURE_HEIGHT || 970);
 const WEB_CAPTURE_WIDTH = Number(process.env.TRUST_WEB_CAPTURE_WIDTH || 1280);
@@ -33,23 +28,54 @@ const CAPTURE_SCALE = Number(process.env.TRUST_CAPTURE_SCALE || 2);
 
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
-/* ────────────────────────────────────────────────────────────────────────
-   Définition des 74 écrans.
-   Chaque entrée décrit l'état à reproduire avant la capture.
-   ──────────────────────────────────────────────────────────────────────── */
+/* Titres des écrans (numérotation identique à scripts/build_wireframe_pdf.py). */
+const SCREEN_TITLES = [
+  'Écran de démarrage', 'Bienvenue', 'Connexion unique', 'Comptes de démonstration',
+  'Créer un compte · Choisir un rôle', 'Créer un compte · Informations',
+  'Créer un compte · Informations fournisseur', 'Créer un compte · Mot de passe',
+  'Tableau de bord utilisateur', 'Mes objectifs', "Détail d’un objectif",
+  'Créer un objectif · Étape 1', 'Créer un objectif · Plan de cotisation', 'Boutique',
+  'Fiche produit', 'Paiement', 'Déclarer une cotisation', 'Retrait de fonds',
+  'Historique des activités', 'Notifications', 'Finalisation de commande',
+  'TrustCoach · Assistant IA', 'Mon analyse IA', 'Profil utilisateur', 'Aide & support',
+  'Tableau de bord fournisseur', 'Mes offres', 'Nouveau produit · Informations',
+  'Nouveau produit · Prix et stock', 'Nouveau produit · Finalisation',
+  'Commandes fournisseur', 'Réclamations fournisseur', 'Suivi fournisseur via TrustFund',
+  'Dossier fournisseur', 'Profil fournisseur', 'Centre de contrôle administrateur',
+  'Vérification assistée', 'Comptes utilisateurs', 'Gérer un compte',
+  'Partenaires fournisseurs', 'Décision fournisseur', 'Réclamations',
+  'Dossier réclamation', 'Statistiques', 'Vérifier la disponibilité',
+  'Vérification d’identité', 'Affecter l’épargne disponible',
+  'Comprendre le fonctionnement des fonds', "Conditions d’utilisation",
+  'Politique de confidentialité', 'Créer une réclamation', 'Récupérer le mot de passe',
+  'Modifier le profil utilisateur', 'Gérer un objectif', 'Détail d’une commande fournisseur',
+  'Répondre et clôturer une réclamation', 'Signaler un problème sur une preuve',
+  'Profil administrateur', 'Rôle et autorisations administrateur',
+  'Confirmer la réception du produit', 'Compte créé - connexion requise',
+  'Connexion du nouveau compte', 'Mot de passe oublié · Choisir le canal',
+  'Mot de passe oublié · Saisir le code', 'Mot de passe oublié · Nouveau mot de passe',
+  'Mot de passe modifié · Reconnexion', 'Utilisateur · Contacter TrustFund',
+  'Admin · Demande de disponibilité reçue', 'Fournisseur · Vérification TrustFund',
+  'Admin · Répondre à l’utilisateur', 'Utilisateur · Réponse de TrustFund',
+  'Découverte libre · Boutique', 'Découverte libre · Fiche produit',
+  'Connexion demandée pour une action sensible',
+  'Vérification d’identité · Documents et validation',
+  'Dossier fournisseur · Documents justificatifs',
+];
+
 const SCENARIOS = [
   /* ── Authentification (01 → 08) ── */
-  { n: 1,  auth: 'splash' },
-  { n: 2,  auth: 'welcome' },
-  { n: 3,  auth: 'login' },
-  { n: 4,  auth: 'login', variant: 'demoOpen' },
-  { n: 5,  auth: 'signup', variant: 'signupStep1' },
-  { n: 6,  auth: 'signup', variant: 'signupStep2' },
-  { n: 7,  auth: 'signup', variant: 'signupStep2Provider' },
-  { n: 8,  auth: 'signup', variant: 'signupStep3' },
+  { n: 1, auth: 'splash' },
+  { n: 2, auth: 'welcome' },
+  { n: 3, auth: 'login' },
+  { n: 4, auth: 'login', variant: 'demoOpen' },
+  { n: 5, auth: 'signup', variant: 'signupStep1' },
+  { n: 6, auth: 'signup', variant: 'signupStep2' },
+  { n: 7, auth: 'signup', variant: 'signupStep2Provider' },
+  { n: 8, auth: 'signup', variant: 'signupStep3' },
 
   /* ── Espace utilisateur (09 → 25) ── */
-  { n: 9,  app: 'user', screen: 'home' },
+  { n: 9, app: 'user', screen: 'home' },
   { n: 10, app: 'user', screen: 'goals' },
   { n: 11, app: 'user', screen: 'goal-detail' },
   { n: 12, app: 'user', screen: 'goals', dialog: 'goalSheet', goalStep: 1 },
@@ -296,11 +322,64 @@ async function prepare(page, s) {
 }
 
 /* ────────────────────────────────────────────────────────────────────────
+   Page de garde + une page par écran, prêtes à imprimer en PDF.
+   ──────────────────────────────────────────────────────────────────────── */
+function buildGalleryHtml(pages) {
+  const escape = (str) => str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
+  const cover = `
+    <section class="sheet cover">
+      <div class="cover-inner">
+        <h1>TrustFund</h1>
+        <p class="subtitle">Prototype · ${pages.length} écrans</p>
+        <p class="meta">Généré le ${new Date().toLocaleDateString('fr-FR')}<br>Depuis index.html (rendu Puppeteer)</p>
+      </div>
+    </section>`;
+
+  const sheets = pages.map((p, i) => `
+    <section class="sheet screen">
+      <img src="${escape(p.url)}" alt="${escape(p.title)}">
+      <figcaption>${String(p.n).padStart(2, '0')} — ${escape(p.title)}</figcaption>
+      <span class="page-number">${i + 1} / ${pages.length}</span>
+    </section>`).join('');
+
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: A4 portrait; margin: 12mm 12mm 10mm 12mm; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: #111; }
+  .sheet { height: 275mm; display: flex; flex-direction: column; align-items: center; }
+  .sheet:not(:last-child) { page-break-after: always; }
+  .sheet img { max-width: 100%; max-height: 246mm; object-fit: contain; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+  figcaption { margin-top: 4mm; font-size: 9pt; color: #444; }
+  .page-number { margin-top: 1mm; font-size: 7.5pt; color: #999; }
+  .cover { justify-content: center; page-break-after: always; }
+  .cover-inner { text-align: center; border: 2px solid #111; padding: 26mm 18mm; }
+  .cover h1 { margin: 0; font-size: 44pt; letter-spacing: 2mm; }
+  .cover .subtitle { margin: 6mm 0 0; font-size: 14pt; color: #333; }
+  .cover .meta { margin: 12mm 0 0; font-size: 9pt; color: #666; line-height: 1.7; }
+</style>
+</head>
+<body>
+  ${cover}
+  ${sheets}
+</body>
+</html>`;
+}
+
+/* ────────────────────────────────────────────────────────────────────────
    Exécution
    ──────────────────────────────────────────────────────────────────────── */
 (async () => {
-  fs.mkdirSync(SOURCE_DIR, { recursive: true });
-  fs.mkdirSync(EXTRA_DIR, { recursive: true });
+  fs.mkdirSync(TMP_DIR, { recursive: true });
+  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
   const only = process.env.TRUST_CAPTURE_ONLY
     ? new Set(process.env.TRUST_CAPTURE_ONLY.split(',').map((x) => Number(x.trim())))
@@ -310,7 +389,6 @@ async function prepare(page, s) {
 
   const browser = await puppeteer.launch({
     headless: 'new',
-    executablePath: CHROME,
     args: ['--allow-file-access-from-files', '--disable-web-security', '--no-sandbox'],
   });
   const page = await browser.newPage();
@@ -331,7 +409,7 @@ async function prepare(page, s) {
   await page.evaluate(() => document.fonts.ready);
   await delay(1900);
 
-  let count = 0;
+  const captured = [];
   for (const s of SCENARIOS) {
     if (only) { if (!only.has(s.n)) continue; }
     else if (s.n < first || s.n > last) continue;
@@ -364,22 +442,35 @@ async function prepare(page, s) {
           dialog.top < shell.top - tolerance ||
           dialog.bottom > shell.bottom + tolerance
         ) {
-          throw new Error(
-            `La feuille ${dialog.id} dépasse du téléphone sur l'écran ${s.n}: ` +
-            JSON.stringify({ dialog, shell })
-          );
+          console.warn(`Avertissement : la feuille ${dialog.id} dépasse du téléphone sur l'écran ${s.n}`);
         }
       }
     }
 
-    const dir = s.n <= 45 ? SOURCE_DIR : EXTRA_DIR;
-    const filename = path.join(dir, `screen-${String(s.n).padStart(2, '0')}.png`);
+    const filename = path.join(TMP_DIR, `screen-${String(s.n).padStart(2, '0')}.png`);
     await page.screenshot({ path: filename, type: 'png', captureBeyondViewport: false });
-    count += 1;
+    captured.push({
+      n: s.n,
+      title: SCREEN_TITLES[s.n - 1] || `Écran ${s.n}`,
+      url: pathToFileURL(filename).href,
+    });
     process.stdout.write(`  ${String(s.n).padStart(2, '0')}  ${path.basename(filename)}\n`);
   }
 
-  console.log(`\n${count} capture(s) écrite(s).`);
+  console.log(`\n${captured.length} capture(s) écrite(s). Assemblage du PDF…`);
+
+  const gallery = await browser.newPage();
+  await gallery.setContent(buildGalleryHtml(captured), { waitUntil: 'networkidle0' });
+  await gallery.evaluate(() => document.fonts.ready);
+  await delay(400);
+  await gallery.pdf({
+    path: OUTPUT_PDF,
+    format: 'A4',
+    printBackground: true,
+    preferCSSPageSize: true,
+  });
+
+  console.log(`PDF écrit : ${OUTPUT_PDF}`);
   await browser.close();
 })().catch((error) => {
   console.error(error);

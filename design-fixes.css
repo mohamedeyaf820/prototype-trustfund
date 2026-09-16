@@ -10,7 +10,7 @@
   --tf-radius-sm: 10px;
   --tf-radius-md: 14px;
   --tf-radius-lg: 22px;
-  --tf-text-xs: 11px;
+  --tf-text-xs: 12px;
   --tf-text-sm: 12px;
   --tf-text-md: 14px;
   --tf-button-height: 48px;
@@ -263,8 +263,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 .metrics-scroll article strong { font-size: clamp(20px, 4vw, 28px) !important; }
 @media (min-width: 900px) {
-  .role-admin .metrics-scroll { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
-  .role-provider .metrics-scroll { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  /* metrics-scroll : definition unique en fin de feuille */
+  /* metrics-scroll : definition unique en fin de feuille */
 }
 
 /* Surfaces noires lourdes remplacees par des surfaces claires */
@@ -364,7 +364,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .reset-password-rules span,
 .password-strength-card span,
 .password-strength-card p {
-  font-size: 11px !important;
+  font-size: 12px !important;
   line-height: 1.45 !important;
 }
 .home-goal-grid .focus-goal-head > span,
@@ -386,7 +386,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .decision-options small,
 .decision-preview span,
 .decision-preview p {
-  font-size: 11px !important;
+  font-size: 12px !important;
   line-height: 1.4 !important;
 }
 
@@ -445,7 +445,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .sheet .money-input i,
 .sheet .identity-upload strong,
 .sheet .trust-steps p {
-  font-size: 11px !important;
+  font-size: 12px !important;
   line-height: 1.4 !important;
 }
 
@@ -482,3 +482,401 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
     transition-duration: .01ms !important;
   }
 }
+
+/* ─────────────────────────────────────────────
+   Passe de relecture retours — unification finale
+   ───────────────────────────────────────────── */
+
+:root {
+  --tf-button-primary: 48px;
+  --tf-button-secondary: 40px;
+  --tf-text-min: 12px;
+  --tf-button-text: 13px;
+}
+
+/* 2) Hauteur standard des boutons d'action et secondaires */
+.main-button, .auth-primary, .login-submit,
+.claim-card > button, .workflow-card > .main-button,
+.free-savings-actions .primary, .guest-banner button,
+#paymentSheet .main-button, .sheet-actions .main-button,
+.review-card > button, .admin-priority-strip > button, .provider-quick-action,
+button[type="submit"].main-button, .sheet .main-button,
+.coach-form button, .goal-primary-actions .main-button,
+.prediction-action button, .order-card > button,
+.logout-button, .floating-add,
+.screen > .main-button, .module-screen > .main-button,
+.claim-card .main-button, .section-block .main-button,
+.inline-actions button, .workflow-card button,
+.anomaly-card button, .validation-buttons button,
+.choose-product, .export-report, .ai-recommendation button,
+.simple-coach-primary, .more-tools > summary {
+  min-height: var(--tf-button-primary) !important;
+  height: auto !important;
+  font-size: var(--tf-button-text) !important;
+}
+.secondary-button, .auth-secondary, .text-payment-action,
+#paymentSheet .text-payment-action, .sheet-actions .secondary-button,
+.sticky-sheet-actions .secondary-button, .product-detail-back,
+.inline-actions button:first-child, .goal-detail-actions button,
+.more-tools > summary, .back-link, .text-action, .notification-inline-action,
+.sheet .secondary-button, .coach-suggestions button, .text-payment-action,
+.claim-card .secondary-button, .full-button, .admin-ticket-open {
+  min-height: var(--tf-button-secondary) !important;
+  height: auto !important;
+  font-size: var(--tf-button-text) !important;
+}
+
+/* 3) Panneaux bottom sheets uniformes */
+.sheet {
+  width: min(406px, calc(100vw - 32px)) !important;
+  max-width: 406px !important;
+  border-radius: 22px !important;
+}
+.sheet form, .short-sheet, .sheet:not(:has(> form)) {
+  padding: var(--tf-space-5) !important;
+}
+.legal-sheet .legal-content {
+  padding: 0 !important;
+}
+.legal-sheet > .main-button {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+@media (max-width: 480px) {
+  .sheet { border-radius: 22px 22px 0 0 !important; }
+}
+
+/* 4) Grilles de cartes : colonnes 1fr égales, min-width:0, responsive */
+.kpi-grid, .report-split,
+.support-kpis, .ai-score-row, .risk-score-grid, .coach-overview,
+.supplier-review-grid, .offer-image-gallery, .document-choice-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: var(--tf-space-2) !important;
+}
+.support-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.kpi-grid > article, .support-kpis > article, .metrics-scroll > article,
+.hub-grid > button, .review-card, .management-card { min-width: 0 !important; }
+@media (min-width: 900px) {
+  .role-admin .admin-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  /* metrics-scroll : definition unique en fin de feuille */
+  .kpi-grid, .report-split { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .role-admin .admin-ticket-list { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 480px) {
+  .kpi-grid, .report-split,
+  .support-kpis, .ai-score-row, .risk-score-grid, .coach-overview,
+  .supplier-review-grid, .offer-image-gallery, .document-choice-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 1) Réclamations et listes admin/provider : cadres aplatis, sections séparées */
+.claim-card, .ticket-row, .ticket-detail-summary, .ticket-timeline article {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.claim-card {
+  padding: var(--tf-space-4) 0 !important;
+  border-bottom: 1px solid var(--ui-line, var(--line)) !important;
+}
+.claim-card:last-child { border-bottom: 0 !important; }
+.claim-card:last-child { border-bottom: 0 !important; }
+.claim-card .ticket-card-top,
+.claim-card .ticket-ownership {
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+.ticket-row {
+  padding: var(--tf-space-4) 0 !important;
+  border-bottom: 1px solid var(--ui-line, var(--line)) !important;
+}
+.ticket-row:last-child { border-bottom: 0 !important; }
+.ticket-list { gap: 0 !important; }
+.admin-ticket-list { gap: 0 !important; }
+.workflow-card { border-bottom: 1px solid var(--ui-line, var(--line)) !important; border-radius: 0 !important; }
+.validation-card { border-bottom: 1px solid var(--ui-line, var(--line)) !important; border-radius: 0 !important; }
+.workflow-card:last-child, .validation-card:last-child { border-bottom: 0 !important; }
+.module-screen .section-head { margin-top: var(--tf-space-5) !important; }
+.section-block + .section-block { margin-top: var(--tf-space-5) !important; }
+.screen, .module-screen { padding: var(--tf-space-4) 0 !important; }
+.app-header { border-bottom: 1px solid var(--ui-line, var(--line)) !important; box-shadow: none !important; }
+.phone-shell { border: 1px solid var(--ui-line, var(--line)) !important; box-shadow: none !important; }
+.phone-shell::after { display: none !important; }
+
+/* 6) Textes secondaires 12px minimum, boutons 13px */
+.small, .label-info { font-size: var(--tf-text-min) !important; }
+body { font-size: 14px !important; }
+.screen p, .screen small, .screen > div > small,
+.sheet label, .sheet small, .auth-heading > p:last-child,
+.screen-heading > div > p:last-child, .eyebrow, .section-head h2,
+.field-feedback, .field-help, .coach-note, .ai-disclaimer {
+  font-size: var(--tf-text-min) !important;
+}
+.screen button, .module-screen button,
+.sheet button, .short-sheet button,
+.claim-card, .ticket-row, .workflow-card, .management-card,
+.order-card, .review-card, .anomaly-card, .validation-card,
+.notification-card, .activity-card, .settings-row, .security-checklist,
+.permission-list, .ticket-detail-summary, .ticket-timeline,
+.coach-overview, .provider-status, .admin-priority-strip,
+.legal-content, .ticket-card-top, .ticket-ownership,
+.guest-gate-points, .kyc-reason, .available-balance, .allocation-note,
+.sheet-note, .trust-steps, .decision-preview, .decision-options,
+.contact-vendor-row, .document-checks, .offer-image-gallery,
+.provider-document, .provider-file-progress, .account-policy-note,
+.provider-quick-action, .home-goal-grid, .focus-goal, .other-goal-row,
+.coach-message, .coach-context, .coach-suggestions, .faq-list,
+.verify-screen, .resend-code, .login-feedback, .demo-accounts,
+.identity-notice, .no-social-note, .admin-invite-note, .deferred-note,
+.switch-row, .settings-form, .reset-step, .check-line,
+.brand-signature, .prototype-ribbon, .guest-banner, .toast,
+.home-activity-preview, .coach-workflow, .signup-explore-link {
+  font-size: var(--tf-text-min) !important;
+}
+.screen strong, .module-screen strong,
+.sheet strong, .short-sheet strong { font-size: var(--tf-text-min) !important; }
+
+/* 7) Cartouches noirs : hiérarchie conservée, poids réduit */
+.free-savings-card, .ai-hero, .prediction-action, .big-kpi,
+.provider-status, .coach-orb, .admin-priority-strip {
+  background: #fff !important;
+  color: #111 !important;
+  border: 1px solid var(--ui-line, var(--line)) !important;
+  box-shadow: none !important;
+}
+.free-savings-card > strong, .free-savings-card p,
+.ai-hero h1, .ai-hero p, .big-kpi strong, .big-kpi p,
+.prediction-action strong, .prediction-action p { color: #111 !important; }
+.main-button, .auth-primary { background: #111 !important; color: #fff !important; }
+
+/* 8) Parcours de création simplifié : accès découverte clair, SMS différé */
+.signup-explore-link {
+  display: block !important;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0 14px;
+  min-height: var(--tf-button-secondary) !important;
+  border: 1px dashed var(--ui-line, var(--line)) !important;
+  border-radius: var(--tf-radius-sm) !important;
+  color: var(--ui-muted, var(--muted)) !important;
+  background: transparent !important;
+  font-size: var(--tf-text-min) !important;
+  text-align: center !important;
+  cursor: pointer !important;
+}
+.signup-explore-link:hover { color: #111 !important; border-color: #111 !important; }
+
+/* 9) TrustCoach accessible partout */
+.trust-coach-fab {
+  position: absolute !important;
+  z-index: 120 !important;
+  right: 18px !important;
+  bottom: 96px !important;
+  width: 52px !important;
+  height: 52px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 2px solid #fff !important;
+  border-radius: 50% !important;
+  color: #fff !important;
+  background: #111 !important;
+  box-shadow: 0 10px 24px rgba(0,0,0,.24) !important;
+  font-size: 22px !important;
+  cursor: pointer !important;
+}
+.trust-coach-fab span { line-height: 1 !important; }
+.trust-coach-fab i { display: none !important; }
+.trust-coach-fab.hidden { display: none !important; }
+@media (min-width: 900px) {
+  .role-provider .trust-coach-fab, .role-admin .trust-coach-fab {
+    right: 24px !important;
+    bottom: 32px !important;
+  }
+}
+@media (max-width: 480px) {
+  .trust-coach-fab { right: 14px !important; bottom: 88px !important; }
+}
+.header-coach-link {
+  display: none !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 0 12px !important;
+  min-height: var(--tf-button-secondary) !important;
+  border: 1px solid var(--ui-line, var(--line)) !important;
+  border-radius: 999px !important;
+  color: #111 !important;
+  background: #fff !important;
+  font-size: var(--tf-text-min) !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+}
+@media (min-width: 900px) { .header-coach-link { display: flex !important; } }
+@media (max-width: 480px) {
+  .trust-coach-fab { right: 14px !important; bottom: 88px !important; }
+}
+
+/* 10) Panneau "Parcours conversationnel" du coach */
+.coach-workflow { margin: 12px 14px 0; padding: 14px; border: 1px solid var(--ui-line, var(--line)); border-radius: var(--ui-radius-md, 14px); background: #fff; }
+.coach-workflow-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.coach-workflow-head .eyebrow { margin: 0 !important; }
+.coach-workflow-head button { min-height: var(--tf-button-secondary) !important; padding: 0 12px !important; border: 1px solid var(--ui-line, var(--line)); border-radius: 999px; color: #111; background: #fff; font-size: var(--tf-text-min); font-weight: 800; cursor: pointer; }
+.coach-workflow-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: coachStep; }
+.coach-workflow-steps li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; padding: 10px; border: 1px solid var(--ui-line, var(--line)); border-radius: 10px; background: #f7f5f0; }
+.coach-workflow-steps li > span { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #111; font-size: 12px; font-weight: 900; }
+.coach-workflow-steps strong { display: block; color: #111; font-size: var(--tf-text-min); }
+.coach-workflow-steps small { display: block; margin-top: 2px; color: var(--ui-muted, var(--muted)); font-size: var(--tf-text-min); line-height: 1.4; }
+.coach-workflow-note { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--ui-line, var(--line)); color: var(--ui-muted, var(--muted)); font-size: var(--tf-text-min); line-height: 1.45; }
+@media (max-width: 480px) {
+  .coach-workflow { margin: 10px 12px 0; }
+  .coach-workflow-steps li { grid-template-columns: 24px 1fr; }
+}
+
+
+/* ==========================================================
+   PASSE FINALE - retours 1 a 7 : un seul cadre par bloc
+   ========================================================== */
+
+/* 6) Plancher de lisibilite : plus aucun texte sous 12px */
+.sheet-note p, .identity-notice p, .intermediary-note p, .trust-steps p,
+.account-policy-note p, .security-checklist p, .allocation-note p,
+.reset-privacy-note p, .guest-gate-points p, .decision-preview span,
+.provider-file-progress span, .document-safety-note, .prototype-payment-note,
+.kyc-document-reason, .kyc-code-block span, .switch-row strong, .switch-row small,
+.security-checklist strong, .security-checklist small, .provider-profile-status span,
+.money-input i, label i, .signup-role small, .amount-choices button,
+.splash-loader small, .check-line span, .available-balance span, .consent-line span,
+.provider-document span, fieldset legend, .demo-toggle, .summary-band span,
+.welcome-legal button, .login-options button, .auth-switch button, .toggle-password,
+.country-phone .country-fixed, .product-detail-vendor strong, .product-detail-description,
+.order-detail-client, .order-detail-date, #loginPhoneHelp, #paymentPhoneHelp,
+#resetStepHelp, #offerStepHelp, #guestGateMessage, #providerDocumentProgress,
+#accountNotificationPreview, #productDetailDescription, .eyebrow {
+  font-size: var(--tf-text-min) !important;
+  line-height: 1.45 !important;
+}
+
+/* 1) Cadres imbriques : un seul cadre par champ, des separateurs dedans */
+.phone-field {
+  border: 1px solid var(--ui-line) !important;
+  border-radius: var(--tf-radius-sm) !important;
+  background: #fff !important;
+}
+.phone-field input, .phone-field select, .phone-field .country-fixed {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+.phone-field .country-fixed { border-right: 1px solid var(--ui-line) !important; }
+.kyc-code-block, .order-detail-steps, .guest-gate-points, .product-detail-visual,
+.decision-preview, .provider-file-progress, .review-top, .document-checks {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.order-detail-steps button {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  min-height: var(--tf-button-secondary) !important;
+}
+.order-detail-steps button + button { border-top: 1px solid var(--ui-line) !important; }
+.document-checks button {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--ui-line) !important;
+}
+.document-checks button:last-child { border-bottom: 0 !important; }
+.contact-vendor-row, .intermediary-note {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: var(--tf-space-3) 0 !important;
+  margin: 0 !important;
+  border-bottom: 1px solid var(--ui-line) !important;
+}
+.intermediary-note { border-top: 1px solid var(--ui-line) !important; }
+
+/* 4) Chiffres cles : meme logique que Mes offres (summary-band) */
+.metrics-scroll, .summary-band {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)) !important;
+  gap: 0 !important;
+  margin: 0 0 var(--tf-space-4) !important;
+  padding: 0 !important;
+  border: 1px solid var(--ui-line) !important;
+  border-radius: var(--tf-radius-md) !important;
+  background: #fff !important;
+  overflow: hidden !important;
+}
+.metrics-scroll article, .summary-band div {
+  min-width: 0 !important;
+  padding: var(--tf-space-3) var(--tf-space-2) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+.metrics-scroll article + article, .summary-band div + div { border-left: 1px solid var(--ui-line) !important; }
+.metrics-scroll article strong, .summary-band strong { font-size: 20px !important; }
+.metrics-scroll article span, .metrics-scroll article small, .summary-band span { line-height: 1.35 !important; }
+
+/* 3) Panneaux venant du bas : un seul contrat de marges et de padding */
+.sheet { width: min(406px, calc(100vw - 32px)) !important; }
+.legal-sheet { padding: var(--tf-space-5) !important; }
+.legal-sheet .legal-content { padding: 0 !important; }
+.legal-sheet .main-button { margin-left: 0 !important; margin-right: 0 !important; }
+
+/* 2) Boutons : tailles standard respectees partout */
+#contactProvider, .contactProvider {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: var(--tf-button-secondary) !important;
+  padding: 0 var(--tf-space-3) !important;
+  font-size: var(--tf-text-min) !important;
+}
+.welcome-legal button, .login-options button, .auth-switch button, .demo-toggle {
+  min-height: var(--tf-button-secondary) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+.toggle-password {
+  bottom: 4px !important;
+  right: 6px !important;
+  min-height: var(--tf-button-secondary) !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+/* 3 bis) Panneau legal : en-tete fixe, contenu defilant, action en bas sans recouvrement */
+.legal-sheet {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--tf-space-5) !important;
+}
+.legal-sheet .legal-content {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+}
+.legal-sheet .main-button {
+  flex: 0 0 auto !important;
+  position: static !important;
+  margin: var(--tf-space-4) 0 0 !important;
+  box-shadow: none !important;
+}
+/* 1 bis) Boutons d icone : surface legere sans cadre supplementaire */
+.sheet-head > button, .module-heading > button:first-child,
+.round-button, .avatar-button, .floating-add, .coach-info {
+  border: 0 !important;
+  background: #f1f1ef !important;
+  box-shadow: none !important;
+}
+.sheet-head > button, .coach-info { border: 0 !important; }
