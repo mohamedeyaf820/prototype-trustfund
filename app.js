@@ -310,6 +310,12 @@ function showScreen(name) {
   if (fab) fab.classList.toggle('hidden', name === 'ai-coach');
   const headerCoach = $('.header-coach-link');
   if (headerCoach) headerCoach.classList.toggle('hidden', name === 'ai-coach');
+  $('#phoneShell').classList.toggle('coach-mode', name === 'ai-coach');
+  if (name === 'ai-coach') {
+    const chat = $('#coachChat');
+    chat.scrollTop = chat.scrollHeight;
+    $('#coachInput')?.focus({ preventScroll: true });
+  }
   $('#appMain').scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -750,7 +756,20 @@ $$('.logout-button').forEach(button => button.addEventListener('click', () => {
   toast('Session fermée', 'Vous avez été déconnecté en toute sécurité.');
 }));
 
-$$('[data-view-target]').forEach(button => button.addEventListener('click', () => showScreen(button.dataset.viewTarget)));
+$$('[data-view-target]').forEach(button => button.addEventListener('click', (event) => {
+  const nested = event.target.closest('button, [data-open], [data-view-target]');
+  if (nested && nested !== button) return;
+  showScreen(button.dataset.viewTarget);
+}));
+
+$$('form button[data-close]').forEach(button => { if (!button.hasAttribute('type')) button.type = 'button'; });
+
+// Boutons "×" des formulaires method="dialog" : fermeture directe sans validation native.
+$$('form[method="dialog"] button[value="cancel"]').forEach(button => {
+  button.type = 'button';
+  button.formNoValidate = true;
+  button.addEventListener('click', () => button.closest('dialog')?.close());
+});
 
 $$('[data-open]').forEach(button => button.addEventListener('click', event => {
   const target = button.dataset.open;
@@ -929,13 +948,9 @@ function fillProductDetails(button) {
   };
   $('#productDetailName').textContent = state.selectedProduct.name;
   $('#productDetailVendor').textContent = vendor;
-  const fee = platformFee(state.selectedProduct.amount);
   const total = customerPrice(state.selectedProduct.amount);
   $('#productDetailPrice').textContent = `${money(total)} FCFA`;
-  $('#productSupplierPrice').textContent = `${money(state.selectedProduct.amount)} FCFA`;
-  $('#productPlatformFee').textContent = `${money(fee)} FCFA`;
   $('#productCustomerTotal').textContent = `${money(total)} FCFA`;
-  $('#productFeeRate').textContent = `${state.serviceFeeRate}%`;
   $('#productDetailDescription').textContent = state.selectedProduct.description;
   $('#productDetailImage').src = state.selectedProduct.image;
   $('#productDetailImage').alt = state.selectedProduct.name;
@@ -1532,44 +1547,86 @@ $('#receptionForm').addEventListener('submit', event => {
   toast('Félicitations !', 'Votre objectif est clôturé et le fournisseur a reçu votre évaluation.');
 });
 
+let offerSlotTarget = null;
+
+function renderOfferGallery() {
+  const images = state.offerImages;
+  const preview = $('#offerImagePreview');
+  if (images[0]) {
+    preview.innerHTML = '<img alt="Photo principale de la nouvelle offre">';
+    $('img', preview).src = images[0];
+  } else {
+    preview.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM8 14l3-3 5 5M15 9h.01"/></svg>';
+  }
+  $$('#offerImageGallery [data-photo-slot]').forEach((slot, index) => {
+    slot.classList.toggle('filled', Boolean(images[index]));
+    slot.innerHTML = images[index] ? `<img src="${images[index]}" alt="Vue ${index + 1} du produit"><small>${index === 0 ? 'Principale' : `Vue ${index + 1}`}</small>` : `${index + 1}<small>${index === 0 ? 'Principale' : index === 3 ? 'Optionnelle' : 'Autre vue'}</small>`;
+  });
+  const remaining = 4 - images.length;
+  $('#offerPhotoHelp').textContent = images.length
+    ? `${images.length} photo${images.length > 1 ? 's' : ''} ajoutée${images.length > 1 ? 's' : ''} · ${remaining > 0 ? `encore ${remaining} à ajouter` : 'maximum atteint'}`
+    : 'Ajoutez au moins 2 photos pour aider l\'utilisateur à vérifier le produit.';
+}
+
 $('#offerImage').addEventListener('change', event => {
-  const files = [...(event.target.files || [])].slice(0, 4);
+  const files = [...(event.target.files || [])];
+  event.target.value = '';
   if (!files.length) return;
-  if (event.target.files.length > 4) toast('Quatre photos maximum', 'Seules les quatre premières images ont été conservées.', 'error');
-  Promise.all(files.map(file => new Promise(resolve => {
+  const replacing = offerSlotTarget !== null && offerSlotTarget < state.offerImages.length;
+  const room = 4 - state.offerImages.length;
+  if (!replacing) {
+    if (!room) {
+      toast('Quatre photos maximum', 'Cliquez sur une photo existante pour la remplacer.', 'error');
+      return;
+    }
+    if (files.length > room) toast('Quatre photos maximum', 'Seules les premières images ont été conservées.', 'error');
+  }
+  const batch = replacing ? files.slice(0, 1) : files.slice(0, room);
+  Promise.all(batch.map(file => new Promise(resolve => {
     const reader = new FileReader();
     reader.addEventListener('load', () => resolve(String(reader.result || '')));
     reader.readAsDataURL(file);
   }))).then(images => {
-    state.offerImages = images;
-    state.offerImage = images[0] || '';
-    $('#offerImagePreview').innerHTML = '<img alt="Photo principale de la nouvelle offre">';
-    $('img', $('#offerImagePreview')).src = state.offerImage;
-    $$('#offerImageGallery [data-photo-slot]').forEach((slot, index) => {
-      slot.classList.toggle('filled', Boolean(images[index]));
-      slot.innerHTML = images[index] ? `<img src="${images[index]}" alt="Vue ${index + 1} du produit"><small>${index === 0 ? 'Principale' : `Vue ${index + 1}`}</small>` : `${index + 1}<small>${index === 0 ? 'Principale' : index === 3 ? 'Optionnelle' : 'Autre vue'}</small>`;
-    });
-    $('#offerPhotoHelp').textContent = `${images.length} photo${images.length > 1 ? 's' : ''} ajoutée${images.length > 1 ? 's' : ''} · ${images.length < 2 ? 'ajoutez encore une photo' : 'galerie prête'}`;
+    if (replacing) {
+      state.offerImages[offerSlotTarget] = images[0];
+    } else {
+      state.offerImages = [...state.offerImages, ...images].slice(0, 4);
+    }
+    state.offerImage = state.offerImages[0] || '';
+    offerSlotTarget = null;
+    renderOfferGallery();
   });
 });
 
 function updateOfferFeePreview() {
   const base = Number($('#offerPrice').value) || 0;
   $('#offerSupplierPrice').textContent = `${money(base)} FCFA`;
-  $('#offerFeeAmount').textContent = `${money(platformFee(base))} FCFA`;
   $('#offerCustomerPrice').textContent = `${money(customerPrice(base))} FCFA`;
 }
 
 $('#offerPrice').addEventListener('input', updateOfferFeePreview);
 
-// BUG-03 — Slots de la galerie photos cliquables → déclenche l\'input file
+// BUG-03 — Slots de la galerie photos cliquables → declenche l'input file sur ce slot
 $('#offerImageGallery').addEventListener('click', e => {
-  if (e.target.closest('[data-photo-slot]')) $('#offerImage').click();
+  const slot = e.target.closest('[data-photo-slot]');
+  if (!slot) return;
+  offerSlotTarget = Number(slot.dataset.photoSlot);
+  $('#offerImage').click();
+});
+$('.offer-image-upload').addEventListener('click', e => {
+  if (e.target !== $('#offerImage') || e.isTrusted) offerSlotTarget = null;
 });
 
 function setOfferStep(step) {
   state.offerStep = Math.max(1, Math.min(4, step));
   $$('.offer-step').forEach(panel => panel.classList.toggle('active', Number(panel.dataset.offerStep) === state.offerStep));
+  $$('.offer-step').forEach(panel => {
+    const active = panel.classList.contains('active');
+    $$('input, select, textarea', panel).forEach(field => {
+      if (!('required' in field.dataset) && field.required) field.dataset.required = '1';
+      if (field.dataset.required === '1') field.required = active;
+    });
+  });
   $$('.wizard-progress i').forEach((bar, index) => bar.classList.toggle('active', index < state.offerStep));
   $('#offerBack').classList.toggle('hidden', state.offerStep === 1);
   $('#offerNext').classList.toggle('hidden', state.offerStep === 4);
@@ -1663,13 +1720,10 @@ $('#providerOfferList').addEventListener('click', event => {
     if (priceMatch) { $('#offerPrice').value = priceMatch[1].replace(/\s/g, ''); updateOfferFeePreview(); }
     if (stockMatch) $('#offerStock').value = stockMatch[1];
 
-    // Injecter l\'image existante pour passer la validation (min 2)
+    // Injecter l'image existante pour passer la validation (min 2)
     state.offerImages = imgSrc ? [imgSrc, imgSrc] : [];
     state.offerImage  = imgSrc;
-    if (imgSrc) {
-      $('#offerImagePreview').innerHTML = `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;border-radius:8px" alt="">`;
-      $('#offerPhotoHelp').textContent = '2 photos chargées. Vous pouvez en ajouter d\'autres.';
-    }
+    if (imgSrc) renderOfferGallery();
 
     const h2 = $('#offerSheet h2');
     if (h2) h2.textContent = 'Modifier l\'offre';
@@ -1990,6 +2044,12 @@ function addCoachMessage(message, actor = 'ai') {
 function answerCoach(question) {
   const normalized = question.toLowerCase();
   const budgetMatch = normalized.match(/(\d[\d\s.]*)\s*(fcfa|franc)?/);
+  if (normalized.includes('semaine') && budgetMatch) {
+    const weekly = Number(budgetMatch[1].replace(/[\s.]/g, '')) || 5000;
+    const remaining = Math.max(0, state.target - state.validated);
+    const weeks = Math.max(1, Math.ceil(remaining / weekly));
+    return `Avec ${money(weekly)} FCFA par semaine, soit ${money(weekly * 4)} FCFA par mois, il vous reste environ ${weeks} semaines pour l’ordinateur. Je peux préparer ce plan à votre rythme ; vous validerez ou ajusterez le montant avant toute modification.`;
+  }
   if (normalized.includes('budget') && budgetMatch) {
     const budget = Number(budgetMatch[1].replace(/[\s.]/g, '')) || 25000;
     const remaining = Math.max(0, state.target - state.validated);
@@ -1999,7 +2059,7 @@ function answerCoach(question) {
   if (normalized.includes('prioris')) return 'Je prioriserais l\'ordinateur : il est déjà à 62 % et proche de son prochain palier. Gardez la formation à 15 000 FCFA par mois et finalisez d\'abord la machine à coudre, déjà atteinte. Vous pouvez accepter ou ignorer ce conseil.';
   if (normalized.includes('alléger') || normalized.includes('cotisation')) return 'Je vous propose de décaler la date cible de deux mois. La cotisation estimée passerait d\'environ 38 000 à 29 000 FCFA par mois, avec un risque d\'abandon plus faible.';
   if (normalized.includes('rappel') || normalized.includes('quand')) return 'Votre meilleur créneau observé est le vendredi entre 18 h et 20 h. Je peux préparer un rappel SMS à ce moment, trois jours avant l\'échéance.';
-  if (normalized.includes('produit') || normalized.includes('offre')) return `Deux offres correspondent à votre profil : le Lenovo IdeaPad à ${money(customerPrice(425000))} FCFA, dont ${money(platformFee(425000))} FCFA de frais TrustFund, et la formation design à ${money(customerPrice(250000))} FCFA. Les montants totaux sont affichés avant votre décision.`;
+  if (normalized.includes('produit') || normalized.includes('offre') || normalized.includes('acheter') || normalized.includes('ordinateur')) return `Deux offres correspondent à votre profil : le Lenovo IdeaPad à ${money(customerPrice(425000))} FCFA et la formation design à ${money(customerPrice(250000))} FCFA. Ce sont les prix totaux, tout compris, affichés avant votre décision.`;
   if (normalized.includes('risque') || normalized.includes('abandon')) return 'Votre risque estimé est faible, à 18 %. Les facteurs favorables sont quatre mois réguliers et trois échéances respectées sur quatre.';
   return 'Je peux vous aider à ajuster le montant, la date, le rappel ou à trouver une offre adaptée. Dites-moi ce qui est le plus difficile en ce moment.';
 }

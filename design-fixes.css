@@ -83,7 +83,7 @@ img, picture, video, canvas { filter: grayscale(1) !important; }
   font-size: clamp(30px, 5vw, 38px) !important;
 }
 
-/* Boutons - une seule hauteur et des etats complets */
+/* Boutons — definition unique : 48px principal, 40px secondaire, 44px icone */
 .main-button, .auth-primary, .secondary-button, .auth-secondary,
 .claim-card > button, .workflow-card > .main-button, .management-card > button,
 .sheet-actions .main-button, .sheet-actions .secondary-button,
@@ -91,18 +91,41 @@ img, picture, video, canvas { filter: grayscale(1) !important; }
 .goal-primary-actions .main-button, .goal-primary-actions .secondary-button,
 .free-savings-actions button, .choose-product, .inline-actions button,
 .prediction-action button, .coach-suggestions button, .text-action, .back-link,
-.provider-quick-action, .order-card > button, .guest-banner button {
-  min-height: var(--tf-button-height) !important;
+.provider-quick-action, .order-card > button, .guest-banner button,
+#paymentSheet .main-button, .sheet .main-button, .sheet .secondary-button,
+.coach-form button, .goal-primary-actions .main-button,
+.order-card > button, .screen > .main-button, .module-screen > .main-button,
+.claim-card .main-button, .section-block .main-button, .workflow-card button,
+.anomaly-card button, .validation-buttons button, .choose-product,
+.export-report, .ai-recommendation button, .simple-coach-primary,
+.more-tools > summary, .full-button, .admin-ticket-open, .notification-inline-action,
+.logout-button, .floating-add {
+  min-height: var(--tf-button-primary) !important;
   height: auto !important;
   padding: 0 var(--tf-space-4) !important;
   border-radius: var(--tf-radius-sm) !important;
-  font-size: var(--tf-text-sm) !important;
+  font-size: var(--tf-button-text) !important;
   font-weight: 800 !important;
+}
+.secondary-button, .auth-secondary, .text-payment-action,
+#paymentSheet .text-payment-action, .sheet-actions .secondary-button,
+.sticky-sheet-actions .secondary-button, .product-detail-back,
+.inline-actions button:first-child, .goal-detail-actions button,
+.back-link, .text-action, .notification-inline-action,
+.coach-suggestions button, .full-button, .admin-ticket-open,
+.sheet .secondary-button {
+  min-height: var(--tf-button-secondary) !important;
+  height: auto !important;
+  padding: 0 var(--tf-space-3) !important;
+  font-size: var(--tf-button-text) !important;
+  font-weight: 700 !important;
 }
 .main-button, .auth-primary, .claim-card > button, .workflow-card > .main-button,
 .goal-primary-actions .main-button, .prediction-action button,
 .inline-actions button:last-child, button[type="submit"].main-button,
-.sheet-actions .main-button, .order-card > button {
+.sheet-actions .main-button, .order-card > button, .guest-banner button,
+.logout-button, .admin-priority-strip > button, .provider-quick-action,
+.choice-primary, .export-report {
   color: #fff !important;
   border-color: #111 !important;
   background: #111 !important;
@@ -110,7 +133,7 @@ img, picture, video, canvas { filter: grayscale(1) !important; }
 }
 .secondary-button, .auth-secondary, .product-detail-back,
 .sheet-actions .secondary-button, .goal-primary-actions .secondary-button,
-.inline-actions button:first-child {
+.inline-actions button:first-child, .full-button, .admin-ticket-open {
   color: #111 !important;
   border: 1px solid #cfcfca !important;
   background: #fff !important;
@@ -122,38 +145,15 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   outline: 3px solid #111 !important;
   outline-offset: 2px !important;
 }
-.floating-add, .round-button, .avatar-button, .sheet-head > button {
+.floating-add, .round-button, .avatar-button, .sheet-head > button, .more-button {
   width: 44px !important;
   height: 44px !important;
   min-height: 44px !important;
   border-radius: var(--tf-radius-sm) !important;
 }
+button { font-family: inherit !important; }
 
-/* Panneaux venant du bas */
-.sheet {
-  left: 50% !important;
-  right: auto !important;
-  /* La feuille reste à l'intérieur du téléphone de démonstration (430 px),
-     même lorsque le viewport de capture est plus large que le téléphone. */
-  bottom: max(16px, calc((100dvh - 920px) / 2 + 12px)) !important;
-  width: min(406px, calc(100vw - 32px)) !important;
-  max-width: min(406px, calc(100vw - 32px)) !important;
-  max-height: min(896px, calc(100dvh - 32px)) !important;
-  border: 0 !important;
-  border-radius: var(--tf-radius-lg) !important;
-  background: #fff !important;
-  box-shadow: 0 28px 80px rgba(0,0,0,.30) !important;
-}
-
-@media (max-width: 480px) {
-  .sheet {
-    bottom: 0 !important;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    max-height: calc(100dvh - 12px) !important;
-    border-radius: var(--tf-radius-lg) var(--tf-radius-lg) 0 0 !important;
-  }
-}
+/* Panneaux venant du bas — definition unifiee en section 3 bis */
 .sheet form, .short-sheet, .sheet:not(:has(> form)) {
   padding: var(--tf-space-5) !important;
 }
@@ -164,12 +164,35 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   border-radius: 4px !important;
   background: #c8c8c3 !important;
 }
-.sheet-head { gap: var(--tf-space-3) !important; margin-bottom: var(--tf-space-4) !important; }
-.sheet-head > div { flex: 1 1 auto !important; min-width: 0 !important; }
-.sheet-head h2 { font-size: 25px !important; line-height: 1.08 !important; }
-.sheet-head h2 { overflow-wrap: anywhere !important; }
-.sheet-head > div > p:last-child { margin-top: var(--tf-space-2) !important; }
-.sheet label { margin: 0 0 var(--tf-space-4) !important; }
+.sheet-head {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: var(--tf-space-3) !important;
+  margin-bottom: var(--tf-space-4) !important;
+}
+.sheet-head > div {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+.sheet-head h2 {
+  font-size: 25px !important;
+  line-height: 1.08 !important;
+  overflow-wrap: anywhere !important;
+}
+.sheet-head > div > p:last-child {
+  margin-top: var(--tf-space-2) !important;
+}
+.sheet-head > button {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  color: #666 !important;
+}
+.sheet label { margin: 0 0 var(--tf-space-4) !important; color: var(--ink) !important; }
 .sheet input, .sheet select, .sheet textarea, .settings-form input, .settings-form select {
   min-height: 46px !important;
   margin-top: var(--tf-space-2) !important;
@@ -178,6 +201,14 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   border-radius: var(--tf-radius-sm) !important;
   color: #111 !important;
   background: #fff !important;
+  font-family: inherit !important;
+  font-size: var(--tf-text-md) !important;
+  line-height: 1.5 !important;
+}
+.sheet textarea {
+  min-height: 120px !important;
+  resize: vertical !important;
+  padding: 12px !important;
 }
 .sheet-actions {
   display: flex !important;
@@ -199,13 +230,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 }
 .legal-content section:last-child { border-bottom: 0 !important; }
 .legal-content h3 { font-size: var(--tf-text-md) !important; }
-.legal-sheet > .main-button { margin-top: var(--tf-space-4) !important; }
-.legal-sheet > .main-button {
-  position: sticky !important;
-  bottom: 0 !important;
-  z-index: 2 !important;
-  box-shadow: 0 -12px 18px #fff !important;
-}
+.legal-sheet .main-button { margin-top: var(--tf-space-4) !important; }
 
 /* Cartes legeres : espacements et separateurs remplacent l'imbrication */
 .claim-card {
@@ -239,7 +264,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   box-shadow: none !important;
 }
 
-/* Cartes de chiffres - aucun debordement */
+/* 4) Cartes de chiffres : meme logique que Mes offres (summary-band).
+   Definition unique : 3 colonnes egales sur mobile, auto-fit sur desktop. */
 .metrics-scroll {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
@@ -247,24 +273,38 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   margin: 0 0 var(--tf-space-4) !important;
   padding: 0 !important;
   overflow: visible !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  border: 1px solid var(--ui-line, var(--line)) !important;
+  border-radius: var(--tf-radius-md) !important;
+  background: #fff !important;
+  box-shadow: none !important;
 }
 .metrics-scroll article {
   min-width: 0 !important;
+  max-width: 100% !important;
   width: auto !important;
-  padding: var(--tf-space-3) !important;
+  padding: var(--tf-space-3) var(--tf-space-2) !important;
   border: 1px solid var(--line) !important;
   border-radius: var(--tf-radius-md) !important;
   background: #fff !important;
   box-shadow: none !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
 }
 .metrics-scroll article span, .metrics-scroll article small {
   overflow-wrap: anywhere;
   font-size: var(--tf-text-xs) !important;
 }
 .metrics-scroll article strong { font-size: clamp(20px, 4vw, 28px) !important; }
+.metrics-scroll article + article { border-left: 1px solid var(--line) !important; }
+@media (max-width: 480px) {
+  .metrics-scroll { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
 @media (min-width: 900px) {
-  /* metrics-scroll : definition unique en fin de feuille */
-  /* metrics-scroll : definition unique en fin de feuille */
+  .metrics-scroll { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 }
 
 /* Surfaces noires lourdes remplacees par des surfaces claires */
@@ -290,7 +330,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   background: #efefec !important;
 }
 
-/* TrustCoach reste disponible partout */
+/* TrustCoach — definition unique */
 .trust-coach-fab {
   position: absolute !important;
   z-index: 200 !important;
@@ -306,6 +346,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   background: #111 !important;
   box-shadow: 0 10px 24px rgba(0,0,0,.24) !important;
   font-size: 23px !important;
+  cursor: pointer !important;
 }
 .trust-coach-fab.hidden { display: none !important; }
 
@@ -483,13 +524,17 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   }
 }
 
-/* ─────────────────────────────────────────────
-   Passe de relecture retours — unification finale
-   ───────────────────────────────────────────── */
+/* Passe de relecture retours — unification finale.
+   Les regles 2 a 7 sont maintenant unifiees :
+   boutons (48/40/44 px), panneaux (406 px / 22 px),
+   cadres (un seul par bloc), cartes (3 colonnes egales),
+   texte (12 px minimum), surfaces claires,
+   parcours simplifie et TrustCoach accessible partout. */
 
 :root {
   --tf-button-primary: 48px;
   --tf-button-secondary: 40px;
+  --tf-button-icon: 44px;
   --tf-text-min: 12px;
   --tf-button-text: 13px;
 }
@@ -526,25 +571,33 @@ button[type="submit"].main-button, .sheet .main-button,
   font-size: var(--tf-button-text) !important;
 }
 
-/* 3) Panneaux bottom sheets uniformes */
+/* 3) Panneaux venant du bas : un seul contrat de marges et de padding */
 .sheet {
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(16px, calc((100dvh - 920px) / 2 + 12px)) !important;
   width: min(406px, calc(100vw - 32px)) !important;
-  max-width: 406px !important;
+  max-width: min(406px, calc(100vw - 32px)) !important;
+  max-height: min(896px, calc(100dvh - 32px)) !important;
+  border: 0 !important;
   border-radius: 22px !important;
-}
-.sheet form, .short-sheet, .sheet:not(:has(> form)) {
-  padding: var(--tf-space-5) !important;
-}
-.legal-sheet .legal-content {
-  padding: 0 !important;
-}
-.legal-sheet > .main-button {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  background: #fff !important;
+  box-shadow: 0 28px 80px rgba(0,0,0,.30) !important;
+  overflow-x: hidden !important;
 }
 @media (max-width: 480px) {
-  .sheet { border-radius: 22px 22px 0 0 !important; }
+  .sheet {
+    bottom: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    max-height: calc(100dvh - 24px) !important;
+    border-radius: 22px 22px 0 0 !important;
+  }
 }
+.sheet form, .short-sheet, .sheet:not(:has(> form)) { padding: var(--tf-space-5) !important; }
+.legal-sheet { display: flex !important; flex-direction: column !important; padding: var(--tf-space-5) !important; }
+.legal-sheet .legal-content { flex: 1 1 auto !important; min-height: 0 !important; overflow-y: auto !important; padding: 0 !important; }
+.legal-sheet .main-button { flex: 0 0 auto !important; position: static !important; margin: var(--tf-space-4) 0 0 !important; margin-left: 0 !important; margin-right: 0 !important; box-shadow: none !important; }
 
 /* 4) Grilles de cartes : colonnes 1fr égales, min-width:0, responsive */
 .kpi-grid, .report-split,
@@ -556,6 +609,53 @@ button[type="submit"].main-button, .sheet .main-button,
 .support-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 .kpi-grid > article, .support-kpis > article, .metrics-scroll > article,
 .hub-grid > button, .review-card, .management-card { min-width: 0 !important; }
+
+/* Galerie d'images produit : 2 colonnes, cases fixes, pas de bouton géant */
+.offer-image-gallery {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: var(--tf-space-2) !important;
+  margin: var(--tf-space-3) 0 !important;
+}
+.offer-image-gallery button {
+  min-height: 72px !important;
+  height: 72px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--tf-radius-sm) !important;
+  background: #fff !important;
+  color: #111 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  padding: 0 var(--tf-space-2) !important;
+  cursor: pointer !important;
+}
+.offer-image-gallery button small {
+  font-size: var(--tf-text-xs) !important;
+  font-weight: 400 !important;
+  color: var(--muted) !important;
+}
+.offer-image-gallery button.active {
+  border-color: #111 !important;
+  background: #111 !important;
+  color: #fff !important;
+}
+.offer-image-gallery button.active small { color: rgba(255,255,255,.75) !important; }
+
+/* Menu d'action (panneau) : lignes d'action standard 44px */
+.action-menu button {
+  min-height: var(--tf-button-secondary) !important;
+  height: auto !important;
+  border: 1px solid var(--ui-line, var(--line)) !important;
+  border-radius: var(--tf-radius-sm) !important;
+  background: #fff !important;
+  padding: var(--tf-space-3) !important;
+}
+.action-menu button + button { margin-top: var(--tf-space-2) !important; }
+.action-menu button.danger { border-color: #111 !important; }
 @media (min-width: 900px) {
   .role-admin .admin-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
   /* metrics-scroll : definition unique en fin de feuille */
@@ -581,7 +681,6 @@ button[type="submit"].main-button, .sheet .main-button,
   padding: var(--tf-space-4) 0 !important;
   border-bottom: 1px solid var(--ui-line, var(--line)) !important;
 }
-.claim-card:last-child { border-bottom: 0 !important; }
 .claim-card:last-child { border-bottom: 0 !important; }
 .claim-card .ticket-card-top,
 .claim-card .ticket-ownership {
@@ -637,7 +736,9 @@ body { font-size: 14px !important; }
   font-size: var(--tf-text-min) !important;
 }
 .screen strong, .module-screen strong,
-.sheet strong, .short-sheet strong { font-size: var(--tf-text-min) !important; }
+.sheet strong, .short-sheet strong {
+  font-size: var(--tf-text-min) !important;
+}
 
 /* 7) Cartouches noirs : hiérarchie conservée, poids réduit */
 .free-savings-card, .ai-hero, .prediction-action, .big-kpi,
@@ -650,6 +751,9 @@ body { font-size: 14px !important; }
 .free-savings-card > strong, .free-savings-card p,
 .ai-hero h1, .ai-hero p, .big-kpi strong, .big-kpi p,
 .prediction-action strong, .prediction-action p { color: #111 !important; }
+/* Carte d'pargne devenue blanche : boutons recolores (secondaire clair, principal sombre). */
+.simple-home .free-savings-actions > :not(.primary) { color: #111 !important; border: 1px solid var(--ui-line, var(--line)) !important; background: #f1f1ef !important; }
+.simple-home .free-savings-actions .primary { color: #fff !important; border-color: #111 !important; background: #111 !important; }
 .main-button, .auth-primary { background: #111 !important; color: #fff !important; }
 
 /* 8) Parcours de création simplifié : accès découverte clair, SMS différé */
@@ -657,7 +761,7 @@ body { font-size: 14px !important; }
   display: block !important;
   width: 100%;
   margin-top: 10px;
-  padding: 0 14px;
+  padding: 0 var(--tf-space-3) !important;
   min-height: var(--tf-button-secondary) !important;
   border: 1px dashed var(--ui-line, var(--line)) !important;
   border-radius: var(--tf-radius-sm) !important;
@@ -669,24 +773,7 @@ body { font-size: 14px !important; }
 }
 .signup-explore-link:hover { color: #111 !important; border-color: #111 !important; }
 
-/* 9) TrustCoach accessible partout */
-.trust-coach-fab {
-  position: absolute !important;
-  z-index: 120 !important;
-  right: 18px !important;
-  bottom: 96px !important;
-  width: 52px !important;
-  height: 52px !important;
-  display: grid !important;
-  place-items: center !important;
-  border: 2px solid #fff !important;
-  border-radius: 50% !important;
-  color: #fff !important;
-  background: #111 !important;
-  box-shadow: 0 10px 24px rgba(0,0,0,.24) !important;
-  font-size: 22px !important;
-  cursor: pointer !important;
-}
+/* 9) TrustCoach accessible partout (complement de la definition unique plus haut) */
 .trust-coach-fab span { line-height: 1 !important; }
 .trust-coach-fab i { display: none !important; }
 .trust-coach-fab.hidden { display: none !important; }
@@ -717,23 +804,6 @@ body { font-size: 14px !important; }
 @media (max-width: 480px) {
   .trust-coach-fab { right: 14px !important; bottom: 88px !important; }
 }
-
-/* 10) Panneau "Parcours conversationnel" du coach */
-.coach-workflow { margin: 12px 14px 0; padding: 14px; border: 1px solid var(--ui-line, var(--line)); border-radius: var(--ui-radius-md, 14px); background: #fff; }
-.coach-workflow-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
-.coach-workflow-head .eyebrow { margin: 0 !important; }
-.coach-workflow-head button { min-height: var(--tf-button-secondary) !important; padding: 0 12px !important; border: 1px solid var(--ui-line, var(--line)); border-radius: 999px; color: #111; background: #fff; font-size: var(--tf-text-min); font-weight: 800; cursor: pointer; }
-.coach-workflow-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: coachStep; }
-.coach-workflow-steps li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; padding: 10px; border: 1px solid var(--ui-line, var(--line)); border-radius: 10px; background: #f7f5f0; }
-.coach-workflow-steps li > span { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: #111; font-size: 12px; font-weight: 900; }
-.coach-workflow-steps strong { display: block; color: #111; font-size: var(--tf-text-min); }
-.coach-workflow-steps small { display: block; margin-top: 2px; color: var(--ui-muted, var(--muted)); font-size: var(--tf-text-min); line-height: 1.4; }
-.coach-workflow-note { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--ui-line, var(--line)); color: var(--ui-muted, var(--muted)); font-size: var(--tf-text-min); line-height: 1.45; }
-@media (max-width: 480px) {
-  .coach-workflow { margin: 10px 12px 0; }
-  .coach-workflow-steps li { grid-template-columns: 24px 1fr; }
-}
-
 
 /* ==========================================================
    PASSE FINALE - retours 1 a 7 : un seul cadre par bloc
@@ -801,6 +871,46 @@ body { font-size: 14px !important; }
   border-bottom: 1px solid var(--ui-line) !important;
 }
 .intermediary-note { border-top: 1px solid var(--ui-line) !important; }
+/* Accueil : statistiques disponible + total epargne, et plan conseille */
+.free-savings-stats { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.free-savings-stats span { display:block; color:var(--muted); font-size:var(--tf-text-min); }
+.free-savings-stats strong { display:block; margin-top:4px; font-size:20px; }
+.free-savings-stats strong small { font-size:var(--tf-text-min); font-weight:600; }
+.focus-goal-plan { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; padding-top:12px; border-top:1px solid var(--line); }
+.focus-goal-plan span { color:var(--muted); font-size:var(--tf-text-min); }
+.focus-goal-plan strong { font-size:var(--tf-text-min); }
+.focus-goal .focus-goal-cta { margin-top:12px; }
+/* Grille accueil : l'objectif prioritaire occupe toute la largeur (carte hero),
+   les autres objectifs restent en 2 colonnes sous la hero. */
+.home-goal-grid .focus-goal { grid-column:1 / -1; min-height:0; }
+.home-goal-grid .focus-goal > * { order:0; }
+.home-goal-grid .focus-goal .focus-goal-visual { height:160px; flex:0 0 160px; }
+.home-goal-grid .focus-goal h2 { font-size:18px !important; margin-top:10px; }
+.home-goal-grid .focus-goal .focus-progress-label strong,
+.home-goal-grid .focus-goal .focus-progress-label strong b { font-size:var(--tf-text-min); color:var(--muted); }
+.focus-goal .focus-goal-plan { margin-top:auto; }
+.focus-goal .focus-goal-cta { width:100%; }
+/* Coach simplifie : l'ecran occupe toute la page, le chat prend l'espace restant. */
+#screen-ai-coach.coach-screen { height:100%; padding:0 !important; }
+.coach-chat { flex:1 1 auto; min-height:0; }
+/* Inputs fichier caches : motif visually-hidden (jamais display:none)
+   pour que la validation native puisse afficher son message. */
+.identity-upload input[type="file"], .upload-card input[type="file"] {
+  display: block !important;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.contact-success {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #f1f1ef !important;
+  color: var(--ink) !important;
+  font-size: var(--tf-text-min) !important;
+}
 
 /* 4) Chiffres cles : meme logique que Mes offres (summary-band) */
 .metrics-scroll, .summary-band {
@@ -828,10 +938,10 @@ body { font-size: 14px !important; }
 .metrics-scroll article span, .metrics-scroll article small, .summary-band span { line-height: 1.35 !important; }
 
 /* 3) Panneaux venant du bas : un seul contrat de marges et de padding */
-.sheet { width: min(406px, calc(100vw - 32px)) !important; }
 .legal-sheet { padding: var(--tf-space-5) !important; }
 .legal-sheet .legal-content { padding: 0 !important; }
 .legal-sheet .main-button { margin-left: 0 !important; margin-right: 0 !important; }
+
 
 /* 2) Boutons : tailles standard respectees partout */
 #contactProvider, .contactProvider {
@@ -879,4 +989,159 @@ body { font-size: 14px !important; }
   background: #f1f1ef !important;
   box-shadow: none !important;
 }
-.sheet-head > button, .coach-info { border: 0 !important; }
+
+/* 11) Plancher typographique 12px : fautifs restants des ecrans user */
+.home-greeting span { font-size: var(--tf-text-min) !important; }
+.brand-signature, .home-greeting-text .brand-signature { font-size: var(--tf-text-min) !important; }
+.home-goal-grid .focus-progress-label span { font-size: var(--tf-text-min) !important; }
+.home-goal-grid .focus-progress-label strong { font-size: var(--tf-text-min) !important; }
+.home-goal-grid .focus-progress-label strong b { font-size: var(--tf-text-min) !important; }
+.goal-percent, .goal-stack .goal-percent { font-size: var(--tf-text-min) !important; }
+.ai-label { font-size: var(--tf-text-min) !important; }
+.status-guide span, .status-guide button { font-size: var(--tf-text-min) !important; }
+.activity-date span { font-size: var(--tf-text-min) !important; display: block; }
+
+/* 12) TrustCoach epure : pleine page, bulles legeres, pas de barres de defilement visibles */
+#screen-ai-coach .coach-header {
+  flex: 0 0 auto;
+  border: 0 !important;
+  border-bottom: 1px solid var(--ui-line, var(--line)) !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  min-height: 56px;
+}
+#screen-ai-coach .coach-header small { display: none; }
+#screen-ai-coach .coach-chat { scrollbar-width: none; }
+#screen-ai-coach .coach-chat::-webkit-scrollbar { display: none; }
+#screen-ai-coach .coach-suggestions { scrollbar-width: none; }
+#screen-ai-coach .coach-suggestions::-webkit-scrollbar { display: none; }
+#screen-ai-coach .coach-message { max-width: 86%; }
+#screen-ai-coach .coach-message > div {
+  border: 1px solid var(--ui-line, var(--line));
+  background: #fff;
+  box-shadow: none;
+  border-radius: 4px 14px 14px 14px;
+}
+#screen-ai-coach .coach-message.user > div {
+  color: #111;
+  border-color: var(--ui-line, var(--line));
+  background: #f1f1ef;
+  border-radius: 14px 4px 14px 14px;
+}
+#screen-ai-coach .coach-note { padding: 2px 20px 10px; color: var(--muted); font-size: var(--tf-text-min); text-align: center; }
+
+/* 13) Ecran d'accueil auth : titre sur trois lignes, carte logo arrondie */
+.welcome-screen { padding-top: 36px !important; }
+.welcome-copy h1 {
+  display: block !important;
+  margin-top: 2px;
+  font-size: 30px !important;
+  line-height: 1.16 !important;
+  letter-spacing: -0.02em;
+  color: #111;
+}
+.welcome-copy h1 br { display: inline !important; }
+.welcome-copy h1 span { color: #6b6b66; font-weight: 500; }
+.welcome-visual {
+  flex: 0 0 auto;
+  height: 172px !important;
+  margin: 0 0 22px !important;
+  border-radius: 16px;
+}
+.welcome-copy > p:last-child { margin-top: 10px !important; color: #5c5c58; }
+.welcome-screen .auth-actions { margin-top: 22px; }
+
+/* 14) TrustCoach : verrouille tout l'ecran (sans header ni barre de nav) */
+.phone-shell.coach-mode .app-header,
+.phone-shell.coach-mode .bottom-nav { display: none !important; }
+
+#screen-ai-coach .coach-header {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  min-height: 62px;
+}
+#screen-ai-coach .coach-header > button {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--ui-line, var(--line)) !important;
+  border-radius: 50% !important;
+  color: #111 !important;
+  background: #fff !important;
+  font-size: 17px;
+}
+#screen-ai-coach .coach-orb {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  font-size: 16px;
+}
+#screen-ai-coach .coach-identity {
+  display: grid;
+  grid-template-columns: 1fr !important;
+  gap: 1px;
+}
+#screen-ai-coach .coach-identity strong { font-size: 16px; }
+#screen-ai-coach .coach-header small {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted) !important;
+  font-size: var(--tf-text-min) !important;
+  margin-top: 0;
+}
+#screen-ai-coach .coach-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #111;
+}
+
+#screen-ai-coach .coach-message { grid-template-columns: 1fr !important; }
+#screen-ai-coach .coach-message > span { display: none !important; }
+#screen-ai-coach .coach-message p { font-size: var(--tf-text-min) !important; line-height: 1.5; }
+#screen-ai-coach .coach-message small { font-size: var(--tf-text-min) !important; color: var(--muted); }
+#screen-ai-coach .coach-message.ai > div { border-radius: 14px; }
+#screen-ai-coach .coach-message.user > div { border-radius: 14px; }
+
+#screen-ai-coach .coach-suggestions {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 2px 16px 10px;
+}
+#screen-ai-coach .coach-suggestions button {
+  flex: 0 1 auto;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: var(--tf-text-min) !important;
+}
+
+#screen-ai-coach .coach-form {
+  grid-template-columns: 1fr 48px;
+  gap: 10px;
+  padding: 10px 16px 8px;
+}
+#screen-ai-coach .coach-form input {
+  border-radius: 999px;
+  padding: 0 18px;
+  font-size: var(--tf-text-min) !important;
+  border: 1px solid var(--ui-line, var(--line));
+  background: #fff;
+}
+#screen-ai-coach .coach-form button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+/* Fiche produit : le total remplace le detail des frais */
+.fee-included-note { display: block; margin-top: 6px; color: var(--muted); font-size: var(--tf-text-min); }
+

@@ -1,6 +1,9 @@
 # Local preview and visual QA artifacts
 tmp/
 debug.log
+playwright-report/
+test-results/
+__pycache__/
 
 
 node_modules

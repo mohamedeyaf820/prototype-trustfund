@@ -5,12 +5,29 @@
   "scripts": {
     "generate-pdf": "node scripts/generate_screens_pdf.js",
     "audit": "node scripts/audit_design_system.js",
+    "audit:interactive": "node scripts/audit_all_interactive.js",
     "audit:report": "node scripts/report_design_audit.js",
     "board": "node scripts/capture_consistency_board.js",
     "capture:all": "node scripts/capture_all_wireframes.js",
-    "verify:sensitive": "node scripts/verify_sensitive.js"
+    "verify:sensitive": "node scripts/verify_sensitive.js",
+    "test:e2e": "playwright test",
+    "test:e2e:auth": "playwright test tests/auth.spec.js",
+    "test:e2e:kyc": "playwright test tests/kyc-workflow.spec.js",
+    "test:e2e:epargne": "playwright test tests/epargne.spec.js",
+    "test:e2e:coach": "playwright test tests/trustcoach.spec.js",
+    "test:e2e:ui": "playwright test tests/ui-consistency.spec.js",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:report": "playwright show-report test-results/html",
+    "validate": "node scripts/validate_all.js",
+    "validate:quick": "npm run audit && npm run verify:sensitive",
+    "serve": "http-server -p 8080 -c-1"
   },
   "dependencies": {
     "puppeteer": "^22.15.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "http-server": "^14.1.1"
   }
 }

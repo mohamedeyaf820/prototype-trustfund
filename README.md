@@ -44,7 +44,7 @@ Ouvrez `index.html` dans un navigateur moderne. L’interface remplit l’écran
 - prédiction explicable du risque d’abandon ;
 - score de régularité et facteurs ayant influencé le score ;
 - recommandation d’un plan d’épargne plus adapté ;
-- TrustCoach, coach intelligent conversationnel ;
+- TrustCoach, coach intelligent conversationnel : écran réduit à l’essentiel (conversation, trois suggestions, champ de question) ;
 - choix d’un horaire de rappel personnalisé ;
 - recommandations de produits et services selon le budget et les objectifs ;
 - détection d’anomalies avec contrôle humain obligatoire côté administrateur.
@@ -92,6 +92,7 @@ Les règles d’harmonisation sont centralisées en fin de `design-fixes.css` :
 
 ```bash
 npm run audit            # 198 états mesurés (320, 375, 414 px) : débordements, boutons, textes, cadres, panneaux
+npm run audit:interactive # 270 boutons cliqués écran par écran : effet attendu, crash, doublon d'id
 npm run audit:report     # rapport lisible du dernier audit
 npm run board            # planche PDF : écrans regroupés par type, côte à côte
 npm run generate-pdf     # régénère le PDF des 76 écrans
